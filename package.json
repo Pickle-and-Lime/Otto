@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/Pickle-and-Lime/Rosie",
   "dependencies": {
-    "gulp": "^3.9.0"
   },
   "devDependencies": {
     "gulp": "^3.9.0"
