@@ -19,7 +19,9 @@
 
   "dependencies": {
     "gulp": "^3.9.0",
-    "synaptic": "^1.0.1"
+    "synaptic": "^1.0.1",
+    "body-parser": "^1.13.3",
+    "express": "^4.13.3"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
