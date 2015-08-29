@@ -1,0 +1,35 @@
+<ul class="collapsible" data-collapsible="accordion">
+  <li>
+    <div class="collapsible-header"><i class="material-icons">shopping_cart</i>Shopping List<span class="badge">{{ shoppingList.length }}</span></div>
+    <div class="collapsible-body">
+      <ul class="collection">
+        <li class="collection-item" ng-repeat="item in shoppingList track by $index">{{ item }}
+          <span class="right">
+            <i class="material-icons" onclick="Materialize.toast('Item deleted',500)" ng-click="removeListItem($index)">not_interested</i>
+            <i class="material-icons" onclick="Materialize.toast('Item bought',500)" ng-click="buyListItem($index)">done</i>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li>
+    <div class="collapsible-header"><i class="material-icons">view_list</i>Suggestions<span class="badge">{{ suggestions.length }}</span></div>
+    <div class="collapsible-body container">
+      <ul class="collection">
+        <li class="collection-item" ng-repeat="item in suggestions track by $index">{{ item }}
+          <span class="right">
+            <i class="material-icons" onclick="Materialize.toast('Suggestion removed',500)" ng-click="removeSuggestion($index)">not_interested</i>
+            <i class="material-icons" onclick="Materialize.toast('Added to list',500)" ng-click="addSuggestion($index)">done</i>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </li>
+</ul>
+<script>
+  $(document).ready(function(){
+    $('.collapsible').collapsible({
+      accordion : true // true for accordion style, false for expandable
+    });
+  });
+</script>
