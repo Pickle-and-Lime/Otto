@@ -1,0 +1,25 @@
+{
+  "name": "Rosie",
+  "version": "0.0.1",
+  "description": "Rosie: The shopping list that builds itself.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pickle-and-Lime/Rosie.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pickle-and-Lime/Rosie/issues"
+  },
+  "homepage": "https://github.com/Pickle-and-Lime/Rosie",
+  "dependencies": {
+    "gulp": "^3.9.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  }
+}
