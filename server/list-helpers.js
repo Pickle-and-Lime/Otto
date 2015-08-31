@@ -1,100 +1,99 @@
 var helpers = require('./nn-helpers.js');
 var appPantry = require('./db/app-pantry.js');
-var users = require('./db/users-data.js');
+var households = require('./db/households-data.js');
 
 module.exports = {
-  //called when user adds to pantry from gen list or by checking off
-  buildPantry : function(user, item, month, day){
+  //called when household adds to pantry from gen list or by checking off
+  buildPantry : function(household, item, month, day){
     //in implementation, no month, day--> just call and store new Date()
     var date = month ? new Date(2015, month, day) : new Date();
-    
-    //get general item data
-    var data = appPantry[item];
-    //set correct household size
-    var size = users[user].hhSize;
 
-    //create and train new item for that user
-    var newItem = new helpers.newItem(item, data, size);
+    //train item for that household with their own data if it exists, or with the general data
+    var houseTraining = households[household].pantry[item] ? 
+      households[household].pantry[item].trainingSet : JSON.parse(JSON.stringify(appPantry[item].initialTrainingSet));
     
-    //add item to the users pantry; will be to database
-    users[user].pantry[item] = {
-      item: newItem, 
+    var expTime = households[household].pantry[item] ?
+      households[household].pantry[item].expTime : appPantry[item].aveExp;
+    //add item to the households pantry; will be to database
+    households[household].pantry[item] = {
+      network: appPantry[item].train(houseTraining), //might be able to convert this to a string with standalone
+      trainingSet : houseTraining,
       date: date,
+      expTime : expTime
     }; 
-    return users[user].pantry;
+    return households[household].pantry;
   },
 
   //called when shopper opens app
-  autoBuildList : function(user){
+  autoBuildList : function(household){
     var dateBought, timeElapsed;
-    //set user, list, and pantry
-    user = users[user];
-    user.list = {};
-    var pantry = user.pantry;
+    //set household, list, and pantry
+    household = households[household];
+    household.list = {}; //or otherwise empty
+    var pantry = household.pantry;
 
     //loop over everything in the pantry and determine if it should be added to the list
-    for (var thing in pantry) {
-      //get item
-      item = pantry[thing].item;
-
+    for (var item in pantry) {
       //calculate how long since last bought
-      timeElapsed = helpers.dateDiff(pantry[thing].date);
+      timeElapsed = helpers.dateDiff(pantry[item].date);
       //add the item to the list if nn calculates a >50% prob it's out
-      if (item.network.activate([timeElapsed/365]) >0.5 || timeElapsed > item.aveExp){
-        user.list[item.name] = 'unchecked';
+      var prob = pantry[item].network([timeElapsed/365]);
+      if (prob >0.5 || timeElapsed > item.aveExp){
+        household.list[item] = 'unchecked';
       }
 
     }
-    return user.list;
+    return household.list;
   },
 
   //called when manually adding items to list
-  manAdd : function(item, user){
+  manAdd : function(item, household){
     //add the item to the shopping list
-    item = users[user].pantry[item];
-    users[user].list[item.item.name] = 'unchecked'; //item;
+    var itemProps = households[household].pantry[item];
+    households[household].list[item] = 'unchecked'; //item;
 
     //calculate how long since last bought
-    var timeElapsed = helpers.dateDiff(item.date);
+    var timeElapsed = helpers.dateDiff(itemProps.date);
 
     //update the NN with the new data
-    item.item.update(timeElapsed, 0.9);
+    appPantry[item].update(item, timeElapsed, 0.9, household);
+    // item.item.update(timeElapsed, 0.9);
   },
 
   //called when manually removing items added by Rosie (NOT bought)
-  manRemove : function(item, user){
-    //remove the item from the user's shopping list
-    delete users[user].list[item];
-
+  manRemove : function(item, household){
+    //remove the item from the household's shopping list
+    delete households[household].list[item];
+    var itemProps = households[household].pantry[item];
     //calculate how long since last bought
-    var timeElapsed = helpers.dateDiff(users[user].pantry[item].date);
+    var timeElapsed = helpers.dateDiff(itemProps.date);
 
     //update network with new data
-    users[user].pantry[item].item.update(timeElapsed, 0.1);
+    appPantry[item].update(item, timeElapsed, 0.1, household);
   },
 
   //called while shopping to mark/unmark items
-  check : function(item, user){
-    if (users[user].list[item] === 'checked'){
-      users[user].list[item] = 'unchecked';
+  check : function(item, household){
+    if (households[household].list[item] === 'checked'){
+      households[household].list[item] = 'unchecked';
     } else{
-      users[user].list[item] = 'checked';
+      households[household].list[item] = 'checked';
     }
   },
 
   //called after purchase
-  bought : function(user){
+  bought : function(household){
     //loop through the list
-    for (var item in users[user].list){
+    for (var item in households[household].list){
       
       //see if "checked"
-      if (users[user].list[item] === 'checked'){
+      if (households[household].list[item] === 'checked'){
         
         //update the date to today
-        users[user].pantry[item].date = new Date();
+        households[household].pantry[item].date = new Date();
         
         //delete the item from the shopping list
-        delete users[user].list[item];
+        delete households[household].list[item];
       }
     }
   }

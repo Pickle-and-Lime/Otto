@@ -1,24 +1,21 @@
 //Table w/ user, household size, pantry--JSON?, shopping list--JSON?, geographic location
 
 //Mock users
-var users = {
-  user1 :{
-    hhSize : 'small', 
+var households = {
+  household1 :{
     pantry : {},
     list : {}
   },
 
-  user2 :{
-    hhSize : 'medium', 
+  household2 :{
     pantry : {},
     list : {}
   },
 
-  user3 : {
-    hhSize : 'large', 
+  household3 : {
     pantry : {},
     list : {}
   }
 };
 
-module.exports = users;
+module.exports = households;
