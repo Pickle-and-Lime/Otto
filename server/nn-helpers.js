@@ -1,4 +1,6 @@
 var synaptic = require('synaptic');
+var households = require('./db/households-data.js');
+var fs = require('fs');
 
 var Neuron = synaptic.Neuron,
   Layer = synaptic.Layer,
@@ -8,29 +10,29 @@ var Neuron = synaptic.Neuron,
 
 module.exports = {
   
-  //function to create a new item using correct trainingSet for household size
-  newItem : function(name, data, hhSize){
-    //create the network; input = time since last purchase; output = probability out
-    this.network = new Architect.LSTM(1, 6, 1);
+  //function to create a generic pantry item
+  pantryItem : function(name, data){
+    //create the network; input = time since last purchase; output = probability need more
+    this.network = new Architect.LSTM(1, 1, 1);
     var trainer = new Trainer(this.network);
+
+    //set the generic expiration date
     this.aveExp = data.aveExp;
     //set the trainingSet property to access/update in the future
-    this.trainingSet = data.trainingSet[hhSize];
-    //set the train property to retrain with updated trainingSet in the future
-    this.train = function(){
-      trainer.train(this.trainingSet);
+    this.initialTrainingSet = data.trainingSet;
+    //set the train property to retrain with any trainingSet
+    this.train = function(trainingSet){
+      trainer.train(trainingSet);
+      return this.network.standalone(); //stringify???
     };
-    //train immediately with given trainingSet
-    this.train(this.trainingSet);
 
     //Update the network as needed
-    this.update = function(data, result){
-      this.trainingSet.push({input : [data/365], output :[result]});
-      this.train(this.trainingSet);
+    this.update = function(item, time, result, household){
+      households[household].pantry[item].trainingSet.push({input : [time/365], output :[result]});
+      households[household].pantry[item].network = this.train(households[household].pantry[item].trainingSet);
     };
-
     //set the name of the network
-    this.name = name;
+    //this.name = name; probably uneccessary now
   }, 
 
   //to calculate the amount of time since last purchased
