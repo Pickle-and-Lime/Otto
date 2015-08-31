@@ -1,7 +1,8 @@
-//Table w/ user, household size, pantry--JSON?, shopping list--JSON?, geographic location
+//Will be stored in db instead
 
-//Mock users
+//Mock households
 var households = {
+  users : ['Tony Soprano'],
   household1 :{
     pantry : {},
     list : {}
