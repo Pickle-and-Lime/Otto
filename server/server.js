@@ -3,8 +3,23 @@ var bodyParser = require('body-parser');
 var listRouter = require('./routers/listRouter');
 var pantryRouter = require('./routers/pantryRouter');
 var householdRouter = require('./routers/householdRouter');
+
 var buyRouter = require('./routers/buyRouter');
 
+/////// DB
+var mongoose = require('mongoose');
+var User = require('./db/userModel.js');
+var Household = require('./db/householdModel.js');
+var listHelpers = require('./list-helpers.js');
+
+mongoose.connect('mongodb://localhost/orbit');
+var db = mongoose.connection;
+
+db.once('open', function(){
+  console.log('Database connection now open!');
+});
+
+////////////
 var app = express();
 
 app.use(bodyParser.json());
@@ -14,7 +29,8 @@ app.use(bodyParser.json());
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('public'));
 } else {
-  app.use(express.static('client'));
+  console.log("Using client!");
+  app.use(express.static('../client'));
 }
 
 // Adds household to request
