@@ -1,20 +1,22 @@
-var listHelpers = require('./list-helpers.js');
-var appPantry = require('./db/app-pantry.js');
-var buildPantry = listHelpers.buildPantry;
-var autoBuildList = listHelpers.autoBuildList;
-var manAdd = listHelpers.manAdd;
-var manRemove = listHelpers.manRemove;
-var check = listHelpers.check;
-var bought = listHelpers.bought;
 var households = require('./db/households-data.js');
+var appPantry = require('./db/app-pantry.js');
+
+var listHelpers = require('./list-helpers.js');
+var addToPantry = listHelpers.addToPantry;
+var autoBuildList = listHelpers.autoBuildList;
+var addToList = listHelpers.addToList;
+var removeFromList = listHelpers.removeFromList;
+var check = listHelpers.check;
+var buy = listHelpers.buy;
+var removeFromPantry = listHelpers.removeFromPantry;
+var updateExpTime = listHelpers.updateExpTime;
 /////////////
 // EXAMPLE //
 /////////////
 //example of adding to pantry with some fake dates (see comment above)
-buildPantry('household1','milk', 7, 30);
-buildPantry('household1','rice', 6, 20);
-buildPantry('household1','fruit', 7, 23);
-buildPantry('household1','carrots',7, 15);
+addToPantry('milk', 'household1', 7, 30);
+addToPantry('rice', 'household1', 6, 20);
+addToPantry('fruit', 'household1', 7, 23);
 
 // console.log('household Pantry');
 // console.log(households.household1.pantry);
@@ -27,7 +29,7 @@ console.log(households.household1.list);
 console.log(' ');
 
 //let's say you actually DO need milk
-manAdd('milk', 'household1');
+addToList('milk', 'household1');
 console.log('Add milk to list');
 console.log(households.household1.list);
 console.log(' ');
@@ -39,8 +41,24 @@ autoBuildList('household1');
 console.log('Autobuilt, now with milk');
 console.log(households.household1.list);
 
+//manually add carrots to the list; carrots should now be in their shopping list AND their pantry
+addToList('carrots', 'household1');
+console.log('Add carrots');
+console.log('List', households.household1.list);
+console.log('Pantry', households.household1.pantry);
+
+//manually add cheese to the list; this should now be in pantry, but is untracked
+addToList('cheese', 'household1');
+console.log('Add cheese');
+console.log('List', households.household1.list);
+console.log('Pantry', households.household1.pantry);
+
+//update the expiration time for the cheese
+updateExpTime('cheese', 'household1', 20);
+console.log('cheese in pantry', households.household1.pantry.cheese);
+
 //turns out you don't actually want milk
-manRemove('milk', 'household1');
+removeFromList('milk', 'household1');
 console.log('Remove milk from list');
 console.log(households.household1.list);
 console.log(' ');
@@ -53,13 +71,13 @@ console.log(households.household1.list);
 console.log(' ');
 
 //Go shopping, checking off items as found
-check('rice','household1');
-console.log('Check-off rice');
-console.log(households.household1.list);
-console.log(' ');
+// check('rice','household1');
+// console.log('Check-off rice');
+// console.log(households.household1.list);
+// console.log(' ');
 
 //Purchase your items
-bought('household1');
+buy(['rice'], 'household1');
 console.log('Purchase items');
 console.log('Rice purchased',households.household1.list);
 console.log('Updated date in pantry',households.household1.pantry);
@@ -69,3 +87,9 @@ console.log(' ');
 autoBuildList('household1');
 console.log('Autobuilt list with just fruit immedately after purchase');
 console.log(households.household1.list);
+console.log(' ');
+
+//But you decide you don't like fruit, so you remove it from your pantry entirely
+removeFromPantry('fruit','household1');
+console.log('No more fruit in the pantry');
+console.log(households.household1.pantry);

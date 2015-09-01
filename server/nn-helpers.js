@@ -1,12 +1,9 @@
 var synaptic = require('synaptic');
-var households = require('./db/households-data.js');
-var fs = require('fs');
 
-var Neuron = synaptic.Neuron,
-  Layer = synaptic.Layer,
-  Network = synaptic.Network,
-  Trainer = synaptic.Trainer,
-  Architect = synaptic.Architect;
+//coming from the db
+var households = require('./db/households-data.js');
+
+var Trainer = synaptic.Trainer, Architect = synaptic.Architect;
 
 module.exports = {
   
