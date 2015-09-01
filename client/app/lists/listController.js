@@ -1,4 +1,62 @@
-groceries.controller('listController', function($scope, Lists) {
+groceries.controller('listController', function($scope, $state, Lists) {
+
+  $scope.goToState = function(state) {
+    $state.go(state);
+  };
+  // scope variables for type ahead input
+  $scope.selected = false;
+  $scope.pantrySelected = false;
+
+  $scope.userItem = '';
+  $scope.userPantryItem = '';
+
+  // fired when an item from typeahead list is clicked
+  $scope.selectTypeAhead = function(item) {
+    $scope.userItem = item;
+    // $scope.selected = true;
+  };
+
+  $scope.selectPantryTypeAhead = function(item) {
+    $scope.userPantryItem = item;
+  };
+
+  // fired when Add Item button is clicked
+  // need to change logic as far as adding new items to the master list
+  $scope.enterItem = function(){
+    // only do something if userItem is bound to something
+    if ($scope.userItem.length) { 
+      // push to shopping list if not already in there
+      if ($scope.shoppingList.indexOf($scope.userItem) === -1) {
+        $scope.shoppingList.push($scope.userItem);
+      }
+      // reset userItem and selected boolean
+      $scope.userItem = '';
+      $scope.selected = false;
+    }
+  };
+
+  $scope.enterPantryItem = function(){
+    if ($scope.userPantryItem.length) { 
+      if ($scope.pantryList.indexOf($scope.userPantryItem) === -1) {
+        $scope.pantryList.push($scope.userPantryItem);
+      }
+      $scope.userPantryItem = '';
+      $scope.pantrySelected = false;
+    }
+  };
+
+  // check if item from pantryBuilder is in shoppingList or pantryList
+  $scope.inList = function(index) { // index refers to pantryBuilder
+    var item = $scope.pantryBuilder[index];
+    return $scope.shoppingList.indexOf(item) !== -1;
+  };
+
+  $scope.inPantry = function(index) {
+    var item = $scope.pantryBuilder[index];
+    return $scope.pantryList.indexOf(item) !== -1;
+  };
+
+/* -------------------------------------------------------------------------- */
 
   $scope.winter = ['Apples','Bananas','Beets','Brussels Sprouts','Cabbage'];
   $scope.spring = ['Apples','Apricots','Asparagus','Bananas','Broccoli'];
@@ -43,12 +101,14 @@ groceries.controller('listController', function($scope, Lists) {
     Lists.removeFromList($scope.pantryBuilder, index);
   };
   
-  $scope.needFromPantryBuilder = function(index) { // move from pantryBuilder to shoppingList
-    Lists.moveToList($scope.pantryBuilder, $scope.shoppingList, index);
+  $scope.needFromPantryBuilder = function(item) { // add from pantryBuilder to shoppingList
+    // Lists.moveToList($scope.pantryBuilder, $scope.shoppingList, index);
+    Lists.addToList(item, $scope.shoppingList);
   };
 
-  $scope.haveFromPantryBuilder = function(index) { // move from pantryBuilder to pantryList
-    Lists.moveToList($scope.pantryBuilder, $scope.pantryList, index);
+  $scope.haveFromPantryBuilder = function(item) { // add from pantryBuilder to pantryList
+    // Lists.moveToList($scope.pantryBuilder, $scope.pantryList, index);
+    Lists.addToList(item, $scope.pantryList);
   };
     
   $scope.addToPantryList = function(item) { // manually add item to pantryList
@@ -133,7 +193,9 @@ groceries.factory('Lists', function() {
     // adds a new item to any number of lists that are optional arguments
     addToList: function(item) {
       for (var i = 1; i < arguments.length; i++) {
-        arguments[i].push(item);
+        if (arguments[i].indexOf(item) === -1) {
+          arguments[i].push(item);
+        }
       }
     }
 

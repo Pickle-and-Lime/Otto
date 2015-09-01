@@ -40,8 +40,19 @@ groceries.config(function($stateProvider) {
     .state('household', {
       url: "/household",
       views: {
-        "mainArea": { templateUrl: "household/household.html" },
+        "mainArea": { templateUrl: "household/household.html",
+                      controller: "householdController"
+                    },
         "title": { template: "My Household" }
+      }
+    })
+    .state('createHousehold', {
+      url: "/createHousehold",
+      views: {
+        "mainArea": {templateUrl: "household/createHousehold.html",
+                      controller: "householdController"
+                    },
+        "title": { template: "Create Household"}
       }
     })
     .state('account', {
