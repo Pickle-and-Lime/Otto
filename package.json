@@ -4,7 +4,7 @@
   "description": "Rosie: The shopping list that builds itself.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1", 
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "express": "^4.13.3",
     "gulp": "^3.9.0",
     "q": "^1.4.1",
-    "synaptic": "^1.0.1"
+    "synaptic": "^1.0.2"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
