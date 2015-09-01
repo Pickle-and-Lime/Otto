@@ -16,7 +16,7 @@ router.get('/', function(req, res) {
  *  Add email to household?
  */
 router.post('/', function(req, res) {
-  res.sendStatus(200);
+  res.sendStatus(201);
 });
 
 /**

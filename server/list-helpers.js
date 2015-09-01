@@ -126,8 +126,10 @@ module.exports = listHelpers = {
     //calculate how long since last bought
     var timeElapsed = listHelpers.timeSincePurchase(itemProps.date);
 
-    //update network with new data
-    appPantry[item].update(item, timeElapsed, 0.1, household);
+    //update network with new data if it is tracked
+    if (itemProps.tracked){
+      appPantry[item].update(item, timeElapsed, 0.1, household);
+    }
 
     //restock in pantry
     itemProps.fullyStocked = true;

@@ -8,8 +8,8 @@ var router = express.Router();
  *  Purchase list of items from shopping cart
  */
 router.post('/', function(req, res) {
-  var items = res.body.items;
-  var household = res.body.household;
+  var items = req.body.items;
+  var household = req.body.household;
 
   Q.fcall(listHelpers.buy, items, household)
   .then(function() {
