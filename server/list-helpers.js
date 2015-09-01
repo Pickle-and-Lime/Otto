@@ -1,4 +1,7 @@
-var helpers = require('./nn-helpers.js');
+/**
+* Provides methods for creating user pantries and lists
+* @module listHelpers
+*/
 
 //This will be coming from the db instead--> watch out anywhere these are used
 var appPantry = require('./db/app-pantry.js');
@@ -56,19 +59,22 @@ module.exports = listHelpers = {
   updateExpTime : function(item, household, time){
     households[household].pantry[item].expTime = time;
   },
-
+  timeSincePurchase : function(date){
+    var diff = (new Date() - date.getTime())/ (24 * 60 * 60 * 1000);
+    return Math.round(diff);
+  },
   //called when shopper opens app
   autoBuildList : function(household){
-    var dateBought, timeElapsed;
     //set household, list, and pantry
     household = households[household];
     household.list = {}; //or otherwise empty
     var pantry = household.pantry;
-
+    
+    var timeElapsed;
     //loop over everything in the pantry and determine if it should be added to the list
     for (var item in pantry) {
       //calculate how long since last bought
-      timeElapsed = helpers.dateDiff(pantry[item].date);
+      timeElapsed = listHelpers.timeSincePurchase(pantry[item].date);
       //add the item to the list if it's past it's expiration
       if (timeElapsed > item.aveExp){
         household.list[item] = item;
@@ -95,7 +101,7 @@ module.exports = listHelpers = {
     //if the item is already in their pantry, update Rosie's data for it
     if (itemProps){
       //calculate how long since last bought
-      var timeElapsed = helpers.dateDiff(itemProps.date);
+      var timeElapsed = listHelpers.timeSincePurchase(itemProps.date);
 
       //update the NN with the new data
       appPantry[item].update(item, timeElapsed, 0.9, household);
@@ -118,7 +124,7 @@ module.exports = listHelpers = {
     //remove the item from the household's shopping list
     delete households[household].list[item];
     //calculate how long since last bought
-    var timeElapsed = helpers.dateDiff(itemProps.date);
+    var timeElapsed = listHelpers.timeSincePurchase(itemProps.date);
 
     //update network with new data
     appPantry[item].update(item, timeElapsed, 0.1, household);
