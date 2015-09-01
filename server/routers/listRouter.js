@@ -1,34 +1,56 @@
 var express = require('express');
+var Q = require('q');
+var listHelpers = require('../list-helpers');
 var router = express.Router();
 
 /**
  *  GET /list
  *  Returns the list generated for the requesting household
- *  This will call autoBuildList or grab the already generated list
- *  from the DB
  */
 router.get('/', function(req, res) {
-  res.sendStatus(200);
+  var household = req.body.household;
+
+  Q.fcall(listHelpers.autoBuildList, household)
+  .then(function(list) {
+    res.send(list);
+  })
+  .catch(function(err) {
+    res.status(404).send('Cannot retrieve shopping list');
+  })
 });
 
 /**
  *  POST /list
  *  Manually add item to list
- *  If NN for item exists, call manAdd?
- *  If not, call newItem?
  */
 router.post('/', function(req, res) {
-  res.sendStatus(200);
+  var item = req.body.item;
+  var household = req.body.household;
+
+  Q.fcall(listHelpers.addToList, item, household)
+  .then(function() {
+    res.sendStatus(201);
+  })
+  .catch(function() {
+    res.status(404).send('Cannot add item to shopping list');
+  })
 });
 
 /**
  *  DELETE /list
  *  Manually remove item from list
- *  This will call manRemove if item was added by Rosie
- *  If not, it will simply remove it from the list (not affecting NN)
  */
 router.delete('/', function(req, res) {
-  res.sendStatus(200);
+  var item = req.body.item;
+  var household = req.body.household;
+
+  Q.fcall(listHelpers.removeFromList, item, household)
+  .then(function() {
+    res.sendStatus(200);
+  })
+  .catch(function() {
+    res.status(404).send('Cannot remove item from shopping list');
+  })
 });
 
 module.exports = router;
