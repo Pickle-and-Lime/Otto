@@ -16,7 +16,13 @@
     "url": "https://github.com/Pickle-and-Lime/Rosie/issues"
   },
   "homepage": "https://github.com/Pickle-and-Lime/Rosie",
-  "dependencies": {},
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "express": "^4.13.3",
+    "gulp": "^3.9.0",
+    "q": "^1.4.1",
+    "synaptic": "^1.0.1"
+  },
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-install": "^0.5.0"
