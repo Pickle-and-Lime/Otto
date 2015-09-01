@@ -75,7 +75,7 @@ groceries.controller('householdController', function($scope, $http) {
   var sendHousehold = function(){
     $http.post('/household', $scope.inputs)
       .then(function(res){
-        console.log('success ', res);
+        
       }, function(err){
         console.log('ERROR in householdController sendHousehold()', err);
         $scope.submitted = false;
