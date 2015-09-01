@@ -6,7 +6,6 @@ var householdRouter = require('./routers/householdRouter');
 var buyRouter = require('./routers/buyRouter');
 
 var app = express();
-var port = process.env.PORT || 1337;
 
 app.use(bodyParser.json());
 
@@ -30,6 +29,4 @@ app.use('/pantry', pantryRouter);
 app.use('/household', householdRouter);
 app.use('/buy', buyRouter);
 
-app.listen(port, function () {
-  console.log('Listening to port %d', port);
-});
+module.exports = app;
