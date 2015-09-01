@@ -4,13 +4,13 @@ groceries.controller('householdController', function($scope) {
 
   //holds current inputs without saving to the input object
   $scope.currentEmail = "";
-  $scope.currentHouseholdName = "";
-  $scope.currentHouseholdSize = null;
 
-  //dynamic class variable for create household button, set to "" to enable button
+  //dynamic class variables for create household button, set to "" to enable button
   $scope.createButtonActive = "disabled";
   $scope.addEmailActive = "disabled";
-  $scope.editHover = "hidden";
+
+  //used to toggle the create button/loading icon when form submitted, also toggles forms enabled/disabled
+  $scope.submitted = false;
 
   //inserts email into array when user submits
   $scope.submitEmail = function(){
@@ -50,19 +50,26 @@ groceries.controller('householdController', function($scope) {
 
   //inserts the clicked email into the edit form, deletes it from the input object
   $scope.editEmail = function(email, index){
-    $scope.currentEmail = email;
-    $scope.inputs.emails.splice(index, 1);
+    if (!$scope.submitted){
+      $scope.currentEmail = email;
+      $scope.inputs.emails.splice(index, 1);
 
-    //forces focus back to email input
-    angular.element('#emailx').trigger('focus');
-    $scope.checkInputs();
+      //forces focus back to email input
+      angular.element('#emailx').trigger('focus');
+      $scope.checkInputs();
 
-    //forces add button active, should be valid email, will update on text change anyways.
-    $scope.addEmailActive = "";
+      //forces add button active, should be valid email, will update on text change anyways.
+      $scope.addEmailActive = "";
+    }
   };
 
+  //submits the household data to server, then redirects to household page
   $scope.createHousehold = function(){
-    console.log('Created!!')
+    if ($scope.createButtonActive !== "disabled"){
+      $scope.submitted = true;
+      //http request will go here!!!!!
+      //then reidrect to main household page
+    }
   };
 });
 
