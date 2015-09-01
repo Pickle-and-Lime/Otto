@@ -1,8 +1,24 @@
 <ul class="collapsible" data-collapsible="accordion">
   <li>
-    <div class="collapsible-header"><i class="material-icons">shopping_cart</i>Shopping List<span class="badge">{{ shoppingList.length }}</span></div>
-    <div class="collapsible-body">
-      <ul class="collection">
+    <div class="collapsible-header"><i class="material-icons">shopping_cart</i>Shopping List<span class="badge" ng-bind="shoppingList.length"></span></div>
+    <div class="collapsible-body container">
+      
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">shopping_basket</i>
+              <input id="groceryItem" type="text" ng-model="userItem">
+              <label for="groceryItem">Enter item...</label>
+            </div>
+            <ul class="collection container" ng-hide="!userItem.length || selected">
+              <li class="collection-item" ng-repeat="item in masterList | filter:userItem track by $index " ng-bind="item" ng-click="selectTypeAhead(item)"></li>
+            </ul>
+            <button class="btn waves-effect waves-light green right" type="submit" name="action" ng-click="enterItem()" onclick="Materialize.toast('Added',500)">Add</button>
+        </form>
+      </div>
+
+      <ul class="collection"> 
         <li class="collection-item" ng-repeat="item in shoppingList track by $index">{{ item }}
           <span class="right">
             <i class="material-icons" onclick="Materialize.toast('Item deleted',500)" ng-click="removeListItem($index)">not_interested</i>
@@ -13,7 +29,7 @@
     </div>
   </li>
   <li>
-    <div class="collapsible-header"><i class="material-icons">view_list</i>Suggestions<span class="badge">{{ suggestions.length }}</span></div>
+    <div class="collapsible-header"><i class="material-icons">view_list</i>Suggestions<span class="badge" ng-bind="suggestions.length"></span></div>
     <div class="collapsible-body container">
       <ul class="collection">
         <li class="collection-item" ng-repeat="item in suggestions track by $index">{{ item }}
