@@ -9,6 +9,7 @@ var removeFromList = listHelpers.removeFromList;
 var check = listHelpers.check;
 var buy = listHelpers.buy;
 var removeFromPantry = listHelpers.removeFromPantry;
+var updateExpTime = listHelpers.updateExpTime;
 /////////////
 // EXAMPLE //
 /////////////
@@ -45,6 +46,16 @@ addToList('carrots', 'household1');
 console.log('Add carrots');
 console.log('List', households.household1.list);
 console.log('Pantry', households.household1.pantry);
+
+//manually add cheese to the list; this should now be in pantry, but is untracked
+addToList('cheese', 'household1');
+console.log('Add cheese');
+console.log('List', households.household1.list);
+console.log('Pantry', households.household1.pantry);
+
+//update the expiration time for the cheese
+updateExpTime('cheese', 'household1', 20);
+console.log('cheese in pantry', households.household1.pantry.cheese);
 
 //turns out you don't actually want milk
 removeFromList('milk', 'household1');

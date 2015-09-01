@@ -2,9 +2,9 @@
 
 //Mock households
 var households = {
-  users : ['Tony Soprano'],
   household1 :{
-    pantry : {},
+    users : ['Tony Soprano'],
+    pantry: {},
     list : {}
   },
 

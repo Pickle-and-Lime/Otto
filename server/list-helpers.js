@@ -11,19 +11,35 @@ module.exports = listHelpers = {
     //stores today's date if no date is passed in
     var date = month ? new Date(2015, month, day) : new Date();
     
-    //train item for that household with their own data if it exists, or with the general data
-    var houseTraining = households[household].pantry[item] ? 
-      households[household].pantry[item].trainingSet : JSON.parse(JSON.stringify(appPantry[item].initialTrainingSet));
-    
-    var expTime = households[household].pantry[item] ?
-      households[household].pantry[item].expTime : appPantry[item].aveExp;
-    //add item to the households pantry; will be to database
-    households[household].pantry[item] = {
-      network: appPantry[item].train(houseTraining), //might be able to convert this to a string with standalone
-      trainingSet : houseTraining,
-      date: date,
-      expTime : expTime
-    }; 
+    //check if the item is in the general pantry
+    if (appPantry[item]){
+      //train item for that household with their own data if it exists, or with the general data
+      var houseTraining = households[household].pantry[item] ? 
+        households[household].pantry[item].trainingSet : JSON.parse(JSON.stringify(appPantry[item].initialTrainingSet));
+      
+      var expTime = households[household].pantry[item] ?
+        households[household].pantry[item].expTime : appPantry[item].aveExp;
+
+      //add item to the households pantry; will be to database
+      households[household].pantry[item] = {
+        network: appPantry[item].train(houseTraining), //might be able to convert this to a string with standalone
+        trainingSet : houseTraining,
+        date: date,
+        expTime : expTime, 
+        fullyStocked : true, 
+        tracked : true
+      }; 
+    } else {
+      //add it as an untracked item if it doesn't exist in the general pantry
+      households[household].pantry[item] = {
+        network: null, //might be able to convert this to a string with standalone
+        trainingSet : null,
+        date: date,
+        expTime : undefined, 
+        fullyStocked : true, 
+        tracked : false
+      }; 
+    }
     return households[household].pantry;
   },
 
@@ -34,6 +50,11 @@ module.exports = listHelpers = {
   //completely deleting from the db 
   removeFromPantry : function(item, household){
     delete households[household].pantry[item];
+  },
+
+  //update expTime if desired
+  updateExpTime : function(item, household, time){
+    households[household].pantry[item].expTime = time;
   },
 
   //called when shopper opens app
@@ -48,10 +69,19 @@ module.exports = listHelpers = {
     for (var item in pantry) {
       //calculate how long since last bought
       timeElapsed = helpers.dateDiff(pantry[item].date);
-      //add the item to the list if nn calculates a >50% prob it's out
-      var prob = pantry[item].network([timeElapsed/365]);
-      if (prob >0.5 || timeElapsed > item.aveExp){
-        household.list[item] = 'unchecked';
+      //add the item to the list if it's past it's expiration
+      if (timeElapsed > item.aveExp){
+        household.list[item] = item;
+        pantry[item].fullyStocked = false;
+      }
+
+      //if it is a tracked item and Rosie thinks it's out, add it
+      else if (appPantry[item]){
+        var prob = pantry[item].network([timeElapsed/365]);
+        if (prob >0.5){
+          household.list[item] = item;
+          pantry[item].fullyStocked = false;
+        }
       }
 
     }
@@ -76,20 +106,25 @@ module.exports = listHelpers = {
     }
 
     //add the item to the shopping list
-    households[household].list[item] = 'unchecked'; //item;
+    households[household].list[item] = item;
+    households[household].pantry[item].fullyStocked = false;
 
   },
 
   //called when manually removing items added by Rosie (NOT bought)
   removeFromList : function(item, household){
+    var itemProps = households[household].pantry[item];
+    
     //remove the item from the household's shopping list
     delete households[household].list[item];
-    var itemProps = households[household].pantry[item];
     //calculate how long since last bought
     var timeElapsed = helpers.dateDiff(itemProps.date);
 
     //update network with new data
     appPantry[item].update(item, timeElapsed, 0.1, household);
+
+    //restock in pantry
+    itemProps.fullyStocked = true;
   },
 
   // //called while shopping to mark/unmark items if the frontend doesn't
@@ -106,7 +141,7 @@ module.exports = listHelpers = {
     items.forEach(function(item){
       //update the date to today
       households[household].pantry[item].date = new Date();
-              
+      households[household].pantry[item].fullyStocked = true;     
       //delete the item from the shopping list
       delete households[household].list[item];
     });
