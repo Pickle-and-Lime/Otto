@@ -1,4 +1,5 @@
-groceries.controller('householdController', function($scope) {
+groceries.controller('householdController', function($scope, $http) {
+
   //holds user inputs
   $scope.inputs = {householdName: "", householdSize: null, emails: []};
 
@@ -67,10 +68,21 @@ groceries.controller('householdController', function($scope) {
   $scope.createHousehold = function(){
     if ($scope.createButtonActive !== "disabled"){
       $scope.submitted = true;
-      //http request will go here!!!!!
-      //then reidrect to main household page
+      sendHousehold();
     }
   };
+
+  var sendHousehold = function(){
+    $http.post('/household', $scope.inputs)
+      .then(function(res){
+        console.log('success ', res);
+      }, function(err){
+        console.log('ERROR in householdController sendHousehold()', err);
+        $scope.submitted = false;
+        Materialize.toast('Ooops, check your connection and try again.', 10000);
+    });
+  };
+
 });
 
 
