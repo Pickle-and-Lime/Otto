@@ -1,1 +1,12 @@
-<h1>Household</h1>
+<h1 class="center-align">Household</h1>
+
+<div class="section">
+  <!-- Displays if a household does not exist -->
+  <div ng-if="!household" class="center-align">
+    <a ui-sref="createHousehold" class="waves-effect green btn-large">Create</a>
+  </div>
+
+  <!-- Displays if a household does exist -->
+  <div ng-if="household">
+  </div>
+</div>
