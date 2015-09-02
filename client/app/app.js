@@ -5,7 +5,7 @@ groceries.config(function($stateProvider) {
   $stateProvider
 
     .state('login', {
-      url: "/login",
+      url: "/",
       views: {
         "content1": { templateUrl: "user/login.html",
                       controller: "userController" 
@@ -32,6 +32,7 @@ groceries.config(function($stateProvider) {
     //   //        },
     //   template: '<ui-view/>'
     // })
+    
     .state('landing', {
       url: "/landing",
       views: {
