@@ -5,21 +5,24 @@
 
 //This will be coming from the db instead--> watch out anywhere these are used
 var appPantry = require('./db/app-pantry.js');
-var households = require('./db/households-data.js');
+// var households = require('./db/households-data.js');
 var mongoose = require('mongoose');
 var User = require('./db/userModel.js');
 var Household = require('./db/householdModel.js');
+var Q = require('q');
 
 module.exports = listHelpers = {
   //called when household adds to pantry from gen list or by checking off
   addToPantry : function(item, householdId, month, day){
     Household.findOne({ _id: householdId }, 'pantry', function(err, household){
       if(err){
-        console.error(err);
+        console.error('Error',err);
+      }
+      if (household.pantry === undefined){
+        household.pantry = {};
       }
       //stores today's date if no date is passed in
       var date = month ? new Date(2015, month, day) : new Date();
-
       //check if the item is in the general pantry
       //This and other calls for appPantry will need to be refactored to use the db
       if (appPantry[item]){
@@ -30,19 +33,22 @@ module.exports = listHelpers = {
         var expTime = household.pantry[item] ?
           household.pantry[item].expTime : appPantry[item].aveExp;
 
+          household.pantry[item] = {
+            network: appPantry[item].train(houseTraining).toString(), //might be able to convert this to a string with standalone
+            trainingSet : houseTraining,
+            date: date,
+            expTime : expTime, 
+            fullyStocked : true, 
+            tracked : true
+          };
+        // var network = appPantry[item].train(houseTraining);
         //add item to the households pantry; will be to database
-        household.pantry[item] = {
-          network: appPantry[item].train(houseTraining), //might be able to convert this to a string with standalone
-          trainingSet : houseTraining,
-          date: date,
-          expTime : expTime, 
-          fullyStocked : true, 
-          tracked : true
-        };
         //Mark pantry modified because it is a mixed datatype in db
         household.markModified('pantry');
         //Save changes
         household.save(); 
+          
+        // });
       } else {
         //add it as an untracked item if it doesn't exist in the general pantry
         household.pantry[item] = {
@@ -104,6 +110,9 @@ module.exports = listHelpers = {
   autoBuildList : function(householdId){
     Household.findOne({ _id: householdId }, 'pantry', function(err, household){
       var timeElapsed;
+      if (household.list === undefined){
+        household.list = {};
+      }
       //set household, list, and pantry
       //or otherwise empty
       var pantry = household.pantry;
@@ -113,13 +122,15 @@ module.exports = listHelpers = {
         timeElapsed = listHelpers.timeSincePurchase(pantry[item].date);
         //add the item to the list if it's past it's expiration
         if (timeElapsed > item.expTime){
-          household.list.push(item);
+          household.list[item] = item;
           pantry[item].fullyStocked = false;
         }
 
         //if it is a tracked item and Rosie thinks it's out, add it
         else if (appPantry[item]){
-          var prob = household.pantry[item].network([timeElapsed/365]);
+          eval("var network = "+household.pantry[item].network);
+          var prob = network([timeElapsed/365]);
+          console.log('Item', item,'Prob', prob);
           if (prob >0.5){
             household.list[item] = item;
             household.pantry[item].fullyStocked = false;
@@ -149,27 +160,45 @@ module.exports = listHelpers = {
       }
       //otherwise, add it to their pantry
       else {
-        listHelpers.addToPantry(item, household);
+        listHelpers.addToPantry(item, householdId);
+
+        //Mark pantry modified because it is a mixed datatype in db
+        household.markModified('pantry');
+        //Save changes
+        household.save();
       }
-
-      //add the item to the shopping list
-      households[household].list[item] = item;
-      households[household].pantry[item].fullyStocked = false;
-
-      //Mark pantry modified because it is a mixed datatype in db
-      household.markModified('pantry');
-      //Save changes
-      household.save();
     });
+    setTimeout(function(){
+
+    Household.findOne({_id: householdId}, 'pantry list', function(err, household){
+        console.log(household.list);
+        //add the item to the shopping list
+        household.list[item] = item;
+        //Mark pantry modified because it is a mixed datatype in db
+        household.markModified('list');
+        //Save changes
+        household.save();
+        setTimeout(function(){console.log(household.list);},1000);
+        household.pantry[item].fullyStocked = false;
+
+        //Mark pantry modified because it is a mixed datatype in db
+        household.markModified('pantry');
+        //Save changes
+        household.save();
+
+    });
+    },1500);
   },
 
   //called when manually removing items added by Rosie (NOT bought)
   removeFromList : function(item, householdId){
-    Household.findOne({ _id: householdId }, 'pantry', function(err, household){
+    Household.findOne({ _id: householdId },'pantry list', function(err, household){
       var itemProps = household.pantry[item];
       
       //remove the item from the household's shopping list
       delete household.list[item];
+      household.markModified('list');
+      household.save();
       //calculate how long since last bought
       var timeElapsed = listHelpers.timeSincePurchase(itemProps.date);
 
@@ -196,18 +225,22 @@ module.exports = listHelpers = {
 
   //called after purchase
   buy : function(items, householdId){
-    Household.findOne({ _id: householdId }, 'pantry', function(err, household){
+    Household.findOne({ _id: householdId }, 'pantry list', function(err, household){
       items.forEach(function(item){
         //update the date to today
         household.pantry[item].date = new Date();
         household.pantry[item].fullyStocked = true;     
-        //delete the item from the shopping list
-        delete household.list[item];
-
         //Mark pantry modified because it is a mixed datatype in db
         household.markModified('pantry');
         //Save changes
         household.save();
+        //delete the item from the shopping list
+        delete household.list[item];
+        //Mark pantry modified because it is a mixed datatype in db
+        household.markModified('list');
+        //Save changes
+        household.save();
+
       });
     }); 
   }
