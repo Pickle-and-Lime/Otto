@@ -43,6 +43,7 @@ var PantryItem = function(item){
 * see [Synaptic documentation](https://github.com/cazala/synaptic/wiki/Networks#standalone)
 */
 PantryItem.prototype.train = function(trainingSet){
+  //eval here?
   this.trainer.train(trainingSet);
   var trainedNetwork = this.network.standalone();
   return trainedNetwork; //stringify??
@@ -66,6 +67,7 @@ PantryItem.prototype.train = function(trainingSet){
 PantryItem.prototype.update = function(item, time, result, household){
   item = household.pantry[item];
   item.trainingSet.push({input : [time/365], output :[result]});
+  //eval???
   item.network = this.train(item.trainingSet);
 };
 */

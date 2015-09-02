@@ -119,7 +119,7 @@ module.exports = listHelpers = {
         //calculate how long since last bought
         timeElapsed = listHelpers.timeSincePurchase(pantry[item].date);
         //add the item to the list if it's past it's expiration
-        if (timeElapsed > item.expTime){
+        if (timeElapsed > pantry[item].expTime){
           household.list[item] = item;
           pantry[item].fullyStocked = false;
         }
@@ -129,7 +129,7 @@ module.exports = listHelpers = {
           //Execute stringified function
           eval("var network = "+household.pantry[item].network);
           var prob = network([timeElapsed/365]);
-          console.log('Item', item,'Prob', prob);
+          console.log(item, prob);
           if (prob >0.5){
             household.list[item] = item;
             household.pantry[item].fullyStocked = false;
@@ -163,10 +163,13 @@ module.exports = listHelpers = {
 
         // Rebuild the standalone NN with the updated training data
         var pantryItem = new PantryItem(item);
+        eval("var network = "+itemProps.network);
+        console.log('asdfijaeroij',network([3/365]));
         var trained = pantryItem.train(itemProps.trainingSet);
-
         // Add new standalone fn to item pantry
         itemProps.network = trained.toString();
+        eval("var network = "+itemProps.network);
+        console.log('asodifjaoiwen',network([3/365]));
       }
       //otherwise, add it to their pantry
       else {
@@ -187,7 +190,6 @@ module.exports = listHelpers = {
         //add the item to the shopping list
         household.list[item] = item;
         //Mark list modified because it is a mixed datatype in db
-        setTimeout(function(){console.log(household.list);},1000);
         household.pantry[item].fullyStocked = false;
 
         //Mark pantry and list modified because they are of mixed datatype in db
