@@ -32,4 +32,7 @@ app.use('/pantry', pantryRouter);
 app.use('/household', householdRouter);
 app.use('/buy', buyRouter);
 
-module.exports = app;
+module.exports = {
+  app: app,
+  db: db
+};

@@ -8,7 +8,6 @@
 
 var synaptic = require('synaptic');
 //coming from the db
-var households = require('./db/households-data.js');
 var Trainer = synaptic.Trainer, Architect = synaptic.Architect;
 
 /**
@@ -21,11 +20,16 @@ var Trainer = synaptic.Trainer, Architect = synaptic.Architect;
 * the default trainingSet and average expiration time
 * for the item
 */
+
+
+
+
 var PantryItem = function(item, data){
   //create the network; input = time since last purchase; output = probability need more
-  this.network = new Architect.LSTM(1, 1, 1);
+  this.network = new Architect.LSTM(1, 1, 1).toString();
   this.trainer = new Trainer(this.network);
-
+  this.trainer.train = this.trainer.train.toString();
+  this.trainer = JSON.stringify(this.trainer);
   //set the generic expiration date
   this.aveExp = data.aveExp;
   //set the trainingSet property to access/update in the future

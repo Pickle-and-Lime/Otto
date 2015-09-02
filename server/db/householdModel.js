@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var householdSchema = new Schema({
   pantry: { type: Schema.Types.Mixed},
-  list: {type: Object},
+  list: {type: Schema.Types.Mixed},
   users: [{type: Schema.Types.ObjectId, default: []}]
 }, { minimize: false } );
 
