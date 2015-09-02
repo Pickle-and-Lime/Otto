@@ -49,7 +49,8 @@ var PantryItem = function(item, data){
 */
 PantryItem.prototype.train = function(trainingSet){
   this.trainer.train(trainingSet);
-  return this.network.standalone(); //stringify???
+  var trainedNetwork = this.network.standalone();
+  return trainedNetwork; //stringify??
 };
 
 /**
@@ -67,9 +68,10 @@ PantryItem.prototype.train = function(trainingSet){
 * the name/id with which to access the household's pantry in the database
 */
 PantryItem.prototype.update = function(item, time, result, household){
-  item = households[household].pantry[item];
+  item = household.pantry[item];
   item.trainingSet.push({input : [time/365], output :[result]});
   item.network = this.train(item.trainingSet);
 };
 
 module.exports = PantryItem;
+
