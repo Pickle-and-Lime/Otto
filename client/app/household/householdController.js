@@ -78,7 +78,7 @@ groceries.controller('householdController', function($scope, $http) {
         
       }, function(err){
         console.log('ERROR in householdController sendHousehold()', err);
-        $scope.submitted = false;
+        //$scope.submitted = false;
         Materialize.toast('Ooops, check your connection and try again.', 10000);
     });
   };
