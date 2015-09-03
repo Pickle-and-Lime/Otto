@@ -1,6 +1,24 @@
 <h1 class="center-align">Household</h1>
 
-<div class="section">
+<div ng-if="!callFinished" class="section">
+  <div class="center-align">
+    <div class="preloader-wrapper small active">
+        <div class="spinner-layer spinner-green-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div>
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div ng-if="callFinished" class="section">
   <!-- Displays if a household does not exist -->
   <div ng-if="!household" class="center-align">
     <a ui-sref="createHousehold" class="waves-effect green btn-large">Create</a>
