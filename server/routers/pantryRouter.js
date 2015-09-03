@@ -8,8 +8,8 @@ var router = express.Router();
  *  Returns the pantry for the household
  *  Includes two lists: tracked and untracked
  */
-router.get('/', function(req, res) {
-  var household = req.body.household;
+router.get('/:id', function(req, res) {
+  var household = req.params.id;
   Q.fcall(listHelpers.getPantry, household)
   .then(function(pantry) {
     res.send(pantry);

@@ -12,6 +12,7 @@ var removeFromList = listHelpers.removeFromList;
 var buy = listHelpers.buy;
 var removeFromPantry = listHelpers.removeFromPantry;
 var updateExpTime = listHelpers.updateExpTime;
+var householdHelpers = require('./household-helpers.js');
 
 /////////////
 // EXAMPLE //
@@ -22,7 +23,6 @@ db.on('error', function(err) {
 });
 
 var household1 = new Household({});
-
 
 household1.save(function(){
   addToPantry('milk', household1._id);
@@ -138,7 +138,10 @@ setTimeout(function(){
 },5500);
 
 setTimeout(function(){
-  db.close();
+  Household.remove({ _id : household1._id }, function(err) {
+    if (err) console.error(err);
+    db.close();
+  })
 },9000);
 // //if you autoBuild again, nothing in there!
 // autoBuildList('household1');
