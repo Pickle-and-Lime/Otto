@@ -1,5 +1,3 @@
-var PantryItem = require('../nn-helpers.js');
-
 appPantryData = {
   milk : require('../item-data/milkData.js'),
   rice : require('../item-data/riceData.js'),
@@ -7,12 +5,4 @@ appPantryData = {
   carrots : require('../item-data/carrots.js')
 };
 
-appPantry = {};
-
-//How to add to the pantry db instead?
-for (var item in appPantryData){
-  appPantry[item] = new PantryItem(item, appPantryData[item]);
-}
-
-//for now to access the pantry items
-module.exports = appPantry;
+module.exports = appPantryData;

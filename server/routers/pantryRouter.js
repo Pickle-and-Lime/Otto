@@ -8,9 +8,15 @@ var router = express.Router();
  *  Returns the pantry for the household
  *  Includes two lists: tracked and untracked
  */
-router.get('/', function(req, res) {
-  // TODO: DB call to retrieve household pantry items
-  res.sendStatus(200);
+router.get('/:id', function(req, res) {
+  var household = req.params.id;
+  Q.fcall(listHelpers.getPantry, household)
+  .then(function(pantry) {
+    res.send(pantry);
+  })
+  .catch(function() {
+    res.status(404).send('Cannot retrieve household pantry');
+  })
 });
 
 /**
@@ -18,8 +24,13 @@ router.get('/', function(req, res) {
  *  Returns the general pantry (all items)
  */
 router.get('/general', function(req, res) {
-  // TODO: DB call to retrieve all pantry items
-  res.sendStatus(200);
+  Q.fcall(listHelpers.getAppPantry)
+  .then(function(appPantry) {
+    res.send(appPantry);
+  })
+  .catch(function() {
+    res.status(404).send('Cannot retrieve general pantry');
+  })
 });
 
 
