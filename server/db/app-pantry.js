@@ -1,4 +1,6 @@
 var PantryItem = require('../nn-helpers.js');
+var appPantry = require('./appPantryModel.js');
+var db = require('../db.js');
 
 appPantryData = {
   milk : require('../item-data/milkData.js'),
@@ -7,12 +9,18 @@ appPantryData = {
   carrots : require('../item-data/carrots.js')
 };
 
-appPantry = {};
+var pantryMilk = new PantryItem('milk', appPantryData['milk']);
 
 //How to add to the pantry db instead?
 for (var item in appPantryData){
-  appPantry[item] = new PantryItem(item, appPantryData[item]);
+  var testPantry =  new appPantry({
+    name: item,
+    data: new PantryItem(item, appPantryData[item])
+  });
+  testPantry.save();
 }
 
+//db.close();
+
 //for now to access the pantry items
-module.exports = appPantry;
+//module.exports = testPantry;
