@@ -11,7 +11,8 @@ var router = express.Router();
 router.get('/', function(req, res) {
   Q.fcall(householdHelpers.getHousehold)
   .then(function(household) {
-    res.send({householdId: household[0]._id});
+    res.send({householdId: household[0]._id, name: 'King House', members: ['aking123@yahoo.com', 'amk_awesome@hotmail.com', 'paws@thedog.com']});
+    //res.send({householdId: household[0]._id});
   })
   .catch(function() {
     res.status(404);

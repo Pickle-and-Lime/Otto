@@ -1,11 +1,17 @@
 groceries.controller('householdController', function($scope, $http, $location) {
+  //initialize household as null
+  $scope.household = null;
+  
   //function to request household from server
-
-  $scope.callFinished = false;
   var getHousehold = function(){
+    $scope.callFinished = false;
     $http.get('/household')
       .then(function(res){
-        console.log(res);
+        $scope.household = res.data;
+        if ($scope.household.householdId){
+          console.log('here');
+          $location.path( "/household" );
+        }
         $scope.callFinished = true;
       }, function(err){
         console.log('ERROR in householdController getHousehold()', err);
@@ -13,9 +19,8 @@ groceries.controller('householdController', function($scope, $http, $location) {
         Materialize.toast('Ooops, check your connection and try again.', 10000);
     });
   };
+  getHousehold();
 
-  //sets a household object equal to the household received from server
-  $scope.household = getHousehold();
   //holds user inputs
   $scope.inputs = {householdName: "", householdSize: null, emails: []};
 
@@ -91,10 +96,10 @@ groceries.controller('householdController', function($scope, $http, $location) {
   var sendHousehold = function(){
     $http.post('/household', $scope.inputs)
       .then(function(res){
-        //$location.path( "/household" );
+        $location.path( "/household" );
       }, function(err){
         console.log('ERROR in householdController sendHousehold()', err);
-        //$scope.submitted = false;
+        $scope.submitted = false;
         Materialize.toast('Ooops, check your connection and try again.', 10000);
     });
   };

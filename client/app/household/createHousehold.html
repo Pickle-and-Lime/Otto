@@ -1,4 +1,29 @@
-<div>
+<!-- Begin Loading Icon (displays while checking whether household exists) -->
+<div ng-if="!callFinished" class="section">
+  <div class="row">
+  </div>
+  <div class="center-align">
+    <div class="preloader-wrapper small active">
+        <div class="spinner-layer spinner-green-only">
+          <div class="circle-clipper left">
+            <div class="circle">
+            </div>
+          </div>
+          <div class="gap-patch">
+            <div class="circle">
+            </div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle">
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!-- Begin Create Household Page (displays if no household attached to user) -->
+<div ng-if="!household.householdId && callFinished">
   <!-- Begin Household Name Input Field -->
   <form>
     <div class="row">
@@ -65,7 +90,7 @@
   <div class="row">
     <ul ng-if="inputs.emails.length >= 1" class="collection with-header">
       <li class="collection-header"><h5>Invites to be sent</h5><span class="badge">click to edit</span></li>
-      <li ng-click="editEmail(email, $index)" class="collection-item dismissable" ng-repeat="email in inputs.emails" data-ng-bind="email"></li>
+      <li ng-click="editEmail(email, $index)" class="collection-item" ng-repeat="email in inputs.emails" data-ng-bind="email"></li>
     </ul>
   </div>
 </div>
