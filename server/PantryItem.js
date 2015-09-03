@@ -24,19 +24,10 @@ var Trainer = synaptic.Trainer, Architect = synaptic.Architect;
 
 
 
-var PantryItem = function(item, data){
+var PantryItem = function(item){
   //create the network; input = time since last purchase; output = probability need more
-  this.network = new Architect.LSTM(1, 1, 1).toString();
+  this.network = new Architect.LSTM(1, 1, 1);
   this.trainer = new Trainer(this.network);
-  this.trainer.train = this.trainer.train.toString();
-  this.trainer = JSON.stringify(this.trainer);
-  //set the generic expiration date
-  this.aveExp = data.aveExp;
-  //set the trainingSet property to access/update in the future
-  this.initialTrainingSet = data.trainingSet;
-
-  //set the name of the network
-  //this.name = name; probably uneccessary now
 };
 
 /**
@@ -71,11 +62,13 @@ PantryItem.prototype.train = function(trainingSet){
 * @param household {String}
 * the name/id with which to access the household's pantry in the database
 */
+/*
 PantryItem.prototype.update = function(item, time, result, household){
   item = household.pantry[item];
   item.trainingSet.push({input : [time/365], output :[result]});
   item.network = this.train(item.trainingSet);
 };
+*/
 
 module.exports = PantryItem;
 

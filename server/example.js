@@ -25,13 +25,13 @@ var household1 = new Household({});
 
 
 household1.save(function(){
-  addToPantry('milk', "55e77e2ab694ee83cf5f3ab2");
+  addToPantry('milk', household1._id);
   setTimeout(function(){addToPantry('carrots', household1._id, 6, 30);}, 200);
   setTimeout(function(){addToPantry('rice', household1._id, 6, 20);}, 400);
   setTimeout(function(){addToPantry('fruit', household1._id, 6, 20);}, 600);
 });
 
-/*//build list for today; note carrots get added because it's past their expiration date
+//build list for today; note carrots get added because it's past their expiration date
 setTimeout(function(){
   autoBuildList(household1._id);
   console.log('Autobuilt List');
@@ -150,4 +150,3 @@ setTimeout(function(){
 // removeFromPantry('fruit','household1');
 // console.log('No more fruit in the pantry');
 // console.log(households.household1.pantry);
-*/
