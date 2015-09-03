@@ -163,7 +163,6 @@ module.exports = listHelpers = {
 
         // Rebuild the standalone NN with the updated training data
         var pantryItem = new PantryItem(item);
-        eval("var network = "+itemProps.network);
         var trained = pantryItem.train(itemProps.trainingSet);
 
         // Add new standalone fn to item pantry
