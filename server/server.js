@@ -20,13 +20,6 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client'));
 }
 
-// Adds household to request
-// REMOVE ONCE DB / HOUSEHOLDS / AUTH IMPLEMENTED
-app.use(function(req, res, next) {
-  req.body.household = 'household1';
-  next();
-});
-
 app.use('/list', listRouter);
 app.use('/pantry', pantryRouter);
 app.use('/household', householdRouter);
