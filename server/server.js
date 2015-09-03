@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('public'));
 } else {
   console.log("Using client!");
-  app.use(express.static('../client'));
+  app.use(express.static('client'));
 }
 
 // Adds household to request
