@@ -163,20 +163,22 @@ module.exports = listHelpers = {
 
         // Rebuild the standalone NN with the updated training data
         var pantryItem = new PantryItem(item);
+        eval("var network = "+itemProps.network);
         var trained = pantryItem.train(itemProps.trainingSet);
 
         // Add new standalone fn to item pantry
         itemProps.network = trained.toString();
+
       }
       //otherwise, add it to their pantry
       else {
         listHelpers.addToPantry(item, householdId);
 
-        //Mark pantry modified because it is a mixed datatype in db
-        household.markModified('pantry');
-        //Save changes
-        household.save();
       }
+      //Mark pantry modified because it is a mixed datatype in db
+      household.markModified('pantry');
+      //Save changes
+      household.save();
     });
     setTimeout(function(){
 
