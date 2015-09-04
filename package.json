@@ -18,15 +18,18 @@
   },
   "homepage": "https://github.com/Pickle-and-Lime/Rosie",
   "dependencies": {
+    "angular-storage": "0.0.13",
+    "auth0": "^0.8.2",
     "body-parser": "^1.13.3",
     "express": "^4.13.3",
+    "express-jwt": "^3.0.1",
     "gulp": "^3.9.0",
+    "mongoose": "^4.1.4",
     "q": "^1.4.1",
     "redtape": "^1.0.0",
     "supertest": "^1.1.0",
     "synaptic": "^1.0.2",
-    "tape": "^4.2.0",
-    "mongoose": "^4.1.4"
+    "tape": "^4.2.0"
   },
   "devDependencies": {
     "gulp": "^3.9.0",

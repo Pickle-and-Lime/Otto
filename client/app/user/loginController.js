@@ -1,5 +1,6 @@
 groceries.controller('loginController', ['$scope', '$http', 'auth', 'store', '$location',
   function ($scope, $http, auth, store, $location) {
+    $scope.auth = auth;
     $scope.login = function () {
       auth.signin({}, function (profile, token) {
         // Success callback

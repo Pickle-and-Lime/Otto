@@ -1,4 +1,4 @@
-groceries.controller('listController', function($scope, $state, Lists) {
+groceries.controller('listController', function($scope, $state, Lists, auth) {
 
   $scope.goToState = function(state) {
     $state.go(state);
