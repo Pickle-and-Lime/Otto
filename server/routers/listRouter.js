@@ -4,15 +4,15 @@ var listHelpers = require('../list-helpers');
 var router = express.Router();
 
 /**
- *  GET /list
+ *  GET /list/:id
  *  Returns the list generated for the requesting household
  */
-router.get('/', function(req, res) {
-  var household = req.body.household;
+router.get('/:id', function(req, res) {
+  var household = req.params.id;
 
   Q.fcall(listHelpers.autoBuildList, household)
-  .then(function(list) {
-    res.send(list);
+  .then(function(household) {
+    res.send(household[0].list);
   })
   .catch(function(err) {
     res.status(404).send('Cannot retrieve shopping list');
