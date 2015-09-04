@@ -15,18 +15,35 @@ groceries.config(function (authProvider) {
 
 //below function is needed to send token? Idk why its not working though.
 
-// groceries.config(function (authProvider, $routeProvider, $httpProvider, jwtInterceptorProvider) {
-//   // ...
+groceries.config(function (authProvider, $httpProvider, jwtInterceptorProvider) {
+  // ...
 
-//   // We're annotating this function so that the `store` is injected correctly when this file is minified
-//   jwtInterceptorProvider.tokenGetter = ['store', function(store) {
-//     // Return the saved token
-//     return store.get('token');
-//   }];
+  // We're annotating this function so that the `store` is injected correctly when this file is minified
+  jwtInterceptorProvider.tokenGetter = ['store', function(store) {
+    // Return the saved token
+    return store.get('token');
+  }];
 
-//   $httpProvider.interceptors.push('jwtInterceptor');
-//   // ...
-// });
+  $httpProvider.interceptors.push('jwtInterceptor');
+  // ...
+});
+
+groceries.run(function ($rootScope, auth, store, jwtHelper, $location) {
+  // This events gets triggered on refresh or URL change
+  $rootScope.$on('$locationChangeStart', function() {
+    var token = store.get('token');
+    if (token) {
+      if (!jwtHelper.isTokenExpired(token)) {
+        if (!auth.isAuthenticated) {
+          auth.authenticate(store.get('profile'), token);
+        }
+      } else {
+        // Either show the login page or use the refresh token to get a new idToken
+        $location.path('/');
+      }
+    }
+  });
+});
 // End Auth0 services
 
 groceries.config(function($stateProvider) {
@@ -134,7 +151,8 @@ groceries.config(function($stateProvider) {
         "menu": { templateUrl: "ui/menu.html",
                       controller: "listController"
                      },
-        "content1": { templateUrl: "user/account.html" },
+        "content1": { templateUrl: "user/account.html", 
+                      controller: "loginController"},
         "title": { template: "My Account" }
       }
     })
