@@ -33,6 +33,6 @@
   },
   "devDependencies": {
     "gulp": "^3.9.0",
-    "gulp-install": "^0.5.0"
+    "gulp-install": "^0.5.0",
   }
 }
