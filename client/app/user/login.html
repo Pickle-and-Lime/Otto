@@ -1,26 +1,35 @@
+<!-- HEADER with 'Rosie' logo -->
 <div class="section green">
   <div class="row container">
     <h2 class="header center-align" style="font-family: 'Pacifico', cursive; -webkit-transform: rotate(-10deg); color:white;">Rosie</h2>
   </div>
 </div>
+
+<!-- Parallax image 1 -->
 <div class="parallax-container" style="height: 250px">
   <div class="parallax"><img src="../assets/login1.jpg"></div>
 </div>
+
+<!-- Sign Up content Area -->
 <div class="section green lighten-5">
   <div class="row container">
     <h5><span style="font-family: 'Pacifico', cursive;">Rosie</span> is the shopping list that <em>builds itself.</em></h5>
     <p>Sign up now and let Rosie start working for you.</p>
     <div class="row valign-wrapper">
       <div class="col s6 offset-s3">
-        <a ui-sref="landing" class="valign center-align green waves-effect waves-light btn-large">Sign Up</a>
+        <!-- Signin button, calls Auth0 login() function -->
+        <a href ng-click="login()" class="valign center-align green waves-effect waves-light btn-large">Sign In</a>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Parallax image 2 -->
 <div class="parallax-container">
   <div class="parallax"><img src="../assets/login2.jpg"></div>
 </div>
 
+<!-- Jquery to enable parallax -->
 <script>
   $(document).ready(function(){
     $('.parallax').parallax();

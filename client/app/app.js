@@ -1,5 +1,33 @@
 // Include app dependency on ngMaterial
-var groceries = angular.module( 'GroceriesApp', ['ui.router'] );
+var groceries = angular.module( 'GroceriesApp', ['ui.router', 'auth0', 'angular-storage', 'angular-jwt'] );
+
+// Auth0 services
+groceries.config(function (authProvider) {
+  authProvider.init({
+    domain: 'ejkinger.auth0.com',
+    clientID: 'Vk8WOzc8NcNXTngDQfYqEvGe00jdK92d'
+  });
+})
+.run(function(auth) {
+  // This hooks al auth events to check everything as soon as the app starts
+  auth.hookEvents();
+});
+
+//below function is needed to send token? Idk why its not working though.
+
+// groceries.config(function (authProvider, $routeProvider, $httpProvider, jwtInterceptorProvider) {
+//   // ...
+
+//   // We're annotating this function so that the `store` is injected correctly when this file is minified
+//   jwtInterceptorProvider.tokenGetter = ['store', function(store) {
+//     // Return the saved token
+//     return store.get('token');
+//   }];
+
+//   $httpProvider.interceptors.push('jwtInterceptor');
+//   // ...
+// });
+// End Auth0 services
 
 groceries.config(function($stateProvider) {
   $stateProvider
@@ -8,7 +36,7 @@ groceries.config(function($stateProvider) {
       url: "/",
       views: {
         "content1": { templateUrl: "user/login.html",
-                      controller: "userController" 
+                      controller: "loginController" 
                     },
         "title": { template: "Rosie" }
       }
@@ -116,7 +144,8 @@ groceries.config(function($stateProvider) {
         "menu": { templateUrl: "ui/menu.html",
                       controller: "listController"
                      },
-        "content1": { templateUrl: "user/logout.html" },
+        "content1": { templateUrl: "user/logout.html",
+                      controller: "loginController"},
         "title": { template: "Rosie" }
       }
     });
