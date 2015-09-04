@@ -4,15 +4,16 @@ var listHelpers = require('../list-helpers');
 var router = express.Router();
 
 /**
- *  GET /pantry
+ *  GET /pantry/household/:id
  *  Returns the pantry for the household
  *  Includes two lists: tracked and untracked
  */
-router.get('/:id', function(req, res) {
+router.get('/household/:id', function(req, res) {
   var household = req.params.id;
+
   Q.fcall(listHelpers.getPantry, household)
-  .then(function(pantry) {
-    res.send(pantry);
+  .then(function(household) {
+    res.send(household[0].pantry);
   })
   .catch(function() {
     res.status(404).send('Cannot retrieve household pantry');
