@@ -10,9 +10,9 @@ var router = express.Router();
 router.get('/:id', function(req, res) {
   var household = req.params.id;
 
-  Q.fcall(listHelpers.autoBuildList, household)
-  .then(function(household) {
-    res.send(household[0].list);
+  listHelpers.autoBuildList(household)
+  .then(function(list) {
+    res.send(list);
   })
   .catch(function(err) {
     res.status(404).send('Cannot retrieve shopping list');
@@ -27,9 +27,9 @@ router.post('/', function(req, res) {
   var item = req.body.item;
   var household = req.body.household;
 
-  Q.fcall(listHelpers.addToList, item, household)
-  .then(function() {
-    res.sendStatus(201);
+  listHelpers.addToList(item, household)
+  .then(function(list) {
+    res.status(201).send(list);
   })
   .catch(function() {
     res.status(404).send('Cannot add item to shopping list');
@@ -44,9 +44,9 @@ router.delete('/', function(req, res) {
   var item = req.body.item;
   var household = req.body.household;
 
-  Q.fcall(listHelpers.removeFromList, item, household)
-  .then(function() {
-    res.sendStatus(200);
+  listHelpers.removeFromList(item, household)
+  .then(function(list) {
+    res.send(list);
   })
   .catch(function() {
     res.status(404).send('Cannot remove item from shopping list');

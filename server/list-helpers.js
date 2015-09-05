@@ -13,7 +13,7 @@ var Q = require('q');
 module.exports = listHelpers = {
   //called when household adds to pantry from gen list or by checking off
   addToPantry : function(item, householdId, month, day, cb){
-    return Household.findOne({ _id: householdId }, 'pantry')
+    return Household.findOne({ _id: householdId }, 'pantry list')
     .then(function(household){
       if(household) {
         if (household.pantry === undefined){
@@ -47,9 +47,14 @@ module.exports = listHelpers = {
           //Mark pantry modified because it is a mixed datatype in db
           household.markModified('pantry');
           //Save changes
-          household.save(function() {
-            if (cb) cb();
-          }); 
+          return household.save()
+          .then(function() {
+            // Allows addToPantry to be chainable
+            return Q.fcall(function() {
+              return household.pantry;
+            });
+          });
+
         } else {
           //add it as an untracked item if it doesn't exist in the general pantry
           household.pantry[item] = {
@@ -63,7 +68,14 @@ module.exports = listHelpers = {
           //Mark pantry modified because it is a mixed datatype in db
           household.markModified('pantry');
           //Save changes
-          household.save();
+          return household.save()
+          .then(function() {
+            // Allows addToPantry to be chainable
+            return Q.fcall(function() {
+              return household.pantry;
+            });
+          });
+
         }
       } else {
         throw new Error('Household not found');
@@ -85,7 +97,13 @@ module.exports = listHelpers = {
         //Mark pantry modified because it is a mixed datatype in db
         household.markModified('pantry');
         //Save changes
-        household.save();
+        return household.save()
+        .then(function() {
+          // Allows removeFromPantry to be chainable
+          return Q.fcall(function() {
+            return household.pantry;
+          });
+        });
       } else {
         throw new Error('Household not found');
       }
@@ -137,7 +155,6 @@ module.exports = listHelpers = {
             //Execute stringified function
             eval("var network = "+household.pantry[item].network);
             var prob = network([timeElapsed/365]);
-            console.log(item, prob);
             if (prob >0.5){
               household.list[item] = item;
               household.pantry[item].fullyStocked = false;
@@ -149,7 +166,12 @@ module.exports = listHelpers = {
         household.markModified('pantry');
         household.markModified('list');
         //Save changes
-        household.save();
+        return household.save()
+        .then(function() {
+          return Q.fcall(function() {
+            return household.list;
+          });
+        });
       } else {
         throw new Error('Household not found');
       }
@@ -170,20 +192,16 @@ module.exports = listHelpers = {
 
         //add the item to the shopping list
         household.list[item] = item;
-
-        household.markModified('list');
-        household.save();
         
         var itemProps = household.pantry[item];
         //if the item is already in their pantry, update Rosie's data for it
         if (itemProps){
           //calculate how long since last bought
           var timeElapsed = listHelpers.timeSincePurchase(itemProps.date);
-          
+
           // Add the updated training data to pantry item
           itemProps.trainingSet.push({input : [timeElapsed/365], output :[0.9]});
-          
-          
+
           // Rebuild the standalone NN with the updated training data
           var pantryItem = new PantryItem(item);
           var trained = pantryItem.train(itemProps.trainingSet);
@@ -191,10 +209,12 @@ module.exports = listHelpers = {
           itemProps.network = trained.toString();
 
           //Mark pantry modified because it is a mixed datatype in db
+          household.markModified('list');
           household.markModified('pantry');
           //Save changes
-          household.save(function() {
-            Household.findOne({_id: householdId}, 'pantry')
+          return household.save()
+          .then(function() {
+            return Household.findOne({_id: householdId}, 'pantry list')
             .then(function(household) {
               if (household) {
                 //Mark list modified because it is a mixed datatype in db
@@ -204,7 +224,12 @@ module.exports = listHelpers = {
                 household.markModified('pantry');
                 
                 //Save changes
-                household.save();
+                return household.save()
+                .then(function() {
+                  return Q.fcall(function() {
+                    return household.list;
+                  });
+                });
               } else {
                 throw new Error('Household not found');
               }
@@ -213,27 +238,27 @@ module.exports = listHelpers = {
         }
         //otherwise, add it to their pantry
         else {
-          listHelpers.addToPantry(item, householdId, function() {
-            // No need to save changes, as we save in addToPantry
-            household.markModified('pantry');
-            household.save(function() {
-              Household.findOne({_id: householdId}, 'pantry')
-              .then(function(household) {
-                if (household) {
-                  //Mark list modified because it is a mixed datatype in db
-                  household.pantry[item].fullyStocked = false;
+          return listHelpers.addToPantry(item, householdId)
+          .then(function(household) {
+            if (household) {
+              //Mark list modified because it is a mixed datatype in db
+              household.pantry[item].fullyStocked = false;
 
-                  //Mark pantry modified because they are of mixed datatype in db
-                  household.markModified('pantry');
-                  
-                  //Save changes
-                  household.save();
-                } else {
-                  throw new Error('Household not found');
-                }
+              //Mark pantry modified because they are of mixed datatype in db
+              household.markModified('pantry');
+              household.markModified('list');
+              
+              //Save changes
+              return household.save()
+              .then(function() {
+                return Q.fcall(function() {
+                  return household.list;
+                });
               });
-            });
-          })
+            } else {
+              throw new Error('Household not found');
+            }
+          });
         }
       } else {
         throw new Error('Household not found');
@@ -277,7 +302,13 @@ module.exports = listHelpers = {
         household.markModified('pantry');
         
         //Save changes
-        household.save();
+        return household.save()
+        .then(function() {
+          return Q.fcall(function() {
+            return household.list;
+          });
+        });
+
       } else {
         throw new Error('Household not found');
       }
@@ -302,7 +333,13 @@ module.exports = listHelpers = {
           household.markModified('list');
           
           //Save changes
-          household.save();
+          return household.save()
+          .then(function() {
+            return Q.fcall(function() {
+              // May need to return something here
+              return;
+            });
+          });
         });
       } else {
         throw new Error('Household not found');
@@ -315,14 +352,17 @@ module.exports = listHelpers = {
     return Household.findOne({ _id: householdId }, 'pantry')
     .then(function(household) {
       if (household) {
-        // Simply return a list of the key names in household's pantry
-        // The value could be anything the frontend needs
         var result = {};
         for (var item in household.pantry) {
-          result[item] = true;
+          result[item] = {
+            tracked: household.pantry[item].tracked,
+            fullyStocked: household.pantry[item].fullyStocked,
+            date: household.pantry[item].date,
+          };
         }
-        console.log('Here is the result: ', result);
-        return result;
+        return Q.fcall(function() {
+          return result;
+        })
       } else {
         // Trigger error for router if household is not found
         throw new Error('Household not found');
@@ -338,6 +378,8 @@ module.exports = listHelpers = {
     for (var item in appPantry) {
       result[item] = true;
     }
-    return result;
+    return Q.fcall(function() {
+      return result;
+    })
   }
 };

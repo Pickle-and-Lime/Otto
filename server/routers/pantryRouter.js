@@ -11,11 +11,11 @@ var router = express.Router();
 router.get('/household/:id', function(req, res) {
   var household = req.params.id;
 
-  Q.fcall(listHelpers.getPantry, household)
-  .then(function(household) {
-    res.send(household[0].pantry);
+  listHelpers.getPantry(household)
+  .then(function(pantry) {
+    res.send(pantry);
   })
-  .catch(function() {
+  .catch(function(err) {
     res.status(404).send('Cannot retrieve household pantry');
   })
 });
@@ -25,7 +25,7 @@ router.get('/household/:id', function(req, res) {
  *  Returns the general pantry (all items)
  */
 router.get('/general', function(req, res) {
-  Q.fcall(listHelpers.getAppPantry)
+  listHelpers.getAppPantry()
   .then(function(appPantry) {
     res.send(appPantry);
   })
@@ -44,9 +44,9 @@ router.post('/', function(req, res) {
   var item = req.body.item;
   var household = req.body.household;
 
-  Q.fcall(listHelpers.addToPantry, item, household)
-  .then(function() {
-    res.sendStatus(201);
+  listHelpers.addToPantry(item, household)
+  .then(function(pantry) {
+    res.status(201).send(pantry);
   })
   .catch(function() {
     res.status(404).send('Cannot add item to pantry');
@@ -62,9 +62,9 @@ router.delete('/', function(req, res) {
   var item = req.body.item;
   var household = req.body.household;
 
-  Q.fcall(listHelpers.removeFromPantry, item, household)
-  .then(function() {
-    res.sendStatus(200);
+  listHelpers.removeFromPantry(item, household)
+  .then(function(pantry) {
+    res.send(pantry);
   })
   .catch(function() {
     res.status(404).send('Cannot add item to pantry');
