@@ -1,5 +1,5 @@
 <ul class="collapsible" data-collapsible="accordion">
-  <li>
+  <!-- <li>
     <div class="collapsible-header"><i class="material-icons">speaker_notes</i>You Might Need...<span class="badge">{{ suggestions.length }}</span></div>
     <div class="collapsible-body container">
       <ul class="collection">
@@ -11,8 +11,8 @@
         </li>
       </ul>
     </div>
-  </li>
-  <li>
+  </li> -->
+<!--   <li>
     <div class="collapsible-header"><i class="material-icons">whatshot</i>What's In Season?</div>
     <div class="collapsible-body container">
       
@@ -31,15 +31,28 @@
       </div>
 
     </div>
-  </li>
+  </li> -->
   <li>
-    <div class="collapsible-header"><i class="material-icons">place</i>Farmer's Markets Today</div>
+    <div class="collapsible-header active"><i class="material-icons">place</i>Farmer's Markets Nearby</div>
     <div class="collapsible-body">
-      <div ng-bind="todaysMarket.Name"></div>
-      <div ng-bind="todaysMarket.Address"></div>
-      <div ng-bind="todaysMarket.Products"></div>
-      <div ng-bind="todaysMarket.Schedule"></div>
-      <div><a ng-href="{{ todaysMarket.GoogleLink }}">Map</a></div>
+
+      <div class="row">
+        <div class="card col s12 m6 l4 small" ng-repeat="market in markets">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" ng-src="{{ market.image }}">
+          </div>
+          <div class="card-content">
+            <span class="activator grey-text text-darken-4">{{ market.name }}<i class="material-icons right">more_vert</i></span>
+            <p>{{ market.schedule }}</p>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">{{ market.name }}<i class="material-icons right">close</i></span>
+            <p><a ng-href="{{ market.map }}">{{ market.address }}</a></p>
+            <p>{{ market.description }}</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </li>
 </ul>

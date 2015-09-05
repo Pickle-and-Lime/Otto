@@ -35,33 +35,34 @@
           edge: 'left', // Choose the horizontal origin
           closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
         });
-        $('.collapsible').collapsible({
-          accordion : true // true for accordion style, false for expandable
-        });
+        // $('.collapsible').collapsible({
+        //   accordion : true // true for accordion style, false for expandable
+        // });
         $('ul.tabs').tabs();
-        $('.tab-button').click(function() {
-          $('.tab-button').removeClass('tab-selected');
-          $(this).addClass('tab-selected');
-        });
-        $('.non-tab').click(function() {
-          $('.tab-button').removeClass('tab-selected');
-        });
+        // $('.tab-button').click(function() {
+        //   $('.tab-button').removeClass('tab-selected');
+        //   $(this).addClass('tab-selected');
+        // });
+        // $('.non-tab').click(function() {
+        //   $('.tab-button').removeClass('tab-selected');
+        // });
       });
 
-      var scroll_pos = 0;
-      var scroll_time;
-      $(window).scroll(function() {
-        clearTimeout(scroll_time);
-        var current_scroll = $(window).scrollTop();
-        if (current_scroll >= $('#tab-bar').outerHeight()) {
-          if (current_scroll <= scroll_pos) {
-            $('#tab-bar').removeClass('hidden');
-          } else {
-            $('#tab-bar').addClass('hidden');
-          }
-        }
-        scroll_time = setTimeout(function() {
-          scroll_pos = $(window).scrollTop();
-        }, 100);
-      });
+      // Script for hiding tab bar - kinda funky
+      // var scroll_pos = 0;
+      // var scroll_time;
+      // $(window).scroll(function() {
+      //   clearTimeout(scroll_time);
+      //   var current_scroll = $(window).scrollTop();
+      //   if (current_scroll >= $('#tab-bar').outerHeight()) {
+      //     if (current_scroll <= scroll_pos) {
+      //       $('#tab-bar').removeClass('hidden');
+      //     } else {
+      //       $('#tab-bar').addClass('hidden');
+      //     }
+      //   }
+      //   scroll_time = setTimeout(function() {
+      //     scroll_pos = $(window).scrollTop();
+      //   }, 100);
+      // });
     </script>

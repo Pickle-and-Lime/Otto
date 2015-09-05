@@ -1,0 +1,41 @@
+.pantry-button {
+  /*color: #4caf50;*/
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 0px 5px;
+  padding: 0px 5px;
+}
+
+.pantry-button-disabled {
+  color: #4caf50;
+  border: 1px solid #4caf50;
+  border-radius: 5px;
+  margin: 0px 5px;
+  padding: 0px 5px;
+}
+
+.tab-selected {
+  font-weight: bold;
+  /*background-color: #4caf50;*/
+  text-shadow: 1px 1px 2px #999;
+}
+
+#tab-bar.hidden {
+  display: none;
+}
+
+#tab-bar {
+  height: 50px;
+  position: relative;
+  clear: both;
+  z-index: 997;
+}
+
+#tab-bar ul {
+  position: fixed;
+  border: 1px solid black;
+}
+
+#tab-bar ul li {
+  /*border: 1px solid black;*/
+}

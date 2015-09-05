@@ -62,8 +62,8 @@ groceries.config(function($stateProvider) {
       url: "/about",
       views: {
         "menu": { templateUrl: "ui/menu.html",
-                      controller: "listController"
-                     },
+                  controller: "menuController"
+                 },
         "content1": { templateUrl: "general/about.html" },
         "title": { template: "Rosie" }
       }
@@ -82,10 +82,10 @@ groceries.config(function($stateProvider) {
       url: "/landing",
       views: {
         "menu": { templateUrl: "ui/menu.html",
-                      controller: "listController"
-                     },
-        "content1": { templateUrl: "lists/landing.html",
-                      controller: "listController" 
+                  controller: "menuController"
+                 },
+        "content1": { templateUrl: "general/landing.html",
+                      controller: "landingController" 
                     },
         "title": { template: "Rosie" }
       }
@@ -94,10 +94,10 @@ groceries.config(function($stateProvider) {
       url: "/list",
       views: {
         "menu": { templateUrl: "ui/menu.html",
-                      controller: "listController"
-                     },
+                  controller: "menuController"
+                 },
         "content1": { templateUrl: "lists/list.html",
-          controller: "listController"
+                      controller: "listController"
         },
         "title": { template: "My List" }
       }
@@ -106,10 +106,10 @@ groceries.config(function($stateProvider) {
       url: "/pantry",
       views: {
         "menu": { templateUrl: "ui/menu.html",
-                      controller: "listController"
-                     },
+                  controller: "menuController"
+                 },
         "content1": { templateUrl: "lists/pantry.html",
-                      controller: "listController"
+                      controller: "pantryController"
                     },
         "title": { template: "My Pantry" }
       }
@@ -125,8 +125,8 @@ groceries.config(function($stateProvider) {
       url: "/household",
       views: {
         "menu": { templateUrl: "ui/menu.html",
-                      controller: "listController"
-                     },
+                  controller: "menuController"
+                 },
         "content1": { templateUrl: "household/household.html",
                       controller: "householdController"
                     },
@@ -137,8 +137,8 @@ groceries.config(function($stateProvider) {
       url: "/createHousehold",
       views: {
         "menu": { templateUrl: "ui/menu.html",
-                      controller: "listController"
-                     },
+                  controller: "menuController"
+                 },
         "content1": {templateUrl: "household/createHousehold.html",
                       controller: "householdController"
                     },
@@ -149,8 +149,8 @@ groceries.config(function($stateProvider) {
       url: "/account",
       views: {
         "menu": { templateUrl: "ui/menu.html",
-                      controller: "listController"
-                     },
+                  controller: "menuController"
+                 },
         "content1": { templateUrl: "user/account.html", 
                       controller: "loginController"},
         "title": { template: "My Account" }
@@ -160,8 +160,8 @@ groceries.config(function($stateProvider) {
       url: "/logout",
       views: {
         "menu": { templateUrl: "ui/menu.html",
-                      controller: "listController"
-                     },
+                  controller: "menuController"
+                 },
         "content1": { templateUrl: "user/logout.html",
                       controller: "loginController"},
         "title": { template: "Rosie" }
