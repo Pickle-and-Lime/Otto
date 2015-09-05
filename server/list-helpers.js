@@ -367,7 +367,7 @@ module.exports = listHelpers = {
         // Trigger error for router if household is not found
         throw new Error('Household not found');
       }
-    })
+    });
   },
 
   getAppPantry : function() {

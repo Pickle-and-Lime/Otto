@@ -1,0 +1,100 @@
+groceries.controller('landingController', function($scope, Landing) {
+
+
+  /* this will get populated with Farmer's Market objects in the following form:
+    {
+      name: "Name of market",
+      address: "String of market address",
+      description: "Longer text of products in market",
+      map: "String of link to Google maps",
+      schedule: "String of when it is open"
+    }
+  */
+  $scope.markets = [];
+
+  // search by Zip code is WAY faster than using lat and lng
+  // var lat, lng;
+  // navigator.geolocation.getCurrentPosition(function(position) {
+  //   lat = position.coords.latitude;
+  //   lng = position.coords.longitude;
+  //   getMarketList(lat, lng);
+  // });
+
+  var getMarketList = function() {
+    Landing.findMarketbyLoc()
+      .then(function(res) {
+        $scope.marketArray = res.data.results;
+        console.log($scope.marketArray);
+        $scope.marketArray.forEach(function(market) {
+          getMarketInfo(market.id, market.marketname);
+        });
+      }, function(err) {
+        console.log('ERR getMarketList:',err);
+      });
+  };
+
+  var getMarketInfo = function(id, name) {
+    Landing.findMarketbyId(id)
+      .then(function(res) {
+        // console.log(res.data.marketdetails);
+        var market = res.data.marketdetails;
+        // console.log(market);
+        $scope.markets.push(Landing.makeMarketInfo(name, market));
+        console.log($scope.markets);
+      }, function(err) {
+        console.log('ERR getMarketInfo',err);
+      });
+  };
+
+  Landing.setZip('95818'); // this should be set by user within app
+
+  getMarketList();
+
+});
+
+groceries.factory('Landing', function($http) {
+
+  var userZip; // make it possible to change and retrieve with a method
+
+  return {
+    // findMarketbyLoc: function(lat, lng) {
+    //   var url = "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/locSearch?lat=" + lat + "&lng=" + lng;
+    //   return $http.get(url);
+    // },
+
+    setZip: function(zip) { // zip code should be a string input by user
+      userZip = zip;
+    },
+
+    getZip: function() {
+      return userZip;
+    },
+
+    findMarketbyLoc: function() {
+      var url = "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/zipSearch?zip=" + userZip;
+      return $http.get(url, {skipAuthorization: true});
+    },
+
+    findMarketbyId: function(id) {
+      var url = "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/mktDetail?id=" + id;
+      return $http.get(url, {skipAuthorization: true});
+    },
+
+    makeMarketInfo: function(name, market) {
+      // correctly format the schedule
+      var temp = market.Schedule.split(';')[0];
+      if (temp === " <br> <br> <br> ") { temp = 'Schedule Unknown'; }
+      return {
+        name: name.split(' ').slice(1).join(' '), // take off the distance from the name
+        address: market.Address,
+        description: market.Products,
+        map: market.GoogleLink,
+        schedule: temp,
+        // grab a random market image to display on card
+        image: "../assets/" + Math.floor(Math.random() * 7) + "market.jpg"
+      };
+    }
+
+  };
+
+});

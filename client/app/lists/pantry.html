@@ -1,6 +1,7 @@
 <ul class="collapsible" data-collapsible="accordion">
   <li>
-    <div class="collapsible-header"><i class="material-icons">store</i>Current Pantry<span class="badge" ng-bind="pantryList.length"></span></div>
+    <!-- <div class="collapsible-header"><i class="material-icons">store</i>Current Pantry<span class="badge" ng-bind="pantryList.length"></span></div> -->
+    <div class="collapsible-header"><i class="material-icons">store</i>Current Pantry</div>
     <div class="collapsible-body container">
 
       <div class="row">
@@ -11,19 +12,19 @@
               <input id="pantryItem" type="text" ng-model="userPantryItem">
               <label for="pantryItem">I already have...</label>
             </div>
-            <ul class="collection container" ng-hide="!userPantryItem.length || pantrySelected">
-              <li class="collection-item" ng-repeat="item in masterList | filter:userPantryItem track by $index " ng-bind="item" ng-click="selectPantryTypeAhead(item)"></li>
+            <ul class="collection container" ng-hide="!userPantryItem.length">
+              <li class="collection-item" ng-repeat="item in masterList | filter:{name: userPantryItem}" ng-bind="item.name" ng-click="setItem(item.name)"></li>
             </ul>
-            <button class="btn waves-effect waves-light green right" type="submit" name="action" ng-click="enterPantryItem()" onclick="Materialize.toast('Added Pantry Item',500)">Add</button>
+            <button class="btn waves-effect waves-light green right" ng-click="addItem(userPantryItem)" onclick="Materialize.toast('Added Pantry Item',500)">Add</button>
+          </div>
         </form>
       </div>
 
       <ul class="collection">
-        <li class="collection-item" ng-repeat="item in pantryList track by $index">{{ item }}
-          <span class="right pantry-button" onclick="Materialize.toast('Out of Item',500)" ng-click="removeFromPantryList($index)">Ran Out</span>
+        <li class="collection-item" ng-repeat="(key, value) in pantryList">{{key}}
+          <span class="right pantry-button" onclick="Materialize.toast('Out of Item',500)" ng-click="ranOut(key)" ng-show="value.fullyStocked">Ran Out</span>
             <!-- <i class="material-icons" onclick="Materialize.toast('Out of Item',500)" ng-click="removeFromPantryList($index)">not_interested</i> -->
             <!-- <i class="material-icons" onclick="Materialize.toast('Item bought',500)" ng-click="removeListItem($index)">done</i> -->
-          </span>
         </li>
       </ul>
     </div>
@@ -34,11 +35,11 @@
     <div class="collapsible-body container">
 
       <ul class="collection">
-        <li class="collection-item" ng-repeat="item in pantryBuilder track by $index">{{ item }}
-          <span class="right pantry-button" onclick="Materialize.toast('Added to Shopping List',500)" ng-click="needFromPantryBuilder(item)" ng-hide="inList($index)">Need</span>
-          <span class="right pantry-button-disabled" ng-hide="!inList($index)">Need</span>
-          <span class="right pantry-button" onclick="Materialize.toast('Added to Pantry',500)" ng-click="haveFromPantryBuilder(item)" ng-hide="inPantry($index)">Have</span>
-          <span class="right pantry-button-disabled" ng-hide="!inPantry($index)">Have</span>
+        <li class="collection-item" ng-repeat="item in masterList">{{ item.name }}
+          <span class="right pantry-button" onclick="Materialize.toast('Added to Shopping List',500)" ng-click="" ng-hide="">Need</span>
+          <span class="right pantry-button-disabled" ng-hide="">Need</span>
+          <span class="right pantry-button" onclick="Materialize.toast('Added to Pantry',500)" ng-click="addItem(item)" ng-hide="pantryList[item].fullyStocked">Have</span>
+          <span class="right pantry-button-disabled" ng-hide="!pantryList[item].fullyStocked">Have</span>
         </li>
       </ul>
 

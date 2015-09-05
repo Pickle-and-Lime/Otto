@@ -17,7 +17,7 @@ router.get('/household/:id', function(req, res) {
   })
   .catch(function(err) {
     res.status(404).send('Cannot retrieve household pantry');
-  })
+  });
 });
 
 /**
@@ -31,7 +31,7 @@ router.get('/general', function(req, res) {
   })
   .catch(function() {
     res.status(404).send('Cannot retrieve general pantry');
-  })
+  });
 });
 
 
@@ -50,7 +50,7 @@ router.post('/', function(req, res) {
   })
   .catch(function() {
     res.status(404).send('Cannot add item to pantry');
-  })
+  });
 });
 
 /**
@@ -68,7 +68,7 @@ router.delete('/', function(req, res) {
   })
   .catch(function() {
     res.status(404).send('Cannot add item to pantry');
-  })
+  });
 });
 
 module.exports = router;
