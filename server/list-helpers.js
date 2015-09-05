@@ -179,11 +179,11 @@ module.exports = listHelpers = {
         if (itemProps){
           //calculate how long since last bought
           var timeElapsed = listHelpers.timeSincePurchase(itemProps.date);
-          console.log('itemprops before: ', itemProps.trainingSet);
+          
           // Add the updated training data to pantry item
           itemProps.trainingSet.push({input : [timeElapsed/365], output :[0.9]});
-          console.log('reaching training part of addToList YAAAAAAAAAY');
-          console.log('itemprops after: ', itemProps.trainingSet);
+          
+          
           // Rebuild the standalone NN with the updated training data
           var pantryItem = new PantryItem(item);
           var trained = pantryItem.train(itemProps.trainingSet);
@@ -255,19 +255,23 @@ module.exports = listHelpers = {
         //calculate how long since last bought
         var timeElapsed = listHelpers.timeSincePurchase(itemProps.date);
 
-        // Add the updated training data to pantry item
-        itemProps.trainingSet.push({input : [timeElapsed/365], output :[0.1]});
+        //Update items tracked by Rosie
+        if(itemProps.trainingSet){
+          // Add the updated training data to pantry item
+          
+          itemProps.trainingSet.push({input : [timeElapsed/365], output :[0.1]});
+          
 
-        // Rebuild the standalone NN with the updated training data
-        var pantryItem = new PantryItem(item);
-        var trained = pantryItem.train(itemProps.trainingSet);
+          // Rebuild the standalone NN with the updated training data
+          var pantryItem = new PantryItem(item);
+          var trained = pantryItem.train(itemProps.trainingSet);
 
-        // Add new standalone fn to item pantry
-        itemProps.network = trained.toString();
+          // Add new standalone fn to item pantry
+          itemProps.network = trained.toString();
+        }
 
         //restock in pantry
         itemProps.fullyStocked = true;
-
         //Mark pantry and list modified because they are of mixed datatype in db
         household.markModified('list');
         household.markModified('pantry');
@@ -317,6 +321,7 @@ module.exports = listHelpers = {
         for (var item in household.pantry) {
           result[item] = true;
         }
+        console.log('Here is the result: ', result);
         return result;
       } else {
         // Trigger error for router if household is not found
