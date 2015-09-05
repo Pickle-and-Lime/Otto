@@ -39,3 +39,15 @@
 #tab-bar ul li {
   /*border: 1px solid black;*/
 }
+#login-logo {
+  font-family: Pacifico, cursive; 
+  -ms-transform: rotate(-10deg); /* IE 9 */
+  -webkit-transform: rotate(-10deg); /* Chrome, Safari, Opera */
+  transform: rotate(-10deg);
+  color: white;
+  margin-top: 2px;
+  margin-bottom: 10px;
+}
+.logo-inline {
+  font-family: Pacifico, cursive;
+}

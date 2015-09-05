@@ -1,11 +1,11 @@
 // Include app dependency on ngMaterial
 var groceries = angular.module( 'GroceriesApp', ['ui.router', 'auth0', 'angular-storage', 'angular-jwt'] );
-
 // Auth0 services
 groceries.config(function (authProvider) {
   authProvider.init({
     domain: 'ejkinger.auth0.com',
-    clientID: 'Vk8WOzc8NcNXTngDQfYqEvGe00jdK92d'
+    clientID: 'Vk8WOzc8NcNXTngDQfYqEvGe00jdK92d',
+    loginState: 'login'
   });
 })
 .run(function(auth) {
@@ -46,9 +46,8 @@ groceries.run(function ($rootScope, auth, store, jwtHelper, $location) {
 });
 // End Auth0 services
 
-groceries.config(function($stateProvider) {
+groceries.config(function ($stateProvider) {
   $stateProvider
-
     .state('login', {
       url: "/",
       views: {
@@ -88,6 +87,9 @@ groceries.config(function($stateProvider) {
                       controller: "landingController" 
                     },
         "title": { template: "Rosie" }
+      },
+      data: {
+            requiresLogin: true
       }
     })
     .state('list', {
@@ -100,6 +102,9 @@ groceries.config(function($stateProvider) {
                       controller: "listController"
         },
         "title": { template: "My List" }
+      },
+      data: {
+            requiresLogin: true
       }
     })
     .state('pantry', {
@@ -112,6 +117,9 @@ groceries.config(function($stateProvider) {
                       controller: "pantryController"
                     },
         "title": { template: "My Pantry" }
+      },
+      data: {
+            requiresLogin: true
       }
     })
     // .state('recipes', {
@@ -131,6 +139,9 @@ groceries.config(function($stateProvider) {
                       controller: "householdController"
                     },
         "title": { template: "My Household" }
+      },
+      data: {
+            requiresLogin: true
       }
     })
     .state('createHousehold', {
@@ -143,6 +154,9 @@ groceries.config(function($stateProvider) {
                       controller: "householdController"
                     },
         "title": { template: "Create Household"}
+      },
+      data: {
+            requiresLogin: true
       }
     })
     .state('account', {
@@ -154,17 +168,9 @@ groceries.config(function($stateProvider) {
         "content1": { templateUrl: "user/account.html", 
                       controller: "loginController"},
         "title": { template: "My Account" }
-      }
-    })
-    .state('logout', {
-      url: "/logout",
-      views: {
-        "menu": { templateUrl: "ui/menu.html",
-                  controller: "menuController"
-                 },
-        "content1": { templateUrl: "user/logout.html",
-                      controller: "loginController"},
-        "title": { template: "Rosie" }
+      },
+      data: {
+            requiresLogin: true
       }
     });
 

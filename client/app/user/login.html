@@ -1,8 +1,6 @@
 <!-- HEADER with 'Rosie' logo -->
 <div class="section green">
-  <div class="row container">
-    <h2 class="header center-align" style="font-family: 'Pacifico', cursive; -webkit-transform: rotate(-10deg); color:white;">Rosie</h2>
-  </div>
+  <h2 class="header center-align" id="login-logo">Rosie</h2>
 </div>
 
 <!-- Parallax image 1 -->
@@ -13,12 +11,18 @@
 <!-- Sign Up content Area -->
 <div class="section green lighten-5">
   <div class="row container">
-    <h5><span style="font-family: 'Pacifico', cursive;">Rosie</span> is the shopping list that <em>builds itself.</em></h5>
+    <h5><span class="logo-inline">Rosie</span> is the shopping list that <em>builds itself.</em></h5>
     <p>Sign up now and let Rosie start working for you.</p>
     <div class="row valign-wrapper">
       <div class="col s6 offset-s3">
         <!-- Signin button, calls Auth0 login() function -->
-        <a href ng-click="login()" class="valign center-align green waves-effect waves-light btn-large">Sign In</a>
+        <a href ng-click="login()" class="valign center-align green waves-effect waves-light btn-large">Sign Up</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <!-- Signin button, calls Auth0 login() function -->
+        <h6 class="center-align"><a href ng-click="login()" class="center-align">Sign In</a></h6>
       </div>
     </div>
   </div>
