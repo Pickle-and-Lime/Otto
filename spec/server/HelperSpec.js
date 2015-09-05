@@ -15,7 +15,6 @@ var householdHelpers = require('../../server/household-helpers.js');
 var getPantry =  listHelpers.getPantry;
 var getAppPantry = listHelpers.getAppPantry;
 
-//Helper function that creates dates based on current day minus however much time you want
 
 mongoose.connect('mongodb://localhost/test');
 var household1 = new Household({});
@@ -46,7 +45,7 @@ test('addToPantry() should add an item to the household\'s pantry', function(t){
   t.end();
 });
 
-test('addToList() should add any item to the household\'s list', function(t){
+/*test('addToList() should add any item to the household\'s list', function(t){
   setTimeout(function(){
     addToList('fruit', household1._id);
   }, 7000);
@@ -57,11 +56,11 @@ test('addToList() should add any item to the household\'s list', function(t){
 
   setTimeout(function(){
     Household.findOne({_id: household1._id }, 'pantry list', function(err, household){
-      
+      //console.log(household);
       t.ok('fruit' in household.list, 'Fruit added to list.');
       t.ok('chicken' in household.list, 'Chicken added to list.');
     });
-  }, 13000);
+  }, 18000);
 
   t.end();
 });
@@ -86,7 +85,7 @@ test('removeFromList() should remove the passed in item from the household\'s li
   t.end();
 });
 
-/*test('getPantry() should return a list of the items in the pantry', function(t){
+test('getPantry() should return a list of the items in the pantry', function(t){
   
   setTimeout(function(){
     var pantry = getPantry(household1._id);
@@ -97,19 +96,19 @@ test('removeFromList() should remove the passed in item from the household\'s li
   }, 18000);
 
   t.end();
-});*/
-
+});
+*/
 test('getAppPantry() should retrieve the names of items in the app pantry', function(t){
   
   setTimeout(function(){
     var appPantry = getAppPantry();
 
     t.ok(appPantry.milk, 'App pantry list retrieved.');
-  }, 18000);
+  }, 8000);
 
   t.end();
 });
-
+/*
 test('removeFromPantry should remove items from the pantry', function(t){
   
   setTimeout(function(){
@@ -152,7 +151,10 @@ test('buy() should move selected items from the current list to the pantry, full
   t.end();
 });
 
-/*test('autoBuildList should add expired items automatically', function(t){});*/
+/*test('autoBuildList should add expired items automatically', function(t){
+  setTimeout(function(){addToPantry('carrots', household1._id, 7, 15);}, 200);
+  autoBuildList(household1._id);
+});*/
 
 /*test('', function(t){t.end();});*/
 
@@ -165,4 +167,4 @@ setTimeout(function(){
     if(err){ console.error(err); }
     mongoose.connection.close();
   });
-}, 40000);
+}, 7000);
