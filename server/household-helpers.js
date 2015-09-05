@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Household = require('./db/householdModel.js');
+var Q = require('q');
 
 module.exports = householdHelpers = {
 
@@ -7,17 +8,21 @@ module.exports = householdHelpers = {
     // Ideally, this will match a user to a household
     // Right now, we will create one if one doesn't exist
     // and use only that one
-    return Household.findOne(function(err, household) {
-      if (err) console.error(err);
-      console.log(household);
+    return Household.findOne()
+    .then(function(household) {
       if (!household) {
         // Create a test household
-        var household = new Household({});
-        household.save(function() {
-          console.log('householdId from helper is ', household._id)
-        })
+        var newHousehold = new Household({});
+        return newHousehold.save()
+        .then(function(household) {
+          return household._id;
+        });
+      } else {
+        return Q.fcall(function() {
+          return household._id;
+        });
       }
-    })
+    });
   },
 
   removeHousehold : function(householdId) {

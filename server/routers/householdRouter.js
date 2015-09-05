@@ -9,13 +9,9 @@ var router = express.Router();
  *  Note: right now, only returning the household id
  */
 router.get('/', function(req, res) {
-  Q.fcall(householdHelpers.getHousehold)
-  .then(function(household) {
-    res.send({householdId: household[0]._id});
-
-    //below: test responses simulating an already existing household and a household that doesn't exist yet.
-    //res.send({householdId: household[0]._id, name: 'King House', members: ['aking123@yahoo.com', 'amk_awesome@hotmail.com', 'paws@thedog.com']});
-    //res.send({});
+  householdHelpers.getHousehold()
+  .then(function(householdId) {
+    res.send({householdId: householdId});
   })
   .catch(function() {
     res.status(404);

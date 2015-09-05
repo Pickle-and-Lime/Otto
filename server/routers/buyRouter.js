@@ -11,7 +11,7 @@ router.post('/', function(req, res) {
   var items = req.body.items;
   var household = req.body.household;
 
-  Q.fcall(listHelpers.buy, items, household)
+  listHelpers.buy(items, household)
   .then(function() {
     res.sendStatus(201);
   })
