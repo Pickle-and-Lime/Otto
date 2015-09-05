@@ -3,9 +3,10 @@ var bodyParser = require('body-parser');
 var listRouter = require('./routers/listRouter');
 var pantryRouter = require('./routers/pantryRouter');
 var householdRouter = require('./routers/householdRouter');
+var userRouter = require('./routers/userRouter');
+var buyRouter = require('./routers/buyRouter');
 var db = require('./db.js');
 
-var buyRouter = require('./routers/buyRouter');
 
 var app = express();
 
@@ -23,6 +24,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use('/list', listRouter);
 app.use('/pantry', pantryRouter);
 app.use('/household', householdRouter);
+app.use('/user', userRouter);
 app.use('/buy', buyRouter);
 
 module.exports = {
