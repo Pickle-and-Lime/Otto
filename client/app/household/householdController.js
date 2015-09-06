@@ -1,5 +1,7 @@
 groceries.controller('householdController', ['$scope', '$http', '$location', 'auth', 
   function ($scope, $http, $location, auth) {
+    $scope.auth = auth;
+
   //initialize object to hold all scope elements, avoids child scope issues with ng-if statements
     $scope.s = {};
     //initialize household as null
