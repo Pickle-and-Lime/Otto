@@ -6,7 +6,7 @@
 var mongoose = require('mongoose');
 var User = require('./db/userModel.js');
 var Household = require('./db/householdModel.js');
-var appPantry = require('./db/app-pantry.js');
+var appPantry = require('./db/finalPantry.js');
 var PantryItem = require('./PantryItem.js');
 var Q = require('q');
 

@@ -19,12 +19,14 @@ var trainingSets = {
 };
 
 var data = {};
+var categoriesObj = {};
 fs.readFileSync("buildGenPantry.txt").toString().split('\n').forEach(function (line) {
     var item = line.split(";");
     var name = item[0];
     data[name] = {};
 
     data[name].category = item[1].trim();
+    categoriesObj[data[name].category] = true;
 
     data[name].tags = item[2].trim().split(',');
     if (data[name].tags[0].length === 0){
@@ -48,9 +50,12 @@ fs.readFileSync("buildGenPantry.txt").toString().split('\n').forEach(function (l
       }
     }
 });
-
+var categories = [];
+for (var category in categoriesObj){
+  categories.push(category);
+}
 fs.writeFile("finalPantry.js", 
-  "var pantry = " + JSON.stringify(data) +";\nmodule.exports = pantry;", 
+  "var pantry = " + JSON.stringify(data) +";\n"+"var categories = " + JSON.stringify(categories)+ ";\n module.exports = pantry;", 
   function(err){
   if (!err){
     console.log("done!");
