@@ -6,8 +6,8 @@ groceries.controller('loginController', ['$scope', '$http', 'auth', 'store', '$l
       auth.signin({}, function (profile, token) {
         // Success callback
         updateUser();
-        store.set('profile', profile);
         store.set('token', token);
+        store.set('profile', profile);
         $location.path('/landing');
       }, function (err) {
         // Error callback
@@ -19,6 +19,7 @@ groceries.controller('loginController', ['$scope', '$http', 'auth', 'store', '$l
       auth.signout();
       store.remove('profile');
       store.remove('token');
+      store.remove('householdId');
       $location.path('/');
     };
 
@@ -27,8 +28,9 @@ groceries.controller('loginController', ['$scope', '$http', 'auth', 'store', '$l
                            email: $scope.auth.profile.email})
       .then(function(res){
         $scope.auth.profile.household = {householdId: res.data};
+        store.set('householdId', res.data);
       },
-        function(err){
+        function (err){
           console.log(err);
         }
       );

@@ -1,69 +1,123 @@
 <!-- Begin Loading icon which displays while calling /household -->
-<div ng-if="!s.callFinished" class="section">
-  <div class="row">
-  </div>
-  <div class="center-align">
-    <div class="preloader-wrapper small active">
-        <div class="spinner-layer spinner-green-only">
-          <div class="circle-clipper left">
-            <div class="circle">
+<div class="container-600">
+  <div ng-if="!s.getHouseholdFinished && !s.getUserFinished" class="section">
+    <div class="row">
+    </div>
+    <div class="center-align">
+      <div class="preloader-wrapper small active">
+          <div class="spinner-layer spinner-green-only">
+            <div class="circle-clipper left">
+              <div class="circle">
+              </div>
             </div>
-          </div>
-          <div class="gap-patch">
-            <div class="circle">
+            <div class="gap-patch">
+              <div class="circle">
+              </div>
             </div>
-          </div>
-          <div class="circle-clipper right">
-            <div class="circle">
+            <div class="circle-clipper right">
+              <div class="circle">
+              </div>
             </div>
           </div>
         </div>
-      </div>
-  </div>
-</div>
-
-<!-- Begin Main display after /household call is finished -->
-<div ng-if="s.callFinished" class="section">
-  <!-- Displays create button if a household does not exist -->
-  <div ng-if="!s.household.householdId" class="center-align">
-    <h1 class="center-align">Household</h1>
-    <a ui-sref="createHousehold" class="waves-effect green btn-large">Create</a>
+    </div>
   </div>
 
-  <!-- Displays household info if a household does exist -->
-  <!-- Displays Household Name -->
-  <div ng-if="s.household.householdId">
-    <div class="row">
-      <div class="col s12">
-        <h3 class="center-align" data-ng-bind="s.household.name"></h3>
-      </div>
+  <!-- Begin Main display after /household call is finished -->
+  <div ng-if="s.getHouseholdFinished && s.getUserFinished" class="section">
+    <!-- Displays create button if a household does not exist -->
+    <div ng-if="s.profile.household.name === ''" class="center-align">
+      <h1 class="center-align">Household</h1>
+      <a ui-sref="createHousehold" class="waves-effect green btn-large">Create</a>
     </div>
-
-    <!-- Displays household members -->
+    <!-- Begin Invites list (doesn't display if users household is already created) -->
     <div class="row">
-      <div class="row">
-        <ul ng-if="s.household.members.length >= 1" class="collection with-header">
-          <li class="collection-header"><h5>Household Members</h5></li>
-          <li class="collection-item" ng-repeat="member in s.household.members" data-ng-bind="member"></li>
-        </ul>
-      </div>
     </div>
-
-    <!-- Displays add to household form/button -->
-    <div class="row">
-      <form name="emailInput" ng-submit="s.test()">
-        <div class="row valign-wrapper">
-          <div class="col s7 offset-s1 input-field">
-            <input ng-change="s.checkInputs(emailInput)" ng-model="s.currentEmail" id="emailx" type="email" class="validate">
-            <label for="emailx">Invite Member (Email)</label>
-          </div>
-        <!-- Begin Add Member By Email Button -->
-          <div class="col s4 valign">
-            <button for="emailx" class="waves-effect green btn {{s.addEmailActive}}" type="submit" name="action">Add
+    <div class="row" ng-if="s.profile.household.user.invites.length >= 1 && s.profile.household.name === ''">
+      <ul ng-if="s.profile.household.users.length >= 1" class="collection with-header">
+        <li class="collection-header"><h5>Invites</h5></li>
+        <li class="collection-item valign-wrapper" ng-repeat="invite in s.profile.household.user.invites">
+          <span class="item-name" data-ng-bind="invite.householdName"></span>
+          <span class="item-options">
+            <button ng-if="!s.joinSubmitted" ng-click="s.joinHouse(invite.householdId)" for="emailx" class="waves-effect green btn valign right" type="submit" name="action">Join
             </button>
-          </div>
+
+            <div ng-if="s.joinSubmitted" class="valign right">
+              <div class="preloader-wrapper small active">
+                <div class="spinner-layer spinner-green-only">
+                  <div class="circle-clipper left">
+                    <div class="circle"></div>
+                  </div>
+                  <div class="gap-patch">
+                    <div class="circle"></div>
+                  </div>
+                  <div class="circle-clipper right">
+                    <div class="circle"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Displays household info if a household does exist -->
+    <!-- Displays Household Name -->
+    <div ng-if="s.profile.household.name !== ''">
+      <div class="row">
+        <div class="col s12">
+          <h3 class="center-align" data-ng-bind="s.profile.household.name"></h3>
         </div>
-      </form>
+      </div>
+
+      <!-- Displays household members -->
+      <div class="row">
+        <div class="row">
+          <ul ng-if="s.profile.household.users.length >= 1" class="collection with-header">
+            <li class="collection-header"><h5>Household Members</h5></li>
+            <li class="collection-item" data-ng-bind="s.profile.name"></li>
+            <li class="collection-item" ng-repeat="member in s.profile.household.members" data-ng-bind="member"></li>
+            <li class="collection-item" ng-repeat="invite in s.profile.household.sentInvites"><span data-ng-bind="invite.email"></span><div class="align-right"><span class="pending indigo-text text-lighten-4"><em>&nbsp;Pending</em></span></div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Displays add to household form/button -->
+      <div class="row">
+        <form name="emailInput" ng-submit="s.newInvite(s.currentEmail)">
+          <div class="row valign-wrapper">
+            <div class="col s7 offset-s1 input-field">
+              <input ng-change="s.checkInputs(emailInput)" ng-model="s.currentEmail" id="emailx" type="email" class="validate">
+              <label for="emailx">Invite Member (Email)</label>
+            </div>
+          <!-- Begin Add Member By Email Button -->
+            <div ng-if="!s.submitted" class="col s4 valign">
+              <button  for="emailx" class="waves-effect green btn {{s.addEmailActive}}" type="submit" name="action">Add
+              </button>
+            </div>
+
+            <div ng-if="s.submitted" class="row">
+              <div class="col s4 valign">
+                <div class="preloader-wrapper small active">
+                  <div class="spinner-layer spinner-green-only">
+                    <div class="circle-clipper left">
+                      <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                      <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                      <div class="circle"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
