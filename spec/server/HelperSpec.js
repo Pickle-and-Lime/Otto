@@ -29,9 +29,6 @@ var test = redtape({
   }
 });
 
-//Correct names of data
-//Remove /365 from list-helpers
-//
 
 test('addToPantry() should add an item to the household\'s pantry', function(t){  
   addToPantry('Milk', household1._id, 7, 30) // tracked with date specified
