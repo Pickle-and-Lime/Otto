@@ -1,15 +1,35 @@
 /**
-* Provides methods for creating user pantries
-* @module pantryHelpers
+* Provides methods for creating household pantries and lists
+* @module groceryHelpers
+* @requires Household, appPantry, PantryItem, pantryHelpers, Q
 */
 
 var Household = require('./db/householdModel.js');
-var appPantry = require('./db/finalPantry.js');
+var appPantry = require('./db/finalPantry.js').pantry;
 var PantryItem = require('./PantryItem.js');
 var Q = require('q');
 
+/** 
+* Provides methods for manipulating household shopping lists
+* @class pantryHelpers
+* @static
+*/
+
 module.exports = pantryHelpers = {
-  //makes a new pantry item nn
+  /**
+  * Updates a household item's neural network with additional
+  * training data provided when a user adds or removes an
+  * item from their shopping list.
+  * @method updateItemNetwork
+  * @param item {String}
+  * the name of the item to update
+  * @param itemProps {Object}
+  * the current properties of the item in the household's pantry
+  * @param household {Object}
+  * the household object returned from the database
+  * @param fullyStocked {Boolean}
+  * if true, the item is fully stocked, if false, it is not
+  */
   updateItemNetwork: function(item, itemProps, household, fullyStocked){
     // Rebuild the standalone NN with the updated training data
     var pantryItem = new PantryItem(item);
@@ -22,7 +42,21 @@ module.exports = pantryHelpers = {
     //Save changes
     return household.save();
   },
-  //called when household adds to pantry from gen list or by checking off
+
+  /**
+  * Adds an item to a household's pantry when they either purchase the item, 
+  * or add it from the app's general pantry list.
+  * @method addToPantry
+  * @static
+  * @param item {String}
+  * the name of the item
+  * @param householdId {String}
+  * the string that identifies a household in the database
+  * @param [month=now] {String}
+  * allows manual input of the month the item was last purchased
+  * @param [day=now] {String}
+  * allows manual input of the day the item was last purchased
+  */
   addToPantry : function(item, householdId, month, day, cb){
     return Household.findOne({ _id: householdId }, 'pantry list')
     .then(function(household){
@@ -42,11 +76,6 @@ module.exports = pantryHelpers = {
           // Create and train the neural network
           var pantryItem = new PantryItem(item);
           var trained = pantryItem.train(houseTraining);
-
-          // //set additional properties to 
-          // var expiration = household.pantry[item] ?
-          //   household.pantry[item].expiration : appPantry[item].expiration;
-
 
           household.pantry[item] = {
             // Store the standalone function inside the database
@@ -90,7 +119,15 @@ module.exports = pantryHelpers = {
     });
   },
 
-  //called if a user wants to remove something entirely from their pantry
+  /**
+  * Completely removes an item from a households's pantry
+  * @method removeFromPantry
+  * @param item {String}
+  * the name of the item
+  * @param householdId {String}
+  * the string that identifies a household in the database
+  */
+
   //in the future, change to "blacklist" instead, and add some logic into 
   //the autoBuild that wouldn't add these items to their shopping list
   //and hide them from displaying in their pantry in the frontend instead of 
@@ -117,7 +154,16 @@ module.exports = pantryHelpers = {
     });
   },
 
-  //update expiration if desired
+  /**
+  * Updates an item's default expiration time
+  * @method updateExpTime
+  * @param item {String}
+  * the name of the item
+  * @param householdId {String}
+  * the string that identifies a household in the database
+  * @param time {Number}
+  * the length of time (in days) from purchase to expiration
+  */
   updateExpTime : function(item, householdId, time){
     return Household.findOne({ _id: householdId }, 'pantry')
     .then(function(household) {
@@ -134,8 +180,15 @@ module.exports = pantryHelpers = {
     });
   },
 
+  /**
+  * Return a specific household's pantry
+  * @method getPantry
+  * @param householdId {String}
+  * the string that identifies a household in the database
+  * @return {Object}
+  * the household's pantry, including the properties of each item
+  */
   getPantry : function(householdId) {
-    // Return a specific households pantry
     return Household.findOne({ _id: householdId }, 'pantry')
     .then(function(household) {
       if (household) {
@@ -162,16 +215,15 @@ module.exports = pantryHelpers = {
     });
   },
 
+  /**
+  * Return the general pantry
+  * @method getPantry
+  * @return {Object}
+  * the general pantry, including the properties of each item
+  */
   getAppPantry : function() {
-    // Simply return a list of the key names in appPantry
-    // which are all the products we track
-    // The value could be anything the frontend needs
-    var result = {};
-    for (var item in appPantry) {
-      result[item] = true;
-    }
     return Q.fcall(function() {
-      return result;
+      return appPantry;
     });
   }
 };
