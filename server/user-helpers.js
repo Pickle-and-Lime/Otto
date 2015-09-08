@@ -25,8 +25,8 @@ module.exports = userHelpers = {
       if (!user) throw new Error('Cannot find user');
       return Q.fcall(function() {
         return user;
-      })
-    })
+      });
+    });
   },
 
   /**
@@ -49,17 +49,17 @@ module.exports = userHelpers = {
       if (user) {
         return Q.fcall(function() {
           return user.householdId;
-        })
+        });
       } else {
         // If user does not exist, create a new one
         return userHelpers.createUser(userId, email)
         .then(function(newUser) {
           return Q.fcall(function() {
             return newUser.householdId;
-          })
-        })
+          });
+        });
       }
-    })
+    });
   },
 
   /**
@@ -82,16 +82,16 @@ module.exports = userHelpers = {
         userId: userId,
         email: email,
         householdId: newHousehold._id
-      })
+      });
 
       return newUser.save()
       .then(function() {
         // Return newly created user
         return Q.fcall(function() {
           return newUser;
-        })
-      })
-    })
+        });
+      });
+    });
   },
 
   /**
@@ -112,7 +112,7 @@ module.exports = userHelpers = {
         user.invites.push(creatorEmail);
       }
       return user.save();
-    })
+    });
   },
 
   /**
@@ -146,10 +146,10 @@ module.exports = userHelpers = {
         .then(function(creator) {
           invitee.householdId = creator.householdId;
           return invitee.save();
-        })
+        });
       } else {
         return invitee.save();
       }
-    })
+    });
   }
-}
+};

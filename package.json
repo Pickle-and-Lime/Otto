@@ -32,7 +32,22 @@
     "tape": "^4.2.0"
   },
   "devDependencies": {
+    "del": "^2.0.1",
     "gulp": "^3.9.0",
-    "gulp-install": "^0.5.0"
+    "gulp-autoprefixer": "^3.0.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-connect": "^2.2.0",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-html-replace": "^1.5.1",
+    "gulp-imagemin": "^2.3.0",
+    "gulp-install": "^0.5.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-minify-html": "^1.0.4",
+    "gulp-ng-annotate": "^1.1.0",
+    "gulp-nodemon": "^2.0.4",
+    "gulp-open": "^1.0.0",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.4.0",
+    "imagemin-pngquant": "^4.2.0"
   }
 }

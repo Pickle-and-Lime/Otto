@@ -2,6 +2,7 @@ node_modules/
 bower_components/
 client/lib
 out/
+public/
 *.log
 .floo
 .flooignore
