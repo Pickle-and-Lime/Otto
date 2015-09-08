@@ -17,7 +17,7 @@ module.exports = listHelpers = {
   },
   //called when shopper opens app
   autoBuildList : function(householdId){
-    return Household.findOne({ _id: householdId }, 'pantry')
+    return Household.findOne({ _id: householdId }, 'pantry list')
     .then(function(household) {
       if (household) {
         var timeElapsed;
@@ -38,6 +38,8 @@ module.exports = listHelpers = {
             console.log(item, prob);
             if (prob >0.5){
               household.pantry[item].fullyStocked = false;
+              household.markModified('pantry');
+              household.save();
             }
           }
           if (!household.pantry[item].fullyStocked){
@@ -129,41 +131,46 @@ module.exports = listHelpers = {
         
         //remove the item from the household's shopping list
         delete household.list[item];
+        household.markModified('list');
         
-        //calculate how long since last bought
-        var timeElapsed = listHelpers.timeSincePurchase(itemProps.date);
+        //Save changes
+        return household.save()
+        .then(function(){
+          //calculate how long since last bought
+          var timeElapsed = listHelpers.timeSincePurchase(itemProps.date);
 
-        //Update items tracked by Rosie
-        if(itemProps.trainingSet){
-          // Add the updated training data to pantry item
-          
-          itemProps.trainingSet.push({input : [timeElapsed], output :[0.1]});
-          
+          //Update items tracked by Rosie
+          if(itemProps.trainingSet){
+            // Add the updated training data to pantry item
+            
+            itemProps.trainingSet.push({input : [timeElapsed], output :[0.1]});
+            
 
-         //Rebuild the standalone NN with the updated training data
-         pantryHelpers.updateItemNetwork(item, itemProps, household, true)
-         .then(function() {
-           return Q.fcall(function() {
-             return household.list;
+           //Rebuild the standalone NN with the updated training data
+           pantryHelpers.updateItemNetwork(item, itemProps, household, true)
+           .then(function() {
+             return Q.fcall(function() {
+               return household.list;
+             });
            });
-         });
 
-        }
-        else{
-          //restock in pantry
-          itemProps.fullyStocked = true;
-          //Mark pantry and list modified because they are of mixed datatype in db
-          household.markModified('list');
-          household.markModified('pantry');
-          
-          //Save changes
-          return household.save()
-          .then(function() {
-            return Q.fcall(function() {
-              return household.list;
+          }
+          else{
+            //restock in pantry
+            itemProps.fullyStocked = true;
+            //Mark pantry and list modified because they are of mixed datatype in db
+            household.markModified('list');
+            household.markModified('pantry');
+            
+            //Save changes
+            return household.save()
+            .then(function() {
+              return Q.fcall(function() {
+                return household.list;
+              });
             });
-          });
-        }
+          }
+        });
 
       } else {
         throw new Error('Household not found');
@@ -182,24 +189,22 @@ module.exports = listHelpers = {
       if (household) {
         items.forEach(function(item) {
           //update the date to today
-          console.log("BOUGHT ITEM", item);
           household.pantry[item].date = new Date();
           household.pantry[item].fullyStocked = true;     
           
           //delete the item from the shopping list
-          delete household.list[item];
-          
-          //Mark pantry and list modified because they are of mixed datatype in db
-          household.markModified('pantry');
-          household.markModified('list');
-          
-          //Save changes
-          return household.save()
-          .then(function() {
-            return Q.fcall(function() {
-              // May need to return something here
-              return;
-            });
+          delete household.list[item];   
+        });
+        //Mark pantry and list modified because they are of mixed datatype in db
+        household.markModified('pantry');
+        household.markModified('list');
+        
+        //Save changes
+        return household.save()
+        .then(function() {
+          return Q.fcall(function() {
+            // May need to return something here
+            return household;
           });
         });
       } else {
