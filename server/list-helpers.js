@@ -1,21 +1,43 @@
 /**
-* Provides methods for creating user pantries and lists
-* @module listHelpers
+* Provides methods for creating household pantries and lists
+* @module groceryHelpers
+* @requires Household, appPantry, PantryItem, pantryHelpers, Q
 */
 
 var Household = require('./db/householdModel.js');
-var appPantry = require('./db/finalPantry.js');
+var appPantry = require('./db/finalPantry.js').pantry;
 var PantryItem = require('./PantryItem.js');
 var pantryHelpers = require('./pantry-helpers.js');
 var Q = require('q');
 
+/** 
+* Provides methods for manipulating household shopping lists
+* @class listHelpers
+* @static
+*/
+
 module.exports = listHelpers = {
-  //called to get the length of time since item was purchased
+  /**
+  * Calculate the amount of time that has passed since the item was purchased
+  * @method timeSincePurchase
+  * @param date {Date}
+  * the date the item was last purchased
+  * @return {Number}
+  * the time in days since the item was last purchased
+  */  
   timeSincePurchase : function(date){
     var diff = (new Date() - date.getTime())/ (24 * 60 * 60 * 1000);
     return Math.round(diff);
   },
-  //called when shopper opens app
+
+  /**
+  * Generates a shopping list for a household based upon the length of time since
+  * the item was last purchased, and Rosie's calculated probability that the 
+  * household has run out of that item.
+  * @method autoBuildList
+  * @param householdId {String}
+  * the string that identifies a household in the database
+  */  
   autoBuildList : function(householdId){
     return Household.findOne({ _id: householdId }, 'pantry list')
     .then(function(household) {
@@ -62,7 +84,17 @@ module.exports = listHelpers = {
     });
   },
 
-  //called when manually adding items to list
+  /**
+  * Adds an item to a household's shopping list.
+  * If the item is not already in their pantry, it adds it to the pantry as well.
+  * If the item is already in their pantry, it updates Rosie's neural network
+  * to train it to add the item to the list sooner.
+  * @method addToList
+  * @param item {String}
+  * the name of the item
+  * @param householdId {String}
+  * the string that identifies a household in the database
+  */
   addToList : function(item, householdId){
     return Household.findOne({ _id: householdId }, 'pantry list')
     .then(function(household) {
@@ -121,7 +153,17 @@ module.exports = listHelpers = {
     });
   },
 
-  //called when manually removing items added by Rosie (NOT bought)
+  /**
+  * Removes an item from a household's shopping list is the user
+  * doesn't want it there, but hasn't purchased it.
+  * It also updates Rosie's neural network to train it to 
+  * add the item to the list later.
+  * @method removeFromList
+  * @param item {String}
+  * the name of the item
+  * @param householdId {String}
+  * the string that identifies a household in the database
+  */
   removeFromList : function(item, householdId){
     return Household.findOne({ _id: householdId },'pantry list')
     .then(function(household) {
@@ -178,7 +220,16 @@ module.exports = listHelpers = {
     });
   },
 
-  //called after purchase
+  /**
+  * Removes an item from a household's shopping list, updating
+  * the last purchased date for that item in the pantry and setting
+  * it's `fullyStocked` property to `true`.
+  * @method buy
+  * @param item {String}
+  * the name of the item
+  * @param householdId {String}
+  * the string that identifies a household in the database
+  */
   buy : function(items, householdId){
     if (!items.length){
       console.log('No items purchased');
