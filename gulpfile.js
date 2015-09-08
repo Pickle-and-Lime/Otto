@@ -14,7 +14,8 @@ var gulp = require('gulp'),
   pngquant = require('imagemin-pngquant'),
   exec = require('child_process').exec,
   nodemon = require('gulp-nodemon'),
-  open = require('gulp-open');
+  open = require('gulp-open'),
+  Server = require('karma').Server;
 
 //Common paths
 var paths = {
@@ -177,3 +178,9 @@ gulp.task('default', ['documentation'],function() {
 // });
 
 //Add testing tasks still
+gulp.task('test', function(done){
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
