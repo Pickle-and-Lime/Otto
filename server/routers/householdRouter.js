@@ -6,12 +6,12 @@ var router = express.Router();
 /**
  *  GET /household
  *  Returns the household information
- *  Note: right now, only returning the household id
  */
-router.get('/', function(req, res) {
-  householdHelpers.getHousehold()
-  .then(function(householdId) {
-    res.send({householdId: householdId});
+router.get('/:id', function(req, res) {
+  var householdId = req.params.id;
+  householdHelpers.getHousehold(householdId)
+  .then(function(household) {
+    res.send(household);
   })
   .catch(function() {
     res.status(404);
@@ -19,11 +19,20 @@ router.get('/', function(req, res) {
 });
 
 /**
- *  POST /household
- *  Add email to household?
+ *  PUT /household
+ *  Update information for household
+ *  For now, only updating Name property
  */
-router.post('/', function(req, res) {
-  res.status(201).send({success: 'YEs'});
+router.put('/', function(req, res) {
+  var householdId = req.body.household;
+  var name = req.body.name;
+  householdHelpers.updateHousehold(householdId, name)
+  .then(function(household) {
+    res.send(household);
+  })
+  .catch(function() {
+    res.status(404);
+  });
 });
 
 /**
