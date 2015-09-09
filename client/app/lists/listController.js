@@ -18,10 +18,9 @@ groceries.controller('listController', function($scope, $state, Lists, auth) {
   $scope.updateList = function() {
     Lists.getList('/list/' + $scope.household)
       .then(function(res) {
-        console.log('GET /list:', res);
-        $scope.shoppingList = res.data;
-        // remake checkList object
-        $scope.checkList = $scope.makeListObj();
+        console.log('GET /list:', res.data);
+        $scope.shoppingList = Lists.listMaker(res.data);
+        console.log('shoppingList:', $scope.shoppingList);
       }, function(err) {
         console.log('GET /list: ERROR', err);
       });
@@ -32,7 +31,7 @@ groceries.controller('listController', function($scope, $state, Lists, auth) {
       .then(function(res) {
         console.log('GET /pantry/general', res.data);
         $scope.masterList = Lists.arrayConverter(res.data);
-        console.log('masterList:', $scope.masterList);
+        // console.log('masterList:', $scope.masterList);
       }, function(err) {
         console.log('GET /pantry/general ERROR', err);
       });
@@ -44,7 +43,7 @@ groceries.controller('listController', function($scope, $state, Lists, auth) {
     if (item && item.length) { // only add if there is something in userItem string
       Lists.addToList('/list', item, $scope.household)
         .then(function(res) {
-          console.log('POST to /list', res.data);
+          console.log('POST to /list', res);
           // update shopping list after add
           $scope.updateList();
         }, function(err) {
@@ -54,7 +53,8 @@ groceries.controller('listController', function($scope, $state, Lists, auth) {
   };
   // remove item from shopping list on backend
   $scope.removeItem = function(item) {
-    Lists.removeFromList('/list', item, $scope.household)
+    console.log('removeItem firing with:', item);
+    Lists.removeFromList('/list/' + $scope.household + '/' + item)
       .then(function(res) {
         console.log('DELETE to /list', res.data);
         // update shopping list after add
@@ -64,28 +64,41 @@ groceries.controller('listController', function($scope, $state, Lists, auth) {
       });
   };
   // takes shopping list and formats an object to be used with checkbox form
-  $scope.makeListObj = function() {
-    var result = {};
-    for (var key in $scope.shoppingList) {
-      result[key] = false;
+  // $scope.makeListObj = function() {
+  //   var result = {};
+  //   for (var key in $scope.shoppingList) {
+  //     result[key] = false;
+  //   }
+  //   return result;
+  // };
+  // toggle checkbox in checkList
+  $scope.toggleCheck = function(item) {
+    // $scope.shoppingList[item].checked = !$scope.shoppingList[item].checked;
+    for (var i = 0; i < $scope.shoppingList.length; i++) {
+      if ($scope.shoppingList[i].name === item) {
+        $scope.shoppingList[i].checked = !$scope.shoppingList[i].checked;
+        return;
+      }
     }
-    return result;
   };
   // submits checked items to backend
   $scope.checkoutList = function() {
     var items = [];
-    for (var key in $scope.checkList) {
-      if ($scope.checkList[key]) {
-        items.push(key);
+    console.log('shoppingList:', $scope.shoppingList);
+    for (var i = 0; i < $scope.shoppingList.length; i++) {
+      if ($scope.shoppingList[i].checked) {
+        items.push($scope.shoppingList[i].name);
       }
     }
+    console.log('items to buy:', items);
     Lists.buyList(items, $scope.household)
       .then(function(res) {
-        console.log('POST /buy:', res.data);
+        console.log('POST /buy:', res);
         // re-create the shopping list object
         $scope.updateList();
       }, function(err) {
         console.log('POST /buy: ERROR', err);
+        $scope.updateList();
       });
   };
 
@@ -120,7 +133,32 @@ groceries.factory('Lists', function($http) {
       for (var key in object) {
         item = {};
         item.name = key;
-        item.inList = object[key];
+        item.type = object[key].category;
+        array.push(item);
+      }
+      return array;
+    },
+
+    listMaker: function(object) {
+      var array = [];
+      var item;
+      for (var key in object) {
+        item = {};
+        item.name = key;
+        item.checked = object[key].checked;
+        array.push(item);
+      }
+      return array;
+    },
+
+    pantryMaker: function(object) {
+      var array = [];
+      var item;
+      for (var key in object) {
+        item = {};
+        item.name = key;
+        item.type = object[key].category;
+        item.fullyStocked = object[key].fullyStocked;
         array.push(item);
       }
       return array;

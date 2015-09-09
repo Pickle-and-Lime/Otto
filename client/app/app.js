@@ -122,6 +122,21 @@ groceries.config(function ($stateProvider) {
             requiresLogin: true
       }
     })
+    .state('pantryBuilder', {
+      url: "/pantryBuilder",
+      views: {
+        "menu": { templateUrl: "ui/menu.html",
+                  controller: "menuController"
+                 },
+        "content1": { templateUrl: "lists/pantryBuilder.html",
+                      controller: "pantryController"
+                    },
+        "title": { template: "My Pantry" }
+      },
+      data: {
+            requiresLogin: true
+      }
+    })
     // .state('recipes', {
     //   url: "/recipes",
     //   views: {

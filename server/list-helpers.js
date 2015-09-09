@@ -117,9 +117,10 @@ module.exports = listHelpers = {
         if (itemProps){
           //calculate how long since last bought
           var timeElapsed = listHelpers.timeSincePurchase(itemProps.date);
-
-          // Add the updated training data to pantry item
-          itemProps.trainingSet.push({input : [timeElapsed], output :[0.9]});
+          if (timeElapsed > 0) {
+            // Add the updated training data to pantry item
+            itemProps.trainingSet.push({input : [timeElapsed], output :[0.9]});
+          }
 
           //Rebuild the standalone NN with the updated training data
           pantryHelpers.updateItemNetwork(item, itemProps, household, false);

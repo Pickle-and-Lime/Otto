@@ -10,7 +10,7 @@ var router = express.Router();
 router.post('/', function(req, res) {
   var items = req.body.items;
   var household = req.body.household;
-
+  console.log('items:',items,'household:',household);
   listHelpers.buy(items, household)
   .then(function() {
     res.sendStatus(201);

@@ -40,9 +40,9 @@ router.post('/', function(req, res) {
  *  DELETE /list
  *  Manually remove item from list
  */
-router.delete('/', function(req, res) {
-  var item = req.body.item;
-  var household = req.body.household;
+router.delete('/:id/:item', function(req, res) {
+  var item = req.params.item;
+  var household = req.params.id;
 
   listHelpers.removeFromList(item, household)
   .then(function(list) {

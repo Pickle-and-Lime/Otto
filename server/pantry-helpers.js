@@ -222,6 +222,16 @@ module.exports = pantryHelpers = {
   * the general pantry, including the properties of each item
   */
   getAppPantry : function() {
+    // // Simply return a list of the key names in appPantry
+    // // which are all the products we track
+    // // The value could be anything the frontend needs
+    // var result = {};
+    // for (var item in appPantry) {
+    //   // result[item] = true;
+    //   result[item] = { // populating the master pantry list with the category
+    //     category: appPantry[item].category
+    //   };
+    // }
     return Q.fcall(function() {
       return appPantry;
     });
