@@ -30,7 +30,7 @@ var test = redtape({
       cb();
     });
   }
-})
+});
 
 test('Server API - /list', function(t) {
   // request() and its chainable methods

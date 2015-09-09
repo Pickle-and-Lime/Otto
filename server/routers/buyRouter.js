@@ -17,7 +17,7 @@ router.post('/', function(req, res) {
   })
   .catch(function() {
     res.status(404).send('Cannot update purchased items');
-  })
+  });
 });
 
 module.exports = router;

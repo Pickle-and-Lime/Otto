@@ -59,7 +59,7 @@ test('addToList() should add any item to the household\'s list', function(t){
         t.ok('Chicken' in household.list, 'Chicken added to list.');
         t.end();
       });
-    })
+    });
   });
 });
 
@@ -74,7 +74,7 @@ test('removeFromList() should remove the passed in item from the household\'s li
         t.notOk('Chicken' in household.list, 'Chicken removed from list.');
         t.end();
       });
-    })
+    });
   });
 });
 
@@ -124,12 +124,12 @@ test('buy() should move selected items from the current list to the pantry, full
       .then(function(){
         Household.findOne({_id: household1._id }, 'pantry list', function(err, household){
           t.notOk('Dessert' in household.list, 'Dessert removed from list.');
-          t.equal(household.pantry['Dessert'].fullyStocked, true, 'Dessert in pantry.');
+          t.equal(household.pantry.Dessert.fullyStocked, true, 'Dessert in pantry.');
           t.ok(household.list.Durian, 'Durian still on list');
           t.end();
         });  
-      })
-    })
+      });
+    });
   });
 });
 

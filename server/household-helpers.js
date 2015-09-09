@@ -28,6 +28,6 @@ module.exports = householdHelpers = {
   removeHousehold : function(householdId) {
     return Household.remove({ _id: householdId }, function(err) {
       if (err) console.error(err);
-    })
+    });
   }
-}
+};

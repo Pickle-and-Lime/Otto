@@ -24,7 +24,7 @@ router.get('/:id', function(req, res) {
   })
   .catch(function() {
     res.sendStatus(404);
-  })
+  });
 });
 
 /**
@@ -46,7 +46,7 @@ router.post('/', function(req, res) {
   })
   .catch(function() {
     res.sendStatus(404);
-  })
+  });
 });
 
 /**
@@ -70,7 +70,7 @@ router.post('/invite', function(req, res) {
   })
   .catch(function() {
     res.sendStatus(404);
-  })
+  });
 });
 
 /**
@@ -95,7 +95,7 @@ router.put('/invite', function(req, res) {
   })
   .catch(function() {
     res.sendStatus(404);
-  })
+  });
 });
 
 

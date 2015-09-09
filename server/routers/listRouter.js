@@ -16,7 +16,7 @@ router.get('/:id', function(req, res) {
   })
   .catch(function(err) {
     res.status(404).send('Cannot retrieve shopping list');
-  })
+  });
 });
 
 /**
@@ -33,7 +33,7 @@ router.post('/', function(req, res) {
   })
   .catch(function() {
     res.status(404).send('Cannot add item to shopping list');
-  })
+  });
 });
 
 /**
@@ -50,7 +50,7 @@ router.delete('/:id/:item', function(req, res) {
   })
   .catch(function() {
     res.status(404).send('Cannot remove item from shopping list');
-  })
+  });
 });
 
 module.exports = router;

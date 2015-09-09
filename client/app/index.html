@@ -6,8 +6,10 @@
       <!-- Compiled and minified CSS -->
       <!-- <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css"> -->
       <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-      <link rel="stylesheet" href="../lib/materialize/dist/css/materialize.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+      <!-- build:css -->
       <link rel="stylesheet" href="../assets/styles.css">
+      <!-- endbuild -->
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link rel="apple-touch-icon" sizes="120x120" href="../assets/icon-iphone.png">
       <meta name="apple-mobile-web-app-title" content="Rosie">
@@ -23,11 +25,13 @@
     <div ui-view="content1"></div>
     <div ui-view="content2"></div>
 
-    <!-- // <script src="../bower_components/jquery/dist/jquery.min.js"></script> -->
-    <script src="../lib/jquery/dist/jquery.min.js"></script>
-    <script src="../lib/angular/angular.min.js"></script>
-    <script src="../lib/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script src="../lib/materialize/dist/js/materialize.min.js"></script>
+     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+          
+    <!-- build:js -->
     <script src="app.js"></script>
     <script src="user/loginController.js"></script>
     <script src="ui/menuController.js"></script>
@@ -36,6 +40,7 @@
     <script src="general/landingController.js"></script>
     <script src="general/seasonalFactory.js"></script>
     <script src="household/householdController.js"></script>
+    <!-- endbuild -->
 
     <!-- Auth0 Stuff  -->
     <!-- We use client cookies to save the user credentials -->

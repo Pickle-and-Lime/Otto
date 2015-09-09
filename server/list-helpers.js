@@ -226,8 +226,8 @@ module.exports = listHelpers = {
   * the last purchased date for that item in the pantry and setting
   * it's `fullyStocked` property to `true`.
   * @method buy
-  * @param item {String}
-  * the name of the item
+  * @param items {Array}
+  * an array of the names of the items
   * @param householdId {String}
   * the string that identifies a household in the database
   */
