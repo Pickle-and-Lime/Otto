@@ -35,6 +35,15 @@ router.get('/general', function(req, res) {
   });
 });
 
+router.get('/categories', function(req, res) {
+  pantryHelpers.getItemCategories()
+  .then(function(categories) {
+    res.send(categories);
+  })
+  .catch(function() {
+    res.status(404).send('Cannot retrieve general pantry');
+  });
+});
 
 /**
  *  POST /pantry
