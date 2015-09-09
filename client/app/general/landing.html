@@ -1,43 +1,79 @@
-<ul class="collapsible" data-collapsible="accordion">
-  <!-- <li>
-    <div class="collapsible-header"><i class="material-icons">speaker_notes</i>You Might Need...<span class="badge">{{ suggestions.length }}</span></div>
+<div class="row hide-on-small-only">
+  <div class="col m6">
+    <ul class="collapsible" data-collapsible="accordion">
+
+      <li>
+        <div class="collapsible-header active"><i class="material-icons">whatshot</i>Vegetables In Season</div>
+        <div class="collapsible-body container">
+          <ul class="collection">
+            <li class="collection-item" ng-repeat="item in veggie">{{ item }}</li>
+          </ul>
+        </div>
+      </li>
+
+      <li>
+        <div class="collapsible-header"><i class="material-icons">whatshot</i>Fruits In Season</div>
+        <div class="collapsible-body container">
+          <ul class="collection">
+            <li class="collection-item" ng-repeat="item in fruit">{{ item }}</li>
+          </ul>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+
+  <div class="col m6">
+    <ul class="collapsible" data-collapsible="accordion">
+      <li>
+        <div class="collapsible-header active"><i class="material-icons">place</i>Farmer's Markets Nearby</div>
+        <div class="collapsible-body">
+
+            <div class="card small" ng-repeat="market in markets">
+              <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator" ng-src="{{ market.image }}">
+              </div>
+              <div class="card-content">
+                <span class="activator grey-text text-darken-4">{{ market.name }}<i class="material-icons right">more_vert</i></span>
+                <p>{{ market.schedule }}</p>
+              </div>
+              <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">{{ market.name }}<i class="material-icons right">close</i></span>
+                <p><a ng-href="{{ market.map }}">{{ market.address }}</a></p>
+                <p>{{ market.description }}</p>
+              </div>
+            </div>
+
+        </div>
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+<ul class="collapsible hide-on-med-and-up" data-collapsible="accordion">
+  <li>
+    <div class="collapsible-header"><i class="material-icons">whatshot</i>Vegetables In Season</div>
     <div class="collapsible-body container">
       <ul class="collection">
-        <li class="collection-item" ng-repeat="item in suggestions track by $index">{{ item }}
-          <span class="right">
-            <i class="material-icons" onclick="Materialize.toast('Suggestion removed',500)" ng-click="removeSuggestion($index)">not_interested</i>
-            <i class="material-icons" onclick="Materialize.toast('Added to list',500)" ng-click="addSuggestion($index)">done</i>
-          </span>
-        </li>
+        <li class="collection-item" ng-repeat="item in veggie">{{ item }}</li>
       </ul>
     </div>
-  </li> -->
-<!--   <li>
-    <div class="collapsible-header"><i class="material-icons">whatshot</i>What's In Season?</div>
+  </li>
+  <li>
+    <div class="collapsible-header"><i class="material-icons">whatshot</i>Fruits In Season</div>
     <div class="collapsible-body container">
-      
-      <div class="row">
-        <div class="col s6 m4" ng-repeat="fruit in summer track by $index">
-          <div class="card grey">
-            <div class="card-content white-text">
-              <span class="card-title" ng-bind="fruit"></span>
-            </div>
-            <div class="card-action">
-              <i class="material-icons left">not_interested</i>
-              <i class="material-icons right">done</i>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <ul class="collection">
+        <li class="collection-item" ng-repeat="item in fruit">{{ item }}</li>
+      </ul>
     </div>
-  </li> -->
+  </li>
   <li>
     <div class="collapsible-header active"><i class="material-icons">place</i>Farmer's Markets Nearby</div>
     <div class="collapsible-body">
 
       <div class="row">
-        <div class="card col s12 m6 l4 small" ng-repeat="market in markets">
+        <div class="card col s12 small" ng-repeat="market in markets">
           <div class="card-image waves-effect waves-block waves-light">
             <img class="activator" ng-src="{{ market.image }}">
           </div>

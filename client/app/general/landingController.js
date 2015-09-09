@@ -1,4 +1,4 @@
-groceries.controller('landingController', function($scope, Landing) {
+groceries.controller('landingController', function($scope, Seasonal, Landing) {
 
 
   /* this will get populated with Farmer's Market objects in the following form:
@@ -10,15 +10,36 @@ groceries.controller('landingController', function($scope, Landing) {
       schedule: "String of when it is open"
     }
   */
-  $scope.markets = [];
+  // functions to load correct set of seasonal fruits and veggies
+  var month = (new Date()).getMonth();
+  console.log('month is:', month);
+  var loadSeasonal = function(month) {
+    if (month === 0 || month === 1 || month === 2) { 
+      $scope.fruit = Seasonal.winterFruit;
+      $scope.veggie = Seasonal.winterVeggie;
+    } else if (month === 3 || month === 4 || month === 5) { 
+      $scope.fruit = Seasonal.springFruit;
+      $scope.veggie = Seasonal.springVeggie;
+    } else if (month === 6 || month === 7 || month === 8) { 
+      $scope.fruit = Seasonal.summerFruit;
+      $scope.veggie = Seasonal.summerVeggie;
+    } else if (month === 9 || month === 10 || month === 11) { 
+      $scope.fruit = Seasonal.fallFruit;
+      $scope.veggie = Seasonal.fallVeggie;
+    }
+  };
+  loadSeasonal(month);
 
-  // search by Zip code is WAY faster than using lat and lng
-  // var lat, lng;
-  // navigator.geolocation.getCurrentPosition(function(position) {
-  //   lat = position.coords.latitude;
-  //   lng = position.coords.longitude;
-  //   getMarketList(lat, lng);
-  // });
+  $scope.markets = [];
+  // getting lists of seasonal fruits and veggies from Seasonal factory
+  // $scope.springFruit = Seasonal.springFruit;
+  // $scope.summerFruit = Seasonal.summerFruit;
+  // $scope.fallFruit = Seasonal.fallFruit;
+  // $scope.winterFruit = Seasonal.winterFruit;
+  // $scope.springVeggie = Seasonal.springVeggie;
+  // $scope.summerVeggie = Seasonal.summerVeggie;
+  // $scope.fallVeggie = Seasonal.fallVeggie;
+  // $scope.winterVeggie = Seasonal.winterVeggie;
 
   var getMarketList = function() {
     Landing.findMarketbyLoc()

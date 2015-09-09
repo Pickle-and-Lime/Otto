@@ -1,5 +1,21 @@
+/* Styles for pantry builder */
+
+.item-name {
+  width: 50%;
+  text-align: left;
+  display: inline-block;
+  /*border: 1px solid black;*/
+}
+
+.item-options {
+  width: 50%;
+  text-align: right;
+  display: inline-block;
+  /*border: 1px solid black;*/
+  float: right;
+}
+
 .pantry-button {
-  /*color: #4caf50;*/
   border: 1px solid black;
   border-radius: 5px;
   margin: 0px 5px;
@@ -9,6 +25,14 @@
 .pantry-button-disabled {
   color: #4caf50;
   border: 1px solid #4caf50;
+  border-radius: 5px;
+  margin: 0px 5px;
+  padding: 0px 5px;
+}
+
+.pantry-button-loading {
+  color: red;
+  border: 1px solid red;
   border-radius: 5px;
   margin: 0px 5px;
   padding: 0px 5px;

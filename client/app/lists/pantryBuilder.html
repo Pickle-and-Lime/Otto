@@ -1,0 +1,25 @@
+<div class="container">
+
+  <ul class="collection with-header" ng-repeat="category in categories">
+<!--   <ul class="collection with-header"> -->
+    <li class="collection-header" ng-click="setVisible(category)"><strong>{{category}}</strong></li>
+    <li class="collection-item" ng-repeat="item in masterList | filter: {type: category}" ng-show="checkVisible(category)">
+      <span class="item-name">{{ item.name }}</span>
+      <span class="item-options">
+        <span class="pantry-button" ng-show="!loadingPantry() && !inPantry(item.name)" ng-click="addItem(item.name)">Have</span>
+        <span class="pantry-button" ng-show="!loadingPantry() && !inPantry(item.name)" ng-click="needItem(item.name)">Need</span>
+        <span class="pantry-button-disabled" ng-show="!loadingPantry() && inPantry(item.name)">Added</span>
+        <span class="pantry-button-loading" ng-show="loadingPantry()">Loading...</span>
+      </span>
+    </li>
+  </ul>
+
+</div>
+
+
+
+<script>
+  // $(document).ready(function(){
+  //   $('.collapsible').collapsible();
+  // });
+</script>
