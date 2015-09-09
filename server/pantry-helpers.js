@@ -5,7 +5,9 @@
 */
 
 var Household = require('./db/householdModel.js');
-var appPantry = require('./db/finalPantry.js').pantry;
+var finalPantry = require('./db/finalPantry.js');
+var appPantry = finalPantry.pantry;
+var categories = finalPantry.categories;
 var PantryItem = require('./PantryItem.js');
 var Q = require('q');
 
@@ -234,6 +236,12 @@ module.exports = pantryHelpers = {
     // }
     return Q.fcall(function() {
       return appPantry;
+    });
+  }, 
+
+  getItemCategories : function(){
+    return Q.fcall(function() {
+      return categories;
     });
   }
 };
