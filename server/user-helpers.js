@@ -75,7 +75,10 @@ module.exports = userHelpers = {
   createUser : function(userId, email) {
     // Create new household for the user
     var newHousehold = new Household({});
-    newHousehold.users.push(userId);
+    newHousehold.users.push({
+      userId: userId,
+      email: email
+    });
     return newHousehold.save()
     .then(function() {
       var newUser = new User({
@@ -95,23 +98,36 @@ module.exports = userHelpers = {
   },
 
   /**
-   *  Adds the creator's email into the invitee's `invites` property.
+   *  Adds the inviters Household information into the invitee's `invites` property,
+   *  and adds invitee's email to the households sent invites list.
    *  If invitation already exists, do nothing and return successfully.
    *
    *  @method createInvitation
-   *  @param  {string}    creatorEmail
+   *  @param  {string}    householdId
    *  @param  {string}    inviteeEmail
    *
    *  @return {Promise}   Callback is supplied with invitee's User object.
   */
-  createInvitation : function(creatorEmail, inviteeEmail) {
-    return User.findOne({ email: inviteeEmail })
-    .then(function(user) {
-      if (!user) throw new Error('Cannot find user');
-      if (user.invites.indexOf(creatorEmail) === -1) {
-        user.invites.push(creatorEmail);
-      }
-      return user.save();
+  createInvitation : function(householdId, inviteeEmail) {
+    return Household.findById(householdId)
+    .then(function(household) {
+      return User.findOne({ email: inviteeEmail })
+      .then(function(user) {
+        if (!user) throw new Error('Cannot find user');
+        user.invites.push({
+          householdName: household.name,
+          householdId: household._id
+        });
+        household.sentInvites.push({
+          userId: user.userId,
+          email: inviteeEmail
+        });
+
+        return household.save()
+        .then(function() {
+          return user.save();
+        });
+      });
     });
   },
 
@@ -119,37 +135,51 @@ module.exports = userHelpers = {
    *  Accepts or rejects the invitation.
    *
    *  Accepting will change the invitee's HouseholdId to
-   *  the creator's householdId.
+   *  the creator's householdId, and add the invitee's email
+   *  to the creator household's users list.
    *
-   *  Both accept and reject will remove the creator's email from
-   *  the `invites` property of the invitee's User DB entry.
+   *  Both accept and reject will remove the household's invite from
+   *  the User's `invites` array, and from the household's `sentInvites` array
    *
    *  @method updateInvitation
-   *  @param  {string}    creatorEmail
+   *  @param  {string}    householdId
    *  @param  {string}    inviteeEmail
    *  @param  {boolean}   accept
    *
    *  @return {Promise}   Callback is supplied with invitee's User object
    */
-  updateInvitation : function(creatorEmail, inviteeEmail, accept) {
+  updateInvitation : function(householdId, inviteeEmail, accept) {
     if (typeof accept !== 'boolean') throw new Error('`Accept` must be a boolean');
 
-    return User.findOne({ email: inviteeEmail })
-    .then(function(invitee) {
-      if (!invitee) throw new Error('Cannot find invitee');
+    return Household.findById(householdId)
+    .then(function(household) {
+      return User.findOne({ email: inviteeEmail })
+      .then(function(invitee) {
+        if (!invitee) throw new Error('Cannot find invitee');
 
-      // Pull removes the element from the `invites` MongoDB Array, if present
-      invitee.invites.pull(creatorEmail);
+        // Removes invite (and duplicates) from User's invites
+        invitee.invites = invitee.invites.filter(function(el) {
+          return el.householdId !== householdId;
+        });
 
-      if (accept) {
-        return User.findOne({ email: creatorEmail })
-        .then(function(creator) {
-          invitee.householdId = creator.householdId;
+        // Removes invite (and duplicates) from household's sentInvites
+        household.sentInvites = household.sentInvites.filter(function(el) {
+          return el.email !== inviteeEmail;
+        });
+
+        if (accept) {
+          invitee.householdId = householdId;
+          household.users.push({
+            userId: invitee.userId,
+            email: inviteeEmail
+          });
+        }
+
+        return household.save()
+        .then(function() {
           return invitee.save();
         });
-      } else {
-        return invitee.save();
-      }
+      });
     });
   }
 };

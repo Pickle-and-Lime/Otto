@@ -13,7 +13,13 @@ var router = express.Router();
  *            userId:"abc", 
  *            email:"test@example.com", 
  *            householdId:"def", 
- *            invites: ['bob@gmail.com', 'karen@gmail.com']
+ *            invites: [ 
+ *              {
+ *                householdName: 'Example Name',
+ *                householdId: '123abc'
+ *              },
+ *              {...}
+ *            ]
  *          }
  */
 router.get('/:id', function(req, res) {
@@ -54,17 +60,17 @@ router.post('/', function(req, res) {
  *  
  *  Creates an invitation for the user
  * 
- *  Invites a user, by email, to another user's household
+ *  Invites a user, by email, to a household specified by ID in the request
  *
- *  E.g. John at john@gmail.com invites Kate at kate@gmail.com
- *  Receives { "creatorEmail": "john@gmail.com", "inviteeEmail": "kate@gmail.com"}
+ *  E.g. John (householdId = abc123) invites Kate at kate@gmail.com
+ *  Receives { "household": "abc123", "inviteeEmail": "kate@gmail.com"}
  *  @return 200 if successful, 404 if unsuccessful
  */
 
 router.post('/invite', function(req, res) {
-  var creatorEmail = req.body.creatorEmail;
+  var household = req.body.household;
   var inviteeEmail = req.body.inviteeEmail;
-  userHelpers.createInvitation(creatorEmail, inviteeEmail)
+  userHelpers.createInvitation(household, inviteeEmail)
   .then(function() {
     res.sendStatus(200);
   })
@@ -81,15 +87,15 @@ router.post('/invite', function(req, res) {
  *  Either accepts or rejects pending invitation
  *
  *  E.g. Kate accepts John's invitation
- *  Receives { creatorEmail: "john@gmail.com", inviteeEmail: "kate@gmail.com", accept: true }
+ *  Receives { household: "abc123", inviteeEmail: "kate@gmail.com", accept: true }
  *  @return Kate's new householdId if successful, 404 if unsuccessful
  */
 
 router.put('/invite', function(req, res) {
-  var creatorEmail = req.body.creatorEmail;
+  var household = req.body.household;
   var inviteeEmail = req.body.inviteeEmail;
   var accept = req.body.accept;
-  userHelpers.updateInvitation(creatorEmail, inviteeEmail, accept)
+  userHelpers.updateInvitation(household, inviteeEmail, accept)
   .then(function(user) {
     res.send(user.householdId);
   })
