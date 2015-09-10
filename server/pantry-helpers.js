@@ -135,7 +135,7 @@ module.exports = pantryHelpers = {
   //and hide them from displaying in their pantry in the frontend instead of 
   //completely deleting from the db 
   removeFromPantry : function(item, householdId){
-    return Household.findOne({ _id: householdId }, 'pantry')
+    return Household.findOne({ _id: householdId }, 'list pantry')
     .then(function(household){
       if (household) {
         //remove item from the pantry
@@ -152,6 +152,7 @@ module.exports = pantryHelpers = {
           // Allows removeFromPantry to be chainable
           return Q.fcall(function() {
             return household.pantry;
+            // return household;
           });
         });
       } else {

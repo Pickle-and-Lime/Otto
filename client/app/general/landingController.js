@@ -31,15 +31,6 @@ groceries.controller('landingController', function($scope, Seasonal, Landing) {
   loadSeasonal(month);
 
   $scope.markets = [];
-  // getting lists of seasonal fruits and veggies from Seasonal factory
-  // $scope.springFruit = Seasonal.springFruit;
-  // $scope.summerFruit = Seasonal.summerFruit;
-  // $scope.fallFruit = Seasonal.fallFruit;
-  // $scope.winterFruit = Seasonal.winterFruit;
-  // $scope.springVeggie = Seasonal.springVeggie;
-  // $scope.summerVeggie = Seasonal.summerVeggie;
-  // $scope.fallVeggie = Seasonal.fallVeggie;
-  // $scope.winterVeggie = Seasonal.winterVeggie;
 
   var getMarketList = function() {
     Landing.findMarketbyLoc()
@@ -78,11 +69,6 @@ groceries.factory('Landing', function($http) {
   var userZip; // make it possible to change and retrieve with a method
 
   return {
-    // findMarketbyLoc: function(lat, lng) {
-    //   var url = "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/locSearch?lat=" + lat + "&lng=" + lng;
-    //   return $http.get(url);
-    // },
-
     setZip: function(zip) { // zip code should be a string input by user
       userZip = zip;
     },

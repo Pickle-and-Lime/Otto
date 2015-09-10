@@ -1,22 +1,8 @@
 
-groceries.controller('listController', function ($scope, $state, Lists, auth) {
-  // store householdId after login
-  $scope.household = auth.profile.household.householdId;
+groceries.controller('listController', function ($scope, $state, Lists, auth, store) {
+  // get householdId from angular storage
+  $scope.household = store.get('householdId');
   console.log('householdId:', $scope.household);
-
-  // scope variable for household id grabbed from backend - might want to put in named function eventually
-  // Lists.getList('/household')
-  //   .then(function(res) {
-  //     console.log('GET /household:', res.data);
-  //     $scope.household = res.data.householdId;
-  //     console.log('householdId:',$scope.household);
-  //     // call update functions to populate lists
-  //     $scope.updateMaster();
-  //     $scope.updateList();
-  //   }, function(err) {
-  //     console.log('GET /household ERR:', err);
-  //   });
-
   // function that updates shoppingList from backend
   $scope.updateList = function() {
     Lists.getList('/list/' + $scope.household)
@@ -50,6 +36,7 @@ groceries.controller('listController', function ($scope, $state, Lists, auth) {
         .then(function(res) {
           console.log('POST to /list', res);
           // update shopping list after add
+          $scope.userItem = '';
           $scope.updateList();
         }, function(err) {
           console.log('POST to /list ERROR', err);
@@ -58,7 +45,6 @@ groceries.controller('listController', function ($scope, $state, Lists, auth) {
   };
   // remove item from shopping list on backend
   $scope.removeItem = function(item) {
-    console.log('removeItem firing with:', item);
     Lists.removeFromList('/list/' + $scope.household + '/' + item)
       .then(function(res) {
         console.log('DELETE to /list', res.data);

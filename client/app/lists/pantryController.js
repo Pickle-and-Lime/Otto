@@ -1,7 +1,7 @@
-groceries.controller('pantryController', function ($scope, Lists, auth) {
-  // we will have id stored after login
-  $scope.household = auth.profile.household.householdId;
-
+groceries.controller('pantryController', function ($scope, Lists, auth, store) {
+  // get householdId from angular storage
+  $scope.household = store.get('householdId');
+  console.log('householdId:', $scope.household);
   // eventually get them from backend
   $scope.categories = [
     "Alcohol","Baked Goods","Beverages","Breakfast","Canned Foods","Condiments And Sauces",
@@ -25,29 +25,22 @@ groceries.controller('pantryController', function ($scope, Lists, auth) {
   };
   // check whether an item from pantryBuilder is in the pantry
   $scope.inPantry = function(item) {
+    console.log('firing inPantry');
     if ($scope.pantryList === undefined) { // if somehow pantryList hasn't been populated yet
       return false; 
     } else {
-      return $scope.pantryList.hasOwnProperty(item);
+      for (var i = 0; i < $scope.pantryList.length; i++) {
+        if ($scope.pantryList[i].name === item) {
+          return true;
+        }
+      }
+      return false;
     }
   };
   // check whether pantry list is still loading
   $scope.loadingPantry = function() {
     return !$scope.pantryList;
   };
-
-    // scope variable for household id grabbed from backend - might want to put in named function eventually
-  // Lists.getList('/household')
-  //   .then(function(res) {
-  //     console.log('GET /household:', res.data);
-  //     $scope.household = res.data.householdId;
-  //     console.log('householdId:',$scope.household);
-  //     // call update functions to populate lists
-  //     $scope.updateMaster();
-  //     $scope.updatePantry();
-  //   }, function(err) {
-  //     console.log('GET /household ERR:', err);
-  //   });
 
   // function that updates pantryList from backend
   $scope.updatePantry = function() {
@@ -81,6 +74,7 @@ groceries.controller('pantryController', function ($scope, Lists, auth) {
       .then(function(res) {
         console.log('POST /pantry:', res.data);
         // update pantry list on completion
+        $scope.userPantryItem = '';
         $scope.updatePantry();
       }, function(err) {
         console.log('POST /pantry:', err);
@@ -88,13 +82,13 @@ groceries.controller('pantryController', function ($scope, Lists, auth) {
   };
   // this removes a pantry item from the list
   $scope.removeItem = function(item) {
-    Lists.removeFromList('/pantry', item, $scope.household)
+    Lists.removeFromList('/pantry/' + $scope.household + '/' + item)
       .then(function(res) {
         console.log('DELETE /pantry:', res.data);
         // update pantry list on completion
         $scope.updatePantry();
       }, function(err) {
-        console.log('DELETE /pantry:', err);
+        console.log('ERROR DELETE /pantry:', err);
       });
   };
   // ranOut will send a request to add the item to the shopping list, and update the pantry

@@ -44,6 +44,19 @@
   text-shadow: 1px 1px 2px #999;
 }
 
+/* Make pantry items in typeahead highlight on hover */
+.pantry-list-item:hover {
+  background-color: #ddd;
+}
+
+.tabs .indicator {
+  position: absolute;
+  bottom: 0;
+  height: 0px;
+  background-color: #f6b2b5;
+  will-change: left, right; 
+}
+
 #tab-bar.hidden {
   display: none;
 }
