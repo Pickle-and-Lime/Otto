@@ -45,7 +45,7 @@ groceries.controller('landingController', function($scope, Seasonal, Landing) {
     Landing.findMarketbyLoc()
       .then(function(res) {
         $scope.marketArray = res.data.results;
-        console.log($scope.marketArray);
+        // console.log($scope.marketArray);
         $scope.marketArray.forEach(function(market) {
           getMarketInfo(market.id, market.marketname);
         });
@@ -61,7 +61,7 @@ groceries.controller('landingController', function($scope, Seasonal, Landing) {
         var market = res.data.marketdetails;
         // console.log(market);
         $scope.markets.push(Landing.makeMarketInfo(name, market));
-        console.log($scope.markets);
+        // console.log($scope.markets);
       }, function(err) {
         console.log('ERR getMarketInfo',err);
       });

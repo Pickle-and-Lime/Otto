@@ -1,4 +1,6 @@
-groceries.controller('pantryController', function($scope, Lists) {
+groceries.controller('pantryController', function ($scope, Lists, auth) {
+  // we will have id stored after login
+  $scope.household = auth.profile.household.householdId;
 
   // eventually get them from backend
   $scope.categories = [
@@ -35,17 +37,17 @@ groceries.controller('pantryController', function($scope, Lists) {
   };
 
     // scope variable for household id grabbed from backend - might want to put in named function eventually
-  Lists.getList('/household')
-    .then(function(res) {
-      console.log('GET /household:', res.data);
-      $scope.household = res.data.householdId;
-      console.log('householdId:',$scope.household);
-      // call update functions to populate lists
-      $scope.updateMaster();
-      $scope.updatePantry();
-    }, function(err) {
-      console.log('GET /household ERR:', err);
-    });
+  // Lists.getList('/household')
+  //   .then(function(res) {
+  //     console.log('GET /household:', res.data);
+  //     $scope.household = res.data.householdId;
+  //     console.log('householdId:',$scope.household);
+  //     // call update functions to populate lists
+  //     $scope.updateMaster();
+  //     $scope.updatePantry();
+  //   }, function(err) {
+  //     console.log('GET /household ERR:', err);
+  //   });
 
   // function that updates pantryList from backend
   $scope.updatePantry = function() {
@@ -70,6 +72,9 @@ groceries.controller('pantryController', function($scope, Lists) {
         console.log('GET /pantry/general', err);
       });
   };
+  // update general list and pantry list
+  $scope.updateMaster();
+  $scope.updatePantry();
   // this adds a pantry item to the list
   $scope.addItem = function(item) {
     Lists.addToList('/pantry', item, $scope.household)
