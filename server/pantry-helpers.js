@@ -138,9 +138,13 @@ module.exports = pantryHelpers = {
     return Household.findOne({ _id: householdId }, 'pantry')
     .then(function(household){
       if (household) {
+        //remove item from the pantry
         delete household.pantry[item];
-
-        //Mark pantry modified because it is a mixed datatype in db
+        //remove the item from the household's shopping list if it is there
+        delete household.list[item];
+        
+        //Mark list and pantry modified because they are a mixed datatype in db
+        household.markModified('list');
         household.markModified('pantry');
         //Save changes
         return household.save()
