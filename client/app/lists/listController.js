@@ -1,18 +1,21 @@
 
-groceries.controller('listController', function($scope, $state, Lists, auth) {
+groceries.controller('listController', function ($scope, $state, Lists, auth) {
+  // store householdId after login
+  $scope.household = auth.profile.household.householdId;
+  console.log('householdId:', $scope.household);
 
   // scope variable for household id grabbed from backend - might want to put in named function eventually
-  Lists.getList('/household')
-    .then(function(res) {
-      console.log('GET /household:', res.data);
-      $scope.household = res.data.householdId;
-      console.log('householdId:',$scope.household);
-      // call update functions to populate lists
-      $scope.updateMaster();
-      $scope.updateList();
-    }, function(err) {
-      console.log('GET /household ERR:', err);
-    });
+  // Lists.getList('/household')
+  //   .then(function(res) {
+  //     console.log('GET /household:', res.data);
+  //     $scope.household = res.data.householdId;
+  //     console.log('householdId:',$scope.household);
+  //     // call update functions to populate lists
+  //     $scope.updateMaster();
+  //     $scope.updateList();
+  //   }, function(err) {
+  //     console.log('GET /household ERR:', err);
+  //   });
 
   // function that updates shoppingList from backend
   $scope.updateList = function() {
@@ -36,7 +39,9 @@ groceries.controller('listController', function($scope, $state, Lists, auth) {
         console.log('GET /pantry/general ERROR', err);
       });
   };
-
+  // update the general list and shopping list
+  $scope.updateMaster();
+  $scope.updateList();
 
   // add item from text input to shopping list on backend
   $scope.addItem = function(item) {
@@ -126,6 +131,8 @@ groceries.factory('Lists', function($http) {
     buyList: function(itemsArray, household) {
       return $http.post('/buy', {items: itemsArray, household: household});
     },
+    // helper function to get household Id from server
+    
 
     arrayConverter: function(object) {
       var array = [];
