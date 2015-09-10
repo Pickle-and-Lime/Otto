@@ -1,10 +1,10 @@
 {
-  "name": "Rosie",
+  "name": "Otto",
   "version": "0.0.1",
   "authors": [
     "Eric King <e.king117@gmail.com>"
   ],
-  "description": "Rosie: The shopping list that builds itself.",
+  "description": "Otto: The shopping list that builds itself.",
   "license": "MIT",
   "ignore": [
     "**/.*",
