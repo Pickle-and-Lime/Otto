@@ -11,18 +11,25 @@ describe('List Controller', function () {
     $scope = $rootScope.$new();
 
     var $controller = $injector.get('$controller');
+    var $auth = $injector.get('auth');
 
     //Create mock controller
     createController = function () {
       return $controller('listController', {
-        $scope: $scope
+        $scope: $scope,
+        auth: {
+          profile: { 
+            household: {
+              householdId: 1
+            }
+           }
+        }
       });
     };
     
     //Due to current front-end config, these calls will always be made on controller init
-    $httpBackend.expectGET('/household').respond({ data: { householdId: 1 } });
     $httpBackend.expectGET('/pantry/general').respond();
-    $httpBackend.expectGET('/list/undefined').respond();
+    $httpBackend.expectGET('/list/1').respond();
     createController();
 
     $httpBackend.flush();
