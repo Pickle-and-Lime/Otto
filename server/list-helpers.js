@@ -57,7 +57,7 @@ module.exports = listHelpers = {
             //Execute stringified function
             eval("var network = "+household.pantry[item].network);
             var prob = network([timeElapsed]);
-            console.log(item, prob);
+            // console.log(item, prob);
             if (prob >0.5){
               household.pantry[item].fullyStocked = false;
               household.markModified('pantry');
@@ -124,7 +124,7 @@ module.exports = listHelpers = {
 
           //Rebuild the standalone NN with the updated training data
           pantryHelpers.updateItemNetwork(item, itemProps, household, false);
-        }
+        } 
         //otherwise, add it to their pantry
         else {
           return pantryHelpers.addToPantry(item, householdId)
@@ -169,7 +169,6 @@ module.exports = listHelpers = {
     return Household.findOne({ _id: householdId },'pantry list')
     .then(function(household) {
       if (household) {
-        //console.log('removeFromList household: ', household);
         var itemProps = household.pantry[item];
         
         //remove the item from the household's shopping list
@@ -233,7 +232,6 @@ module.exports = listHelpers = {
   */
   buy : function(items, householdId){
     if (!items.length){
-      console.log('No items purchased');
       throw new Error("items not purchased");
     }
     return Household.findOne({ _id: householdId }, 'pantry list')
