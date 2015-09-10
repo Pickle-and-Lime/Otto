@@ -39,10 +39,16 @@ module.exports = pantryHelpers = {
     // Add new standalone fn to item pantry
     itemProps.network = trained.toString();
     itemProps.fullyStocked = fullyStocked;
+    itemProps.tracked = true;
     //Mark pantry modified because it is a mixed datatype in db
     household.markModified('pantry');
     //Save changes
-    return household.save();
+    return household.save()
+    .then(function() {
+      return Q.fcall(function() {
+        return household.pantry;
+      });
+    });
   },
 
   /**
@@ -68,7 +74,6 @@ module.exports = pantryHelpers = {
         }
         //stores today's date if no date is passed in
         var date = month ? new Date(2015, month, day) : new Date();
-        console.log('ITEM',item);
         //check if the item is in the general pantry
         if (appPantry[item]){
           //train item for that household with their own data if it exists, or with the general data
@@ -101,7 +106,7 @@ module.exports = pantryHelpers = {
           household.pantry[item] = {
             tracked : false,
             network: null,
-            trainingSet : null,
+            trainingSet : [],
             date: date,
             fullyStocked : true, 
             expiration : undefined,
