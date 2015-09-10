@@ -177,10 +177,18 @@ gulp.task('default', ['documentation'],function() {
 //     .pipe(gulp.dest('public/'));
 // });
 
-//Add testing tasks still
-gulp.task('test', function(done){
+//Add testing tasks 
+
+gulp.task('front-end-test', function(done){
   new Server({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true
   }, done).start();
 });
+
+gulp.task('back-end-test', function(){
+  runCommand('node server/spec/HelperSpec.js');
+});
+
+gulp.task('test', ['front-end-test', 'back-end-test']);
+
