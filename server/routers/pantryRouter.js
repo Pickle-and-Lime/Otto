@@ -69,10 +69,10 @@ router.post('/', function(req, res) {
  *  Remove item from pantry
  *  Note: This will not add the item to shopping list
  */
-router.delete('/', function(req, res) {
-  var item = req.body.item;
-  var household = req.body.household;
-
+router.delete('/:id/:item', function(req, res) {
+  var item = req.params.item;
+  var household = req.params.id;
+  console.log('household:',household,'item:',item);
   pantryHelpers.removeFromPantry(item, household)
   .then(function(pantry) {
     res.send(pantry);

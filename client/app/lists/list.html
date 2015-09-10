@@ -14,7 +14,7 @@
         <label for="groceryItem">Enter item...</label>
       </div>
       <ul class="collection container" ng-hide="!userItem.length">
-        <li class="collection-item" ng-repeat="item in masterList | filter:{name: userItem}" ng-bind="item.name" ng-click="setItem(item.name)"></li>
+        <li class="collection-item pantry-list-item" ng-repeat="item in masterList | filter:{name: userItem}" ng-bind="item.name" ng-click="addItem(item.name)" onclick="Materialize.toast('Added',500)"></li>
       </ul>
       <button class="btn waves-effect waves-light green right" onclick="Materialize.toast('Added',500)" ng-click="addItem(userItem)">Add</button>
     </div>
@@ -23,10 +23,11 @@
   <form>
     <p ng-repeat="item in shoppingList | orderBy: 'name'">
       <span>{{ item.name }}</span>
+      <span class="right" ng-click="removeItem(item.name)" onclick="Materialize.toast('Item Deleted',500)"><i class="material-icons">not_interested</i></span>
       <input class="right" id="{{ item.name }}" type="checkbox"/>
       <label for="{{ item.name }}" class="right" ng-click="toggleCheck(item.name)"></label>
     </p>
-    <button class="green right btn waves-effect waves-light" ng-click="checkoutList()" onclick="Materialize.toast('Checkout',500)">Checkout
+    <button class="green right btn waves-effect waves-light" ng-click="checkoutList()" onclick="Materialize.toast('Items Bought',500)">Checkout
     <i class="material-icons">send</i>
     </button>
   </form>
