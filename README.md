@@ -13,7 +13,7 @@ To view the documentation
 
 To edit the documentation in real time
 ----------------------------------------------------
-   1. Run `yuidoc --server` from the root directory
+   1. Run `yuidoc . --server` from the root directory
    2. Navigate to `http://127.0.0.1:3000/`
    3. Refer to the [YUIDoc Syntax Reference](http://yui.github.io/yuidoc/syntax/index.html) to add to the documentation
    4. Refresh the browser to view changes
