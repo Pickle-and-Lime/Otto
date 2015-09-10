@@ -6,7 +6,7 @@ var router = express.Router();
 /**
  *  GET /user/:id
  * 
- *  Retrieves information about user, including outstanding invites
+ *  Retrieves information about user, including received outstanding/pending invites
  *  
  *  @return JSON
  *          { 

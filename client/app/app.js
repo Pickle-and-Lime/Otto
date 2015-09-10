@@ -63,7 +63,9 @@ groceries.config(function ($stateProvider) {
         "menu": { templateUrl: "ui/menu.html",
                   controller: "menuController"
                  },
-        "content1": { templateUrl: "general/about.html" },
+        "content1": { templateUrl: "general/about.html",
+                      controller: "loginController"
+                    },
         "title": { template: "Rosie" }
       }
     })

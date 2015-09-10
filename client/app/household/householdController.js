@@ -1,44 +1,89 @@
-groceries.controller('householdController', ['$scope', '$http', '$location', 'auth', 
-  function ($scope, $http, $location, auth) {
-    $scope.auth = auth;
+/**
+ * Household Controller: Controlls household.html and createHousehold.html
+ *
+ * @module Household Controller
+ */
+groceries.controller('householdController', ['$scope', '$http', '$location', 'auth', 'store', '$state',
+  function ($scope, $http, $location, auth, store, $state) {
+    /**
+     * initializes $scope variables to store received data and interaction states (private)
+     *
+     * @class getUser()
+     */
+    var init = function(){
+    //initialize object to hold all scope elements, avoids child scope issues with ng-if statements
+      $scope.s = {};
+      $scope.s.profile = auth.profile;
+      $scope.s.profile.household = {};
+      $scope.s.profile.household.id = store.get('householdId');
+      //initialize household as null
+      $scope.s.household = null;
+      
+      //holds user inputs
+      $scope.s.inputs = {householdName: "", emails: []};
 
-  //initialize object to hold all scope elements, avoids child scope issues with ng-if statements
-    $scope.s = {};
-    //initialize household as null
-    $scope.s.household = null;
-    
-    //function to request household from server
+      //holds current inputs without saving to the input object
+      $scope.s.currentEmail = "";
+
+      //dynamic class variables for create household button, set to "" to enable button
+      $scope.s.createButtonActive = "disabled";
+      $scope.s.addEmailActive = "disabled";
+
+      //used to toggle the create button/loading icon when form submitted, also toggles forms enabled/disabled
+      $scope.s.submitted = false;
+      $scope.s.joinSubmitted = false;
+    };
+    init();
+
+    /**
+     * function to request user info from server (private)
+     *
+     * @class getUser()
+     */
+    var getUser = function(){
+      $scope.s.getUserFinished = false;
+      $http.get('/user/' + $scope.s.profile.user_id.split('|')[1])
+      .then(function(res){
+        console.log('getUser(): ', res);
+        $scope.s.profile.household.user = res.data;
+        $scope.s.getUserFinished = true;
+      }, function(err){
+        console.log('Error in getUser: ', err);
+        $scope.s.getUserFinished = false;
+        Materialize.toast('Ooops, check your connection and try again.', 10000);
+      });
+    };
+
+    /**
+     * function to request household info from server (private)
+     *
+     * @class getHousehold()
+     */
     var getHousehold = function(){
-      $scope.s.callFinished = false;
-      $http.get('/household')
+      $scope.s.getHouseholdFinished = false;
+      $http.get('/household/' + $scope.s.profile.household.id)
         .then(function(res){
-          $scope.s.household = res.data;
-          if ($scope.s.household.householdId){
+          console.log('getHousehold(): ', res.data);
+          angular.extend($scope.s.profile.household, res.data);
+          if ($scope.s.profile.household.name !== ""){
             $location.path( "/household" );
           }
-          $scope.s.callFinished = true;
+          $scope.s.getHouseholdFinished = true;
         }, function(err){
           console.log('ERROR in householdController getHousehold()', err);
-          //$scope.s.submitted = false;
+          $scope.s.getHouseholdFinished = false;
           Materialize.toast('Ooops, check your connection and try again.', 10000);
       });
     };
+    getUser();
     getHousehold();
 
-    //holds user inputs
-    $scope.s.inputs = {householdName: "", householdSize: null, emails: []};
 
-    //holds current inputs without saving to the input object
-    $scope.s.currentEmail = "";
-
-    //dynamic class variables for create household button, set to "" to enable button
-    $scope.s.createButtonActive = "disabled";
-    $scope.s.addEmailActive = "disabled";
-
-    //used to toggle the create button/loading icon when form submitted, also toggles forms enabled/disabled
-    $scope.s.submitted = false;
-
-    //inserts email into array when user submits
+    /**
+     * function to store email in local variable until submission occurs (attached to $scope.s)
+     *
+     * @class submitEmail()
+     */
     $scope.s.submitEmail = function(){
       if ($scope.s.currentEmail !== ""){
         $scope.s.inputs.emails.push($scope.s.currentEmail);
@@ -49,6 +94,11 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
 
     //checks if all inputs entered and activates 'create' button
     //emailForm is used to check if valid email has been entered, if so it enables add button
+    /**
+     * function to check that user inputs are valid
+     *
+     * @class checkInputs()
+     */
     $scope.s.checkInputs = function(emailForm){
       emailForm = emailForm || false;
       var i = $scope.s.inputs;
@@ -64,8 +114,6 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
       //check all inputs for validity, if valid enable create button, else disable
       if (i.householdName !== ""       && 
           i.householdName.length <= 24 &&
-          i.householdSize >= 1         && 
-          i.householdSize % 1 === 0    && 
           i.emails.length >= 1) {
         $scope.s.createButtonActive = "";
       }
@@ -75,6 +123,11 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
     };
 
     //inserts the clicked email into the edit form, deletes it from the input object
+    /**
+     * function to edit email in list of unsent invitations
+     *
+     * @class editEmail()
+     */
     $scope.s.editEmail = function(email, index){
       if (!$scope.s.submitted){
         $scope.s.currentEmail = email;
@@ -89,29 +142,142 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
       }
     };
 
-    //submits the household data to server, then redirects to household page
-    $scope.s.createHousehold = function(){
-      if ($scope.s.createButtonActive !== "disabled"){
-        $scope.s.submitted = true;
-        sendHousehold();
-      }
-    };
-
+    //sends household information to server
+    /**
+     * function to send household information to server
+     *
+     * @class sendHousehold()
+     */
     var sendHousehold = function(){
-      $http.post('/household', $scope.s.inputs)
+      $scope.s.sendHouseholdFinished = false;
+      console.log('sendHousehold: ' + $scope.s.profile.household.id + ' ' + $scope.s.inputs.householdName);
+      $http.put('/household', {household: $scope.s.profile.household.id, name: $scope.s.inputs.householdName})
         .then(function(res){
-          $location.path( "/household" );
+          console.log('sentHoushold: ', res);
+          $scope.s.sendHouseholdFinished = true;
+          redirect();
         }, function(err){
           console.log('ERROR in householdController sendHousehold()', err);
-          $scope.s.submitted = false;
+          $scope.submitted = false;
           Materialize.toast('Ooops, check your connection and try again.', 10000);
       });
     };
-    $scope.s.test=function(){
-      console.log($scope.s.currentEmail);
-      if ($scope.currentEmail !== ""){
-        console.log('test');
+
+    //invites each user in an array to join a household, takes callback
+    /**
+     * function to send invite requests to server for a list of emails
+     *
+     * @class inviteUsers()
+     * @param {Array} emails:  array of "emails"
+     * @param {Function} cb: callback to be executed when invites are successfuly sent
+     */
+    var inviteUsers = function(emails, cb){
+      cb = cb || null;
+      $scope.s.inviteUsersFinished = false;
+      var todo = [emails.length, 0];
+      emails.forEach(function(email){
+        $http.post('/user/invite', {household: $scope.s.profile.household.id, inviteeEmail: email})
+        .then(function(res){
+          console.log('sending invite...');
+          todo[1]++;
+          if (todo[0] === todo[1]){
+            console.log('all invites sent...');
+            $scope.s.inviteUsersFinished = true;
+            redirect();
+            if (cb){
+              cb();
+            }
+          }
+
+        },function(err){
+          console.log('ERROR in householdController inviteUsers(): ', err);
+          $scope.submitted = false;
+          Materialize.toast('Ooops, check your connection and try again.', 10000);
+        });
+      });
+    };
+
+    /**
+     * function to redirect to household page when inviteUsersFinished and sendHouseholdFinished
+     *
+     * @class redirect()
+     */
+    var redirect = function(){
+      console.log('redirect attempt: ' + $scope.s.inviteUsersFinished + " " + $scope.s.sendHouseholdFinished);
+      if ($scope.s.inviteUsersFinished && $scope.s.sendHouseholdFinished){
+        console.log('redirecting...');
+        $location.path( "/household" );
       }
+    };
+
+    //submits the household data to server, then redirects to household page
+    /**
+     * function submit household to server
+     *
+     * @class submitHousehold()
+     */
+    $scope.s.submitHousehold = function(){
+      if ($scope.s.createButtonActive !== "disabled"){
+        $scope.s.submitted = true;
+        sendHousehold();
+        inviteUsers($scope.s.inputs.emails);
+      }
+    };
+
+    //submits a single invite to server
+    /**
+     * function to submit a single invite to the server
+     *
+     * @class newInvite()
+     * @param {String} email: email to be invited
+     */
+    $scope.s.newInvite = function(email){
+      $scope.s.submitted = true;
+      inviteUsers([email], function(){
+        $scope.s.currentEmail = "";
+        getHousehold();
+        $scope.s.submitted =  false;
+      });
+    };
+
+    /**
+     * function join household (attached to $scope.s)
+     *
+     * @class joinHouse()
+     * @param {String} hhid: is the householdId to be joined
+     */
+    $scope.s.joinHouse = function(hhid){
+      $scope.s.joinSubmitted = true;
+      updateHouse(hhid, $scope.s.profile.email, true, function(res){
+        store.set('householdId', res.data);
+        $state.go($state.current, {}, {reload: true});
+      });
+      
+    };
+
+    /**
+     * function send request to server to join household (private)
+     *
+     * @class updateHouse()
+     * @param {String} hhid: is the householdId to be joined
+     * @param {String} email: is the current users email
+     * @param {Boolean} accept: true to accept invitation, false to reject
+     * @param {Function} cb: callback to be executed on success
+     */
+    var updateHouse = function(hhid, email, accept, cb){
+      cb = cb || null;
+      if (hhid === null || email === null || accept === null){
+        console.log("Must pass 3 args to updateHouse");
+        return;
+      }
+      $http.put('/user/invite', {household: hhid, inviteeEmail: email, accept: accept})
+      .then(function(res){
+        if (cb){
+          cb(res);
+        }
+      }, function(err){
+        console.log("ERROR in updateHouse: ", err);
+      });
     };
   }
 ]);
