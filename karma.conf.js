@@ -2,10 +2,10 @@
 // Generated on Wed Sep 09 2015 13:53:45 GMT-0500 (CDT)
 
 module.exports = function(config) {
-  config.set({
+  var configuration = {
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: './',
 
 
     // frameworks to use
@@ -15,9 +15,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'client/lib/angular/angular.js',
-      'client/lib/angular-mocks/angular-mocks.js',
-      'client/lib/angular-ui-router/release/angular-ui-router.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-mocks.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js',
       'https://cdn.auth0.com/js/lock-7.5.min.js',
       'https://cdn.rawgit.com/auth0/angular-storage/master/dist/angular-storage.js',
       'https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js',
@@ -69,9 +69,22 @@ module.exports = function(config) {
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['Chrome'],
 
+    
+    customLaunchers: {
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
+      }
+    },
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: true
-  })
-}
+  };
+
+  if(process.env.TRAVIS){
+    configuration.browsers = ['Chrome_travis_ci'];
+  }
+
+  config.set(configuration);
+};
