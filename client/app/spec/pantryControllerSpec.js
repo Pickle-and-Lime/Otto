@@ -15,14 +15,20 @@ describe('Pantry Controller', function () {
     //Create mock controller
     createController = function () {
       return $controller('pantryController', {
-        $scope: $scope
+        $scope: $scope,
+        auth: {
+          profile: { 
+            household: {
+              householdId: 1
+            }
+           }
+        }
       });
     };
 
     //Due to current front-end config, these calls will always be made on controller init
-    $httpBackend.expectGET('/household').respond({data: {householdId: 1}});
     $httpBackend.expectGET('/pantry/general').respond();
-    $httpBackend.expectGET('/pantry/household/undefined').respond();
+    $httpBackend.expectGET('/pantry/household/1').respond();
     createController();
 
     $httpBackend.flush();
