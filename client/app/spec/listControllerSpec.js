@@ -17,11 +17,11 @@ describe('List Controller', function () {
     createController = function () {
       return $controller('listController', {
         $scope: $scope,
-        auth: {
-          profile: { 
-            household: {
-              householdId: 1
-            }
+        //store's get function will not contain anything in a standalone controller
+        //therefore we create a mock that returns what we need for testing
+        store: {
+          get: function(){ 
+            return 1;
            }
         }
       });

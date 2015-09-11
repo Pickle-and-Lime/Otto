@@ -16,11 +16,9 @@ describe('Pantry Controller', function () {
     createController = function () {
       return $controller('pantryController', {
         $scope: $scope,
-        auth: {
-          profile: { 
-            household: {
-              householdId: 1
-            }
+        store: {
+          get: function(){ 
+            return 1;
            }
         }
       });
@@ -77,14 +75,14 @@ describe('Pantry Controller', function () {
   
   it('removeItem() should send a request for item removal', function(){
     $scope.household = 1;
-    $httpBackend.expectDELETE('/pantry').respond({pantryList: 'pantryList'});
+    $httpBackend.expectDELETE('/pantry/1/item1').respond({pantryList: 'pantryList'});
     $httpBackend.expectGET('/pantry/household/1').respond(
-      {item1 : {checked: true}, item2 : {checked: true}, item3 : {checked: true} }
+      { item2 : {checked: true}, item3 : {checked: true} }
     );
     $scope.removeItem('item1');
     $httpBackend.flush();
     expect($scope.removeItem).to.be.a('function');
-    expect($scope.pantryList.length).to.equal(3);
+    expect($scope.pantryList.length).to.equal(2);
   });
 
   it('ranOut() should POST the requested item to the list and update the list', function(){
