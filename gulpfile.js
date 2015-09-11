@@ -186,6 +186,21 @@ gulp.task('front-end-test', function(done){
   }, done).start();
 });
 
+gulp.task('front-end-travis', function(done){
+  
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    customLaunchers: {
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
+      }
+    },
+    browsers: ['Chrome_travis_ci'],
+    singleRun: true
+  }, done).start();
+});
+
 gulp.task('back-end-test', function(){
   runCommand('node server/spec/HelperSpec.js');
 });
