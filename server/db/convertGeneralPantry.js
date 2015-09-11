@@ -55,7 +55,9 @@ for (var category in categoriesObj){
   categories.push(category);
 }
 fs.writeFile("finalPantry.js", 
-  "var pantry = " + JSON.stringify(data) +";\n"+"var categories = " + JSON.stringify(categories)+ ";\n module.exports = pantry;", 
+  "var pantry = " + JSON.stringify(data) +
+  ";\nvar categories = " + JSON.stringify(categories)+ 
+  ";\nmodule.exports = {pantry: pantry, categories: categories};", 
   function(err){
   if (!err){
     console.log("done!");
