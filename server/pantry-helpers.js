@@ -41,14 +41,9 @@ module.exports = pantryHelpers = {
     itemProps.fullyStocked = fullyStocked;
     itemProps.tracked = true;
     //Mark pantry modified because it is a mixed datatype in db
-    household.markModified('pantry');
+    household.markModified('pantry')
     //Save changes
-    return household.save()
-    .then(function() {
-      return Q.fcall(function() {
-        return household.pantry;
-      });
-    });
+    return household.save();
   },
 
   /**
@@ -111,8 +106,8 @@ module.exports = pantryHelpers = {
             fullyStocked : true, 
             expiration : undefined,
             category : undefined,
-            tags : undefined,
-            seasons : undefined
+            tags : [],
+            seasons : []
           }; 
           //Mark pantry modified because it is a mixed datatype in db
           household.markModified('pantry');
@@ -206,7 +201,6 @@ module.exports = pantryHelpers = {
       if (household) {
         var result = {};
         for (var item in household.pantry) {
-          console.log('ITEM', item);
           result[item] = {
             tracked: household.pantry[item].tracked,
             fullyStocked: household.pantry[item].fullyStocked,

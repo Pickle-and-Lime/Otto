@@ -65,7 +65,8 @@ module.exports = listHelpers = {
             }
           }
           if (!household.pantry[item].fullyStocked){
-            household.list[item] = {checked: false};          }
+            household.list[item] = {checked: false, tags: pantry[item].tags};          
+          }
         }
 
         //Mark pantry and list modified because they are of mixed datatype in db
@@ -107,14 +108,17 @@ module.exports = listHelpers = {
         }
         //add the item to the shopping list
         household.list[item] = {checked: false};
-        //Mark list modified because it is a mixed datatype in db
+        //needed to pass specs, though behavior seems ok in app without these
         household.markModified('list');
-        //Save changes
         household.save();
         
         var itemProps = household.pantry[item];
         //if the item is already in their pantry, update Rosie's data for it
         if (itemProps){
+          //add available tags
+          household.list[item].tags = household.pantry[item].tags;
+          //Mark list modified because it is a mixed datatype in db
+          household.markModified('list');
           //calculate how long since last bought
           var timeElapsed = listHelpers.timeSincePurchase(itemProps.date);
           if (timeElapsed > 0) {
@@ -123,7 +127,7 @@ module.exports = listHelpers = {
           }
 
           //Rebuild the standalone NN with the updated training data
-          pantryHelpers.updateItemNetwork(item, itemProps, household, false);
+          return pantryHelpers.updateItemNetwork(item, itemProps, household, false);
         } 
         //otherwise, add it to their pantry
         else {

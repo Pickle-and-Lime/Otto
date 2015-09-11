@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var listRouter = require('./routers/listRouter');
 var pantryRouter = require('./routers/pantryRouter');
+var itemRouter = require('./routers/itemRouter');
 var householdRouter = require('./routers/householdRouter');
 var userRouter = require('./routers/userRouter');
 var buyRouter = require('./routers/buyRouter');
@@ -26,6 +27,7 @@ app.use('/pantry', pantryRouter);
 app.use('/household', householdRouter);
 app.use('/user', userRouter);
 app.use('/buy', buyRouter);
+app.use('/item', itemRouter);
 
 module.exports = {
   app: app,

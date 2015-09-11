@@ -25,7 +25,7 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store) {
   };
   // check whether an item from pantryBuilder is in the pantry
   $scope.inPantry = function(item) {
-    console.log('firing inPantry');
+    // console.log('firing inPantry');
     if ($scope.pantryList === undefined) { // if somehow pantryList hasn't been populated yet
       return false; 
     } else {
