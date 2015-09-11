@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 // Will need to adjust file paths once deployed
 // For local, navigate to 127.0.0.1:1337/app
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('public'));
+  app.use(express.static('./public'));
 } else {
   console.log("Using client!");
   app.use(express.static('./client'));
