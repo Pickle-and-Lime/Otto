@@ -65,7 +65,7 @@ module.exports = listHelpers = {
             }
           }
           if (!household.pantry[item].fullyStocked){
-            household.list[item] = {checked: false, tags: pantry[item].tags};          
+            household.list[item] = {checked: false, tags: pantry[item].tags, category: pantry[item].category};          
           }
         }
 
@@ -117,6 +117,7 @@ module.exports = listHelpers = {
         if (itemProps){
           //add available tags
           household.list[item].tags = household.pantry[item].tags;
+          household.list[item].category = household.pantry[item].category;
           //Mark list modified because it is a mixed datatype in db
           household.markModified('list');
           //calculate how long since last bought
