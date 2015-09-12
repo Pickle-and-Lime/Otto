@@ -108,18 +108,22 @@ module.exports = listHelpers = {
         }
         //add the item to the shopping list
         household.list[item] = {checked: false};
-        //needed to pass specs, though behavior seems ok in app without these
+        //add available tags
+        if (household.pantry[item]){
+          household.list[item].tags = household.pantry[item].tags;
+          household.list[item].category = household.pantry[item].category;
+        } else if (appPantry[item]){
+          household.list[item].tags = appPantry[item].tags;
+          household.list[item].category = appPantry[item].category;          
+        }
+        //Mark list modified because it is a mixed datatype in db
         household.markModified('list');
+        //needed to pass specs, though behavior seems ok in app without these
         household.save();
         
         var itemProps = household.pantry[item];
         //if the item is already in their pantry, update Rosie's data for it
         if (itemProps){
-          //add available tags
-          household.list[item].tags = household.pantry[item].tags;
-          household.list[item].category = household.pantry[item].category;
-          //Mark list modified because it is a mixed datatype in db
-          household.markModified('list');
           //calculate how long since last bought
           var timeElapsed = listHelpers.timeSincePurchase(itemProps.date);
           if (timeElapsed > 0) {

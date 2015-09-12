@@ -22,16 +22,17 @@ router.post('/tag', function(req, res) {
 });
 
 /**
- *  POST /dates
+ *  POST /data
  *  Manually edit expiration and purchase dates of item
  */
-router.post('/dates', function(req, res) {
+router.post('/data', function(req, res) {
   var item = req.body.item;
   var household = req.body.household;
+  var category = req.body.category;
   var expiration = req.body.expiration;
   var purchase = req.body.purchase;
 
-  itemHelpers.editItem(expiration, date, item, household)
+  itemHelpers.editItem(category, expiration, date, item, household)
   .then(function(pantry) {
     res.status(201).send(pantry);
   })
