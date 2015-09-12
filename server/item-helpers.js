@@ -36,9 +36,10 @@ module.exports = itemHelpers = {
     });
   }, 
 
-  editItem : function(expiration, purchased, item, householdId){
+  editItem : function(category, expiration, purchased, item, householdId){
     return Household.findOne({ _id: householdId }, 'pantry')
     .then(function(household) {
+      household.pantry[item].category = category;
       household.pantry[item].expiration = expiration;
       household.pantry[item].date = purchased;
       //Mark list modified because it is a mixed datatype in db
