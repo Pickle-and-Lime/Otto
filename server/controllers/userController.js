@@ -96,10 +96,7 @@ module.exports = userHelpers = {
   createUser : function(userId, email) {
     // Create new household for the user
     var newHousehold = new Household({});
-    newHousehold.users.push({
-      userId: userId,
-      email: email
-    });
+    newHousehold.users.push(userId);
     return newHousehold.save()
     .then(function() {
       var newUser = new User({
@@ -136,10 +133,7 @@ module.exports = userHelpers = {
       .then(function(user) {
         if (!user) throw new Error('Cannot find user');
         user.invites.push(household._id);
-        household.sentInvites.push({
-          userId: user.userId,
-          email: inviteeEmail
-        });
+        household.sentInvites.push(user.userId);
 
         return household.save()
         .then(user.save)
@@ -177,21 +171,18 @@ module.exports = userHelpers = {
         if (!invitee) throw new Error('Cannot find invitee');
 
         // Removes invite (and duplicates) from User's invites
-        invitee.invites = invitee.invites.filter(function(el) {
-          return String(el) !== householdId;
+        invitee.invites = invitee.invites.filter(function(id) {
+          return String(id) !== householdId;
         });
 
         // Removes invite (and duplicates) from household's sentInvites
-        household.sentInvites = household.sentInvites.filter(function(el) {
-          return el.email !== inviteeEmail;
+        household.sentInvites = household.sentInvites.filter(function(id) {
+          return String(id) !== invitee.userId;
         });
 
         if (accept) {
           invitee.householdId = householdId;
-          household.users.push({
-            userId: invitee.userId,
-            email: inviteeEmail
-          });
+          household.users.push(invitee.userId);
         }
 
         return household.save()
