@@ -78,12 +78,12 @@ groceries.factory('Landing', function($http) {
     },
 
     findMarketbyLoc: function() {
-      var url = "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/zipSearch?zip=" + userZip;
+      var url = "//search.ams.usda.gov/farmersmarkets/v1/data.svc/zipSearch?zip=" + userZip;
       return $http.get(url, {skipAuthorization: true});
     },
 
     findMarketbyId: function(id) {
-      var url = "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/mktDetail?id=" + id;
+      var url = "//search.ams.usda.gov/farmersmarkets/v1/data.svc/mktDetail?id=" + id;
       return $http.get(url, {skipAuthorization: true});
     },
 

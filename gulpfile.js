@@ -20,6 +20,7 @@ var gulp = require('gulp'),
 //Common paths
 var paths = {
   scripts: ['./client/app/**/*.js','./server/**/*.js', './index.js','./spec/**/*.js'],
+  clientScripts: ['./client/app/**/*.js', '!./client/app/spec/**/*.js'],
   styles: ['./client/assets/**/*.css'],
   index: './client/app/index.html',
   partials: ['client/app/**/*.html', '!client/app/index.html'],
@@ -76,7 +77,7 @@ gulp.task('clean', function (callback) {
 
 //Concatentate and minify js files
 gulp.task('js', function () {
-  gulp.src(['client/app/app.js', 'client/**/*.js', '!client/lib/**/*.js'])
+  gulp.src(paths.clientScripts)
     .pipe(concat('app.min.js'))
     .pipe(ngAnnotate())
     .pipe(uglify())
@@ -164,7 +165,7 @@ gulp.task('pre-prod', ['set-prod-node-env', 'production', 'mongo','nodemon', 'wa
 //Install dependencies and documentation
 gulp.task('default', ['documentation'],function() {
   runCommand('npm install -g nodemon');
-  gulp.src(['./bower.json', './package.json'])
+  gulp.src(['./package.json'])
   .pipe(install());
 });
 
