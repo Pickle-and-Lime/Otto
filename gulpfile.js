@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+  runSequence = require('run-sequence'),
   install = require("gulp-install"),
   ngAnnotate = require('gulp-ng-annotate'),
   jshint = require('gulp-jshint'),
@@ -69,7 +70,7 @@ gulp.task('lint', function() {
 
 // Clean task — cleans the contents of the public folder
 gulp.task('clean', function (callback) {
-  del([
+  return del([
     'public/**/*'
   ], callback);
   
@@ -77,7 +78,7 @@ gulp.task('clean', function (callback) {
 
 //Concatentate and minify js files
 gulp.task('js', function () {
-  gulp.src(paths.clientScripts)
+  return gulp.src(paths.clientScripts)
     .pipe(concat('app.min.js'))
     .pipe(ngAnnotate())
     .pipe(uglify())
@@ -95,7 +96,7 @@ gulp.task('html', function() {
   .pipe(minifyHTML())
   .pipe(gulp.dest('public/'));
 
-  gulp.src(paths.partials)
+  return gulp.src(paths.partials)
   .pipe(minifyHTML())
   .pipe(gulp.dest('public/'));
 });
@@ -103,7 +104,7 @@ gulp.task('html', function() {
 // Images task — copy all images to public folder and minify
 gulp.task('images', function() {
   // Image files from app/assets
-  gulp.src(paths.images)
+  return gulp.src(paths.images)
   .pipe(imagemin({
       progressive: true,
       svgoPlugins: [{removeViewBox: false}],
@@ -116,7 +117,7 @@ gulp.task('images', function() {
 // Copy and minify css files from the client folder to public/assets folder)
 
 gulp.task('styles', function() {
-  gulp.src(paths.styles)
+  return gulp.src(paths.styles)
   .pipe(autoprefixer("last 2 versions", "> 1%", "ie 8"))
   .pipe(cssmin())
   .pipe(concat('styles.min.css'))
@@ -150,8 +151,11 @@ gulp.task('open-prod', function(){
   }, 1500);
 });
 //Run production tasks
-gulp.task('production', ['clean','lint', 'js', 'html', 'styles', 'images'], function(){
-  //open({uri: 'http://localhost:1337/#/'});
+gulp.task('production', function(callback){
+  runSequence('clean',
+    'lint', 
+    ['js', 'html', 'styles', 'images'],
+    callback); 
 });
 
 //Run development environment
