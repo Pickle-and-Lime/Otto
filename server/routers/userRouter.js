@@ -46,7 +46,10 @@ router.get('/:id', function(req, res) {
 router.post('/', function(req, res) {
   var userId = req.body.userId;
   var email = req.body.email;
-  userController.getHouseholdForUser(userId, email)
+  var fullName = req.body.fullName;
+  var picture = req.body.picture;
+  var zip = req.body.zip;
+  userController.getHouseholdForUser(userId, email, fullName, picture, zip)
   .then(function(householdId) {
     res.send(householdId);
   })

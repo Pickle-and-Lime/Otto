@@ -63,7 +63,7 @@ module.exports = userHelpers = {
    *
    *  @return {Promise}   Callback is supplied with user's householdId.
    */
-  getHouseholdForUser : function(userId, email) {
+  getHouseholdForUser : function(userId, email, fullName, picture, zip) {
     return User.findOne({ userId : userId})
     .then(function(user) {
       // If user exists, return the householdId
@@ -73,7 +73,7 @@ module.exports = userHelpers = {
         });
       } else {
         // If user does not exist, create a new one
-        return userHelpers.createUser(userId, email)
+        return userHelpers.createUser(userId, email, fullName, picture, zip)
         .then(function(newUser) {
           return Q.fcall(function() {
             return newUser.householdId;
@@ -93,7 +93,7 @@ module.exports = userHelpers = {
    *
    *  @return {Promise}   Callback is supplied with new User object.
    */
-  createUser : function(userId, email) {
+  createUser : function(userId, email, fullName, picture, zip) {
     // Create new household for the user
     var newHousehold = new Household({});
     newHousehold.users.push(userId);
@@ -102,9 +102,11 @@ module.exports = userHelpers = {
       var newUser = new User({
         userId: userId,
         email: email,
-        householdId: newHousehold._id
+        householdId: newHousehold._id,
+        fullName: fullName,
+        picture: picture,
+        zip: zip
       });
-
       return newUser.save()
       .then(function() {
         // Return newly created user

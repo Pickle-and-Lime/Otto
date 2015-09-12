@@ -80,7 +80,17 @@ groceries.config(function ($stateProvider, $urlRouterProvider, $locationProvider
     //   //        },
     //   template: '<ui-view/>'
     // })
-    
+    .state('zip', {
+      url: "/zip",
+      views: {
+        "content1": { templateUrl: "user/zip.html",
+                      controller: "loginController"
+        }
+      },
+      data: {
+            requiresLogin: true
+      }
+    })
     .state('landing', {
       url: "/landing",
       views: {

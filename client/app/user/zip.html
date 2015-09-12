@@ -1,0 +1,51 @@
+<div class="section green hide-overflow">
+  <h2 class="header center-align" id="login-logo">Otto</h2>
+</div>
+
+<div>
+  <div class="container-600"> 
+    <div class="row">
+    </div>
+    <div class="row">
+      <h4 class="center-align">
+        Please enter your ZIP Code
+      </h4>
+    </div>
+    <div class="center-align">
+      <form name="zipInput" ng-submit="updateUser()">
+        <div class="row">
+         <div class="input-field col s10 offset-s1">
+          <input ng-model="zip" ng-change="checkZip()" id="zip" type="tel" pattern="(\d{5})" maxlength="5" max="99999" name="zip" step="1" class="validate" required>
+           <label for="zip" data-error="5 digit zip code">Zip Code (5 digits)</label>
+         </div>
+        </div>
+
+         <div class="row">
+          <div>
+            <button for="zip" ng-if="!zipSubmitted" type="submit" class="btn-large waves-effect green {{zipSubmitEnabled}}" name="action">Submit
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+      <!-- Begin Loading Icon (displays if form sumitted) -->
+    <div ng-if="zipSubmitted" class="row center-align">
+      <div >
+        <div class="preloader-wrapper small active">
+          <div class="spinner-layer spinner-green-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

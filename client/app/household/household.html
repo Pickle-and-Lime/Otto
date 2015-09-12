@@ -39,8 +39,18 @@
         <div class="row">
           <ul ng-if="s.profile.household.users.length >= 1" class="collection with-header">
             <li class="collection-header"><h5>Household Members</h5></li>
-            <li class="collection-item" ng-repeat="user in s.profile.household.users" data-ng-bind="user.email"></li>
-            <li class="collection-item" ng-repeat="invite in s.profile.household.sentInvites"><span data-ng-bind="invite.email"></span><span class="pending indigo-text text-lighten-4 right"><em>&nbsp;Pending</em></span></li>
+
+            <li class="collection-item avatar" ng-repeat="user in s.profile.household.users">
+              <img ng-src="{{user.picture}}" alt="" class="circle">
+              <span class="title" data-ng-bind="user.fullName"></span>
+              <p>
+                 <em><span data-ng-bind="user.email"></span></em>
+              </p>
+            </li>
+            <li class="collection-item" ng-repeat="invite in s.profile.household.sentInvites">
+              <em><span data-ng-bind="invite.email"></span></em>
+              <span class="pending indigo-text text-lighten-4 right"><em>&nbsp;Pending</em></span>
+            </li>
           </ul>
         </div>
       </div>
