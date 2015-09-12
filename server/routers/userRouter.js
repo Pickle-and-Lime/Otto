@@ -1,6 +1,6 @@
 var express = require('express');
 var Q = require('q');
-var userHelpers = require('../user-helpers');
+var userController = require('../controllers/userController.js');
 var router = express.Router();
 
 /**
@@ -24,7 +24,7 @@ var router = express.Router();
  */
 router.get('/:id', function(req, res) {
   var userId = req.params.id;
-  userHelpers.getUser(userId)
+  userController.getUser(userId)
   .then(function(user) {
     res.send(user);
   })
@@ -46,7 +46,7 @@ router.get('/:id', function(req, res) {
 router.post('/', function(req, res) {
   var userId = req.body.userId;
   var email = req.body.email;
-  userHelpers.getHouseholdForUser(userId, email)
+  userController.getHouseholdForUser(userId, email)
   .then(function(householdId) {
     res.send(householdId);
   })
@@ -70,7 +70,7 @@ router.post('/', function(req, res) {
 router.post('/invite', function(req, res) {
   var household = req.body.household;
   var inviteeEmail = req.body.inviteeEmail;
-  userHelpers.createInvitation(household, inviteeEmail)
+  userController.createInvitation(household, inviteeEmail)
   .then(function() {
     res.sendStatus(200);
   })
@@ -95,7 +95,7 @@ router.put('/invite', function(req, res) {
   var household = req.body.household;
   var inviteeEmail = req.body.inviteeEmail;
   var accept = req.body.accept;
-  userHelpers.updateInvitation(household, inviteeEmail, accept)
+  userController.updateInvitation(household, inviteeEmail, accept)
   .then(function(user) {
     res.send(user.householdId);
   })

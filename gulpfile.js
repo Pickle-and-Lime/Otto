@@ -151,7 +151,7 @@ gulp.task('open-prod', function(){
 });
 //Run production tasks
 gulp.task('production', ['clean','lint', 'js', 'html', 'styles', 'images'], function(){
-  open({uri: 'http://localhost:1337/#/'});
+  //open({uri: 'http://localhost:1337/#/'});
 });
 
 //Run development environment

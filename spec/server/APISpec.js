@@ -2,16 +2,16 @@ var Q = require('q');
 var redtape = require('redtape');
 var request = require('supertest');
 var server = require('../../server/server');
-var listHelpers = require('../../server/list-helpers.js');
+var listController = require('../../server/controllers/listController.js');
 
 var test = redtape({
   beforeEach: function (cb) {
     // Add some starting data before each test
     Q.all([
-      listHelpers.addToPantry('milk', 'household1', 7, 30),
-      listHelpers.addToPantry('rice', 'household1', 6, 20),
-      listHelpers.addToPantry('fruit', 'household1', 7, 23),
-      listHelpers.addToPantry('carrots', 'household1', 7, 15)
+      listController.addToPantry('milk', 'household1', 7, 30),
+      listController.addToPantry('rice', 'household1', 6, 20),
+      listController.addToPantry('fruit', 'household1', 7, 23),
+      listController.addToPantry('carrots', 'household1', 7, 15)
     ])
     .then(function() {
       cb();
@@ -21,10 +21,10 @@ var test = redtape({
     // Remove the data (will be useful when we are modifying
     // the neural networks)
     Q.all([
-      listHelpers.removeFromPantry('milk', 'household1'),
-      listHelpers.removeFromPantry('rice', 'household1'),
-      listHelpers.removeFromPantry('fruit', 'household1'),
-      listHelpers.removeFromPantry('carrots', 'household1')
+      listController.removeFromPantry('milk', 'household1'),
+      listController.removeFromPantry('rice', 'household1'),
+      listController.removeFromPantry('fruit', 'household1'),
+      listController.removeFromPantry('carrots', 'household1')
     ])
     .then(function() {
       cb();

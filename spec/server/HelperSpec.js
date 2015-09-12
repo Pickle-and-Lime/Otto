@@ -3,24 +3,24 @@ var redtape = require('redtape');
 var mongoose = require('mongoose'),
     Household = require('../../server/db/householdModel.js');
 
-var listHelpers = require('../../server/list-helpers.js');
-var pantryHelpers = require('../../server/pantry-helpers.js');
-var itemHelpers = require('../../server/item-helpers.js');
+var listController = require('../../server/controllers/listController.js');
+var pantryController = require('../../server/controllers/pantryController.js');
+var itemController = require('../../server/controllers/itemController.js');
 
-var autoBuildList = listHelpers.autoBuildList;
-var addToList = listHelpers.addToList;
-var removeFromList = listHelpers.removeFromList;
-var buy = listHelpers.buy;
+var autoBuildList = listController.autoBuildList;
+var addToList = listController.addToList;
+var removeFromList = listController.removeFromList;
+var buy = listController.buy;
 
-var addToPantry = pantryHelpers.addToPantry;
-var removeFromPantry = pantryHelpers.removeFromPantry;
-var updateExpTime = pantryHelpers.updateExpTime;
+var addToPantry = pantryController.addToPantry;
+var removeFromPantry = pantryController.removeFromPantry;
+var updateExpTime = pantryController.updateExpTime;
 
-var getPantry =  pantryHelpers.getPantry;
-var getAppPantry = pantryHelpers.getAppPantry;
+var getPantry =  pantryController.getPantry;
+var getAppPantry = pantryController.getAppPantry;
 
-var addTag = itemHelpers.addTag;
-var editItem = itemHelpers.editItem;
+var addTag = itemController.addTag;
+var editItem = itemController.editItem;
 
 mongoose.connect('mongodb://localhost/test');
 var household1 = new Household({});

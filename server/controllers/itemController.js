@@ -4,10 +4,10 @@
 * @requires Household, appPantry, PantryItem, pantryHelpers, Q
 */
 
-var Household = require('./db/householdModel.js');
-var appPantry = require('./db/finalPantry.js').pantry;
+var Household = require('../db/householdModel.js');
+var appPantry = require('../db/finalPantry.js').pantry;
 var PantryItem = require('./PantryItem.js');
-var pantryHelpers = require('./pantry-helpers.js');
+var pantryHelpers = require('./pantryController.js');
 var Q = require('q');
 
 /** 
@@ -17,16 +17,20 @@ var Q = require('q');
 */
 
 module.exports = itemHelpers = {
+
+  /**
+  * Adds new tags to an item in a household's shopping list, and saves it in the pantry for future use
+  * @method addTag
+  * @param tag {String}
+  * @param item {String}
+  * @param householdId {String}
+  */
   addTag : function(tag, item, householdId){
     return Household.findOne({ _id: householdId }, 'pantry list')
     .then(function(household) {
-      console.log('Before pantry',household.pantry[item].tags);
       household.pantry[item].tags.push(tag);
-      console.log('After pantry',household.pantry[item].tags);
       if (household.list[item]){
-      console.log('Before list',household.pantry[item].tags);
         household.list[item].tags.push(tag);
-      console.log('After list',household.pantry[item].tags);
       }
       //Mark list modified because it is a mixed datatype in db
       household.markModified('pantry');
@@ -36,6 +40,18 @@ module.exports = itemHelpers = {
     });
   }, 
 
+  /**
+  * Edits data associated with an item in a household's pantry
+  * @method editItem
+  * @param category {String}
+  * The category to which the item belongs
+  * @param expiration {String}
+  * The estimated expiration time for an item
+  * @param purchased {String}
+  * The date the item was last purchased
+  * @param item {String}
+  * @param householdId {String}
+  */
   editItem : function(category, expiration, purchased, item, householdId){
     return Household.findOne({ _id: householdId }, 'pantry')
     .then(function(household) {
