@@ -5,9 +5,10 @@
  */
 
 var mongoose = require('mongoose');
+var Q = require('q');
 var Household = require('./db/householdModel.js');
 var User = require('./db/userModel.js');
-var Q = require('q');
+var utils = require('./utils.js');
 
 module.exports = userHelpers = {
 
@@ -17,14 +18,34 @@ module.exports = userHelpers = {
    *  @method getUser
    *  @param {string}     userId
    *
-   *  @return {Promise}   Callback is supplied with User object.
+   *  @return {Promise}   Callback is supplied with User object. The
+   *  User object is slightly modified to not show full details of any
+   *  households in its list of invitations
    */
   getUser : function(userId) {
     return User.findOne({ userId : userId})
     .then(function(user) {
       if (!user) throw new Error('Cannot find user');
-      return Q.fcall(function() {
-        return user;
+      // Map over the householdIds and resolve each of them
+      // to their respective households
+      return utils.promiseMap(user.invites, function(householdId){
+        return Household.findById(householdId);
+      })
+      .then(function(resolvedInvites) {
+        var invites = resolvedInvites.map(function(household) {
+          household = household.toObject();
+          delete household.sentInvites;
+          delete household.users;
+          return household;
+        });
+        // user is a type of Model, so convert to object
+        // and replace the invites property
+        // Note: this does not update the DB
+        user = user.toObject();
+        user.invites = invites;
+        return Q.fcall(function() {
+          return user;
+        });
       });
     });
   },
@@ -114,18 +135,17 @@ module.exports = userHelpers = {
       return User.findOne({ email: inviteeEmail })
       .then(function(user) {
         if (!user) throw new Error('Cannot find user');
-        user.invites.push({
-          householdName: household.name,
-          householdId: household._id
-        });
+        user.invites.push(household._id);
         household.sentInvites.push({
           userId: user.userId,
           email: inviteeEmail
         });
 
         return household.save()
+        .then(user.save)
         .then(function() {
-          return user.save();
+          // Call getUser to get properly formatted user object
+          return userHelpers.getUser(user.userId);
         });
       });
     });
@@ -176,8 +196,10 @@ module.exports = userHelpers = {
         }
 
         return household.save()
+        .then(invitee.save)
         .then(function() {
-          return invitee.save();
+          // Call getUser to get properly formatted user object
+          return userHelpers.getUser(invitee.userId);
         });
       });
     });
