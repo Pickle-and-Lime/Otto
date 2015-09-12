@@ -54,7 +54,7 @@ groceries.config(function ($stateProvider) {
         "content1": { templateUrl: "user/login.html",
                       controller: "loginController" 
                     },
-        "title": { template: "Rosie" }
+        "title": { template: "Otto" }
       }
     })
     .state('about', {
@@ -66,7 +66,7 @@ groceries.config(function ($stateProvider) {
         "content1": { templateUrl: "general/about.html",
                       controller: "loginController"
                     },
-        "title": { template: "Rosie" }
+        "title": { template: "Otto" }
       }
     })
     // .state('activeUser', {
@@ -88,7 +88,7 @@ groceries.config(function ($stateProvider) {
         "content1": { templateUrl: "general/landing.html",
                       controller: "landingController" 
                     },
-        "title": { template: "Rosie" }
+        "title": { template: "Otto" }
       },
       data: {
             requiresLogin: true

@@ -1,5 +1,4 @@
 /* Styles for pantry builder */
-
 .item-name {
   width: 50%;
   text-align: left;
@@ -82,8 +81,8 @@
   -webkit-transform: rotate(-10deg); /* Chrome, Safari, Opera */
   transform: rotate(-10deg);
   color: white;
-  margin-top: 2px;
-  margin-bottom: 10px;
+  margin-top: 3px;
+  margin-bottom: 7px;
 }
 .logo-inline {
   font-family: Pacifico, cursive;
@@ -97,6 +96,7 @@
   max-width: 50px;
 }
 .container-600 {
+  width: 100%;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -116,4 +116,24 @@
 }
 .pending {
   font-size: .75em; 
+}
+.invite-reject-icon {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+}
+.invite-reject-icon:hover{
+  color: #ef5350 !important;
+}
+.phrase-container {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.hide-overflow {
+  overflow: hidden;
+}
+.slideshow {
+  display: block;
+  margin: 0 auto;
+  max-width: 95%;
 }

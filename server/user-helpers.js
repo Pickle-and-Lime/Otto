@@ -170,7 +170,6 @@ module.exports = userHelpers = {
    */
   updateInvitation : function(householdId, inviteeEmail, accept) {
     if (typeof accept !== 'boolean') throw new Error('`Accept` must be a boolean');
-
     return Household.findById(householdId)
     .then(function(household) {
       return User.findOne({ email: inviteeEmail })
@@ -179,7 +178,7 @@ module.exports = userHelpers = {
 
         // Removes invite (and duplicates) from User's invites
         invitee.invites = invitee.invites.filter(function(el) {
-          return el.householdId !== householdId;
+          return String(el) !== householdId;
         });
 
         // Removes invite (and duplicates) from household's sentInvites
