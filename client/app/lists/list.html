@@ -1,17 +1,11 @@
-<!-- <ul class="collapsible" data-collapsible="accordion">
-  <li> -->
-    <!-- Not quite sure how I can get the count of items to work correctly if list is an object and not an array... -->
-    <!-- <div class="collapsible-header"><i class="material-icons">shopping_cart</i>Shopping List<span class="badge" ng-bind="shoppingList.length"></span></div> -->
-<!--     <div class="collapsible-header"><i class="material-icons">shopping_cart</i>Shopping List</div>
-    <div class="collapsible-body container"> -->
-<div class="container">
+<div class="row">
 
-  <form class="col s12">
+  <form class="col s12 m6 l4">
     <div class="row">
       <div class="input-field col s12">
         <i class="material-icons prefix">shopping_basket</i>
         <input id="groceryItem" type="text" ng-model="userItem">
-        <label for="groceryItem">Enter item...</label>
+        <label for="groceryItem">What do you need?</label>
       </div>
       <ul class="collection container" ng-hide="!userItem.length">
         <li class="collection-item pantry-list-item" ng-repeat="item in masterList | filter:{name: userItem}" ng-bind="item.name" ng-click="addItem(item.name)" onclick="Materialize.toast('Added',500)"></li>
@@ -20,13 +14,21 @@
     </div>
   </form>
 
-  <form>
-    <p ng-repeat="item in shoppingList | orderBy: 'name'">
-      <span>{{ item.name }}</span>
-      <span class="right" ng-click="removeItem(item.name)" onclick="Materialize.toast('Item Deleted',500)"><i class="material-icons">not_interested</i></span>
-      <input class="right" id="{{ item.name }}" type="checkbox"/>
-      <label for="{{ item.name }}" class="right" ng-click="toggleCheck(item.name)"></label>
-    </p>
+  <form class="col s12 m6 l8">
+    <h4 class="center-align">My Shopping List</h4>
+
+    <div class="row">
+      <ul class="collection with-header col s12 m12 l6" ng-repeat="itemObj in shoppingByCategory | orderBy: 'type'">
+        <li class="collection-header"><strong>{{ itemObj.type }}</strong></li>
+        <li class="collection-item pantry-list-item" ng-repeat="item in itemObj.items | orderBy: ''">
+          <span class="item-name">{{ item }}</span>
+          <span class="right" ng-click="removeItem(item)" onclick="Materialize.toast('Item Deleted',500)"><i class="material-icons">not_interested</i></span>
+          <input class="right" id="{{ item }}" type="checkbox"/>
+          <label for="{{ item }}" class="right" ng-click="toggleCheck(item)"></label>
+        </li>
+      </ul>
+    </div>
+
     <button class="green right btn waves-effect waves-light" ng-click="checkoutList()" onclick="Materialize.toast('Items Bought',500)">Checkout
     <i class="material-icons">send</i>
     </button>

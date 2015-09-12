@@ -1,5 +1,79 @@
-groceries.controller('landingController', function($scope, Seasonal, Landing) {
+groceries.controller('landingController', function($scope, Seasonal, Landing, States, Lists, store) {
 
+  // set state to 'landing' when loading this view
+  States.setState('landing');
+  // grab household id from angular storage
+  $scope.household = store.get('householdId');
+  console.log('householdId:', $scope.household);
+  // functions to load correct set of seasonal fruits and veggies
+  $scope.month = (new Date()).getMonth();
+  console.log('month is:', $scope.month);
+  // function that updates masterList from backend
+  $scope.updateMaster = function() { // crashes server for now
+    Lists.getList('/pantry/general', $scope.household)
+      .then(function(res) {
+        // console.log('GET /pantry/general', res.data);
+        $scope.masterList = Lists.arrayConverter(res.data);
+        console.log('masterList:', $scope.masterList);
+        seasonalFilter($scope.masterList);
+      }, function(err) {
+        console.log('GET /pantry/general ERROR', err);
+      });
+  };
+  // function that updates pantryList from backend
+  $scope.updatePantry = function() {
+    Lists.getList('/pantry/household/' + $scope.household)
+      .then(function(res) {
+        // console.log('GET /pantry', res.data);
+        $scope.pantryList = res.data;
+        console.log('pantryList:', $scope.pantryList);
+        $scope.updateMaster();
+      }, function(err) {
+        console.log('GET /pantry ERR', err);
+      });
+  };
+  // addSeasonalItem adds it to our shopping list
+  $scope.addSeasonalItem = function(item) {
+    Lists.addToList('/list', item, $scope.household)
+      .then(function(res) {
+        // console.log('POST to /list', res);
+        // update shopping list after add
+        $scope.updatePantry();
+      }, function(err) {
+        console.log('POST to /list ERROR', err);
+      });
+  };
+  // update the general list and shopping list
+  $scope.updatePantry();
+  // function that filters the masterList to only show items in season
+  var seasonalFilter = function(list) {
+    $scope.seasonalList = [];
+    list.forEach(function(itemObj) {
+      if (itemObj.season.indexOf($scope.month) !== -1) {
+        // modify itemObj with inList and inPantry properties
+        itemObj.inList = !!$scope.pantryList[itemObj.name] && !$scope.pantryList[itemObj.name].fullyStocked;
+        itemObj.inPantry = !!$scope.pantryList[itemObj.name] && $scope.pantryList[itemObj.name].fullyStocked;
+        $scope.seasonalList.push(itemObj);
+      }
+    });
+    console.log('filtered List:', $scope.seasonalList);
+  };
+  // helpers to find if an item is in the stocked in the pantry or if it is in the list
+  $scope.inPantry = function(item) {
+    if (!$scope.pantryList[item]) {
+      return false;
+    } else {
+      return $scope.pantryList[item].fullyStocked;
+    }
+  };
+
+  $scope.inList = function(item) {
+    if (!$scope.pantryList[item]) {
+      return false;
+    } else {
+      return !$scope.pantryList[item].fullyStocked;
+    }
+  };
 
   /* this will get populated with Farmer's Market objects in the following form:
     {
@@ -10,26 +84,6 @@ groceries.controller('landingController', function($scope, Seasonal, Landing) {
       schedule: "String of when it is open"
     }
   */
-  // functions to load correct set of seasonal fruits and veggies
-  var month = (new Date()).getMonth();
-  console.log('month is:', month);
-  var loadSeasonal = function(month) {
-    if (month === 0 || month === 1 || month === 2) { 
-      $scope.fruit = Seasonal.winterFruit;
-      $scope.veggie = Seasonal.winterVeggie;
-    } else if (month === 3 || month === 4 || month === 5) { 
-      $scope.fruit = Seasonal.springFruit;
-      $scope.veggie = Seasonal.springVeggie;
-    } else if (month === 6 || month === 7 || month === 8) { 
-      $scope.fruit = Seasonal.summerFruit;
-      $scope.veggie = Seasonal.summerVeggie;
-    } else if (month === 9 || month === 10 || month === 11) { 
-      $scope.fruit = Seasonal.fallFruit;
-      $scope.veggie = Seasonal.fallVeggie;
-    }
-  };
-  loadSeasonal(month);
-
   $scope.markets = [];
 
   var getMarketList = function() {

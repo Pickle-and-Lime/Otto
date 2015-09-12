@@ -1,5 +1,5 @@
-groceries.controller('loginController', ['$scope', '$http', 'auth', 'store', '$location',
-  function ($scope, $http, auth, store, $location) {
+groceries.controller('loginController', ['$scope', '$http', 'auth', 'store', '$location', 'States',
+  function ($scope, $http, auth, store, $location, States) {
     $scope.zipSubmitEnabled = "disabled";
     $scope.zipSubmitted = false;
     $scope.checkZip = function(){
@@ -9,6 +9,8 @@ groceries.controller('loginController', ['$scope', '$http', 'auth', 'store', '$l
       else $scope.zipSubmitEnabled = "disabled";
     };
 
+    // set state to 'login' when loading this view
+    States.setState('login');
     $scope.auth = auth;
     $scope.login = function () {
       auth.signin({}, function (profile, token) {
