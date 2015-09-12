@@ -36,25 +36,15 @@ module.exports = itemHelpers = {
     });
   }, 
 
-  editExpiration : function(expiration, item, householdId){
+  editItem : function(expiration, purchased, item, householdId){
     return Household.findOne({ _id: householdId }, 'pantry')
     .then(function(household) {
       household.pantry[item].expiration = expiration;
+      household.pantry[item].date = purchased;
       //Mark list modified because it is a mixed datatype in db
       household.markModified('pantry');
       //Save changes
       return household.save();
     });
   },
-
-  editPurchaseDate : function(date, item, householdId){
-    return Household.findOne({ _id: householdId }, 'pantry list')
-    .then(function(household) {
-      household.pantry[item].date = date;
-      //Mark list modified because it is a mixed datatype in db
-      household.markModified('pantry');
-      //Save changes
-      return household.save();
-    });
-  }
 };

@@ -22,38 +22,21 @@ router.post('/tag', function(req, res) {
 });
 
 /**
- *  POST /expiration
- *  Manually add expiration data to item
+ *  POST /dates
+ *  Manually edit expiration and purchase dates of item
  */
-router.post('/expiration', function(req, res) {
+router.post('/dates', function(req, res) {
   var item = req.body.item;
   var household = req.body.household;
   var expiration = req.body.expiration;
+  var purchase = req.body.purchase;
 
-  itemHelpers.editExpiration(expiration, item, household)
+  itemHelpers.editItem(expiration, date, item, household)
   .then(function(pantry) {
     res.status(201).send(pantry);
   })
   .catch(function() {
     res.status(404).send('Cannot add expiration');
-  });
-});
-
-/**
- *  POST /purchased
- *  Manually add last purchased date to item
- */
-router.post('/purchased', function(req, res) {
-  var item = req.body.item;
-  var household = req.body.household;
-  var purchased = req.body.purchased;
-
-  itemHelpers.editPurchaseDate(purchased, item, household)
-  .then(function(pantry) {
-    res.status(201).send(pantry);
-  })
-  .catch(function() {
-    res.status(404).send('Cannot add purchased');
   });
 });
 

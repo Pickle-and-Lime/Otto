@@ -20,8 +20,7 @@ var getPantry =  pantryHelpers.getPantry;
 var getAppPantry = pantryHelpers.getAppPantry;
 
 var addTag = itemHelpers.addTag;
-var editExpiration = itemHelpers.editExpiration;
-var editPurchaseDate = itemHelpers.editPurchaseDate;
+var editItem = itemHelpers.editItem;
 
 mongoose.connect('mongodb://localhost/test');
 var household1 = new Household({});
@@ -110,29 +109,19 @@ test('addTag() should add a tag to an item in household\'s pantry and list', fun
   });
 });
 
-test('editExpiration() should change the expiration of an item in household\'s pantry', function(t){
-  editExpiration(2, 'Chicken', household1._id)
-  .then(function(){
-    Household.findOne({_id: household1._id }, 'pantry list', function(err, household){
-      t.ok(household.pantry.Chicken.expiration === 2, 'Expiration changed for item in pantry');
-      t.end();
-    });
-  });
-});
-
-test('editPurchaseDate() should change the purchased date of an item in household\'s pantry', function(t){
+test('editItem() should change the expiration of an item in household\'s pantry', function(t){
   var timePast = 4*24*60*60*1000;
   var date = new Date();
   date.setTime(date.getTime()-timePast);
-  editPurchaseDate(date, 'Chicken', household1._id)
+  editItem(2, date, 'Chicken', household1._id)
   .then(function(){
     Household.findOne({_id: household1._id }, 'pantry list', function(err, household){
+      t.ok(household.pantry.Chicken.expiration === 2, 'Expiration changed for item in pantry');
       t.ok(household.pantry.Chicken.date.getTime() == date.getTime(), 'Expiration changed for item in pantry');
       t.end();
     });
   });
 });
-
 
 test('getPantry() should return a list of the items in the pantry', function(t){
   
