@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 
 var listHelpers = require('../../server/list-helpers.js');
 var pantryHelpers = require('../../server/pantry-helpers.js');
+var itemHelpers = require('../../server/item-helpers.js');
 
 var autoBuildList = listHelpers.autoBuildList;
 var addToList = listHelpers.addToList;
@@ -18,6 +19,8 @@ var updateExpTime = pantryHelpers.updateExpTime;
 var getPantry =  pantryHelpers.getPantry;
 var getAppPantry = pantryHelpers.getAppPantry;
 
+var addTag = itemHelpers.addTag;
+var editItem = itemHelpers.editItem;
 
 mongoose.connect('mongodb://localhost/test');
 var household1 = new Household({});
@@ -36,14 +39,28 @@ var test = redtape({
 test('addToPantry() should add an item to the household\'s pantry', function(t){  
   addToPantry('Milk', household1._id, 7, 30) // tracked with date specified
   .then(function() {
-    return addToPantry('Rice', household1._id); // untracked without date specified
+    return addToPantry('Gooseberries', household1._id); // untracked without date specified
   })
   .then(function() {
     return Household.findOne({ _id: household1._id }, 'pantry', function(err, household){
       if (err) { t.error(err); }
       t.ok('Milk' in household.pantry, 'Milk added to pantry!');
-      t.ok('Rice' in household.pantry, 'Rice added to created!');
+      t.ok('Gooseberries' in household.pantry, 'Gooseberries added to pantry!');
       t.end();
+    });
+  });
+});
+
+test('addToList() should add an item from the pantry to the household\'s list and include any tags', function(t){
+  addToPantry('Citrus', household1._id)
+  .then(function(){
+    addToList('Citrus', household1._id)
+    .then(function(){
+      Household.findOne({_id: household1._id}, 'list', function(err, household) {
+        t.ok('Citrus' in household.list, 'Citrus in list');
+        t.ok(household.list.Citrus.tags.indexOf('Lemons') !== -1, 'Tags in list');
+        t.end();
+      });
     });
   });
 });
@@ -74,6 +91,34 @@ test('removeFromList() should remove the passed in item from the household\'s li
         t.notOk('Chicken' in household.list, 'Chicken removed from list.');
         t.end();
       });
+    });
+  });
+});
+
+test('addTag() should add a tag to an item in household\'s pantry and list', function(t){
+  addToList('Chicken', household1._id)
+  .then(function(){
+    addTag('Shredded', 'Chicken', household1._id)
+    .then(function(){
+      Household.findOne({_id: household1._id }, 'pantry list', function(err, household){
+        t.ok(household.list.Chicken.tags.indexOf('Shredded') !== -1, 'Tag added to item in list');
+        t.ok(household.pantry.Chicken.tags.indexOf('Shredded') !== -1, 'Tag added to item in pantry');
+        t.end();
+      });
+    });
+  });
+});
+
+test('editItem() should change the expiration of an item in household\'s pantry', function(t){
+  var timePast = 4*24*60*60*1000;
+  var date = new Date();
+  date.setTime(date.getTime()-timePast);
+  editItem(2, date, 'Chicken', household1._id)
+  .then(function(){
+    Household.findOne({_id: household1._id }, 'pantry list', function(err, household){
+      t.ok(household.pantry.Chicken.expiration === 2, 'Expiration changed for item in pantry');
+      t.ok(household.pantry.Chicken.date.getTime() == date.getTime(), 'Expiration changed for item in pantry');
+      t.end();
     });
   });
 });
