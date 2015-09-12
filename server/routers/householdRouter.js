@@ -1,6 +1,6 @@
 var express = require('express');
 var Q = require('q');
-var householdHelpers = require('../household-helpers');
+var householdController = require('../controllers/householdController.js');
 var router = express.Router();
 
 /**
@@ -9,7 +9,7 @@ var router = express.Router();
  */
 router.get('/:id', function(req, res) {
   var householdId = req.params.id;
-  householdHelpers.getHousehold(householdId)
+  householdController.getHousehold(householdId)
   .then(function(household) {
     res.send(household);
   })
@@ -26,7 +26,7 @@ router.get('/:id', function(req, res) {
 router.put('/', function(req, res) {
   var householdId = req.body.household;
   var name = req.body.name;
-  householdHelpers.updateHousehold(householdId, name)
+  householdController.updateHousehold(householdId, name)
   .then(function(household) {
     res.send(household);
   })

@@ -1,6 +1,6 @@
 var express = require('express');
 var Q = require('q');
-var pantryHelpers = require('../pantry-helpers.js');
+var pantryController = require('../controllers/pantryController.js');
 var router = express.Router();
 
 /**
@@ -11,7 +11,7 @@ var router = express.Router();
 router.get('/household/:id', function(req, res) {
   var household = req.params.id;
 
-  pantryHelpers.getPantry(household)
+  pantryController.getPantry(household)
   .then(function(pantry) {
     console.log('PANTRY', pantry);
     res.send(pantry);
@@ -26,7 +26,7 @@ router.get('/household/:id', function(req, res) {
  *  Returns the general pantry (all items)
  */
 router.get('/general', function(req, res) {
-  pantryHelpers.getAppPantry()
+  pantryController.getAppPantry()
   .then(function(appPantry) {
     res.send(appPantry);
   })
@@ -36,7 +36,7 @@ router.get('/general', function(req, res) {
 });
 
 router.get('/categories', function(req, res) {
-  pantryHelpers.getItemCategories()
+  pantryController.getItemCategories()
   .then(function(categories) {
     res.send(categories);
   })
@@ -54,7 +54,7 @@ router.post('/', function(req, res) {
   var item = req.body.item;
   var household = req.body.household;
 
-  pantryHelpers.addToPantry(item, household)
+  pantryController.addToPantry(item, household)
   .then(function(pantry) {
     console.log('PANTRY',pantry);
     res.status(201).send(pantry);
@@ -73,7 +73,7 @@ router.delete('/:id/:item', function(req, res) {
   var item = req.params.item;
   var household = req.params.id;
   console.log('household:',household,'item:',item);
-  pantryHelpers.removeFromPantry(item, household)
+  pantryController.removeFromPantry(item, household)
   .then(function(pantry) {
     res.send(pantry);
   })

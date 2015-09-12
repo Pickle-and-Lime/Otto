@@ -1,6 +1,6 @@
 var express = require('express');
 var Q = require('q');
-var itemHelpers = require('../item-helpers.js');
+var itemController = require('../controllers/itemController.js');
 var router = express.Router();
 
 /**
@@ -12,7 +12,7 @@ router.post('/tag', function(req, res) {
   var household = req.body.household;
   var tag = req.body.tag;
 
-  itemHelpers.addTag(tag, item, household)
+  itemController.addTag(tag, item, household)
   .then(function(list) {
     res.status(201).send(list);
   })
@@ -32,7 +32,7 @@ router.post('/data', function(req, res) {
   var expiration = req.body.expiration;
   var purchase = req.body.purchase;
 
-  itemHelpers.editItem(category, expiration, date, item, household)
+  itemController.editItem(category, expiration, date, item, household)
   .then(function(pantry) {
     res.status(201).send(pantry);
   })

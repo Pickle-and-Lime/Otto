@@ -3,16 +3,16 @@ var Q = require('q');
 
 var Household = require('./db/householdModel.js');
 
-var pantryHelpers = require('./pantry-helpers.js');
+var pantryController = require('./controllers/pantryController.js');
 
-var listHelpers = require('./list-helpers.js');
-var addToPantry = pantryHelpers.addToPantry;
-var autoBuildList = listHelpers.autoBuildList;
-var addToList = listHelpers.addToList;
-var removeFromList = listHelpers.removeFromList;
-var buy = listHelpers.buy;
-var removeFromPantry = pantryHelpers.removeFromPantry;
-var updateExpTime = pantryHelpers.updateExpTime;
+var listController = require('./controllers/listController.js');
+var addToPantry = pantryController.addToPantry;
+var autoBuildList = listController.autoBuildList;
+var addToList = listController.addToList;
+var removeFromList = listController.removeFromList;
+var buy = listController.buy;
+var removeFromPantry = pantryController.removeFromPantry;
+var updateExpTime = pantryController.updateExpTime;
 var householdHelpers = require('./household-helpers.js');
 
 /////////////

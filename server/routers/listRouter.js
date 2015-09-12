@@ -1,6 +1,6 @@
 var express = require('express');
 var Q = require('q');
-var listHelpers = require('../list-helpers');
+var listController = require('../controllers/listController.js');
 var router = express.Router();
 
 /**
@@ -10,7 +10,7 @@ var router = express.Router();
 router.get('/:id', function(req, res) {
   var household = req.params.id;
 
-  listHelpers.autoBuildList(household)
+  listController.autoBuildList(household)
   .then(function(list) {
     res.send(list);
   })
@@ -27,7 +27,7 @@ router.post('/', function(req, res) {
   var item = req.body.item;
   var household = req.body.household;
 
-  listHelpers.addToList(item, household)
+  listController.addToList(item, household)
   .then(function(list) {
     res.status(201).send(list);
   })
@@ -44,7 +44,7 @@ router.delete('/:id/:item', function(req, res) {
   var item = req.params.item;
   var household = req.params.id;
 
-  listHelpers.removeFromList(item, household)
+  listController.removeFromList(item, household)
   .then(function(list) {
     res.send(list);
   })

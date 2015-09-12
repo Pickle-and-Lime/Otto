@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var Household = require('./db/householdModel.js');
+var Household = require('../db/householdModel.js');
 var Q = require('q');
 
 module.exports = householdHelpers = {

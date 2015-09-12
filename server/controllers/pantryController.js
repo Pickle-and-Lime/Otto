@@ -4,8 +4,8 @@
 * @requires Household, appPantry, PantryItem, pantryHelpers, Q
 */
 
-var Household = require('./db/householdModel.js');
-var finalPantry = require('./db/finalPantry.js');
+var Household = require('../db/householdModel.js');
+var finalPantry = require('../db/finalPantry.js');
 var appPantry = finalPantry.pantry;
 var categories = finalPantry.categories;
 var PantryItem = require('./PantryItem.js');
