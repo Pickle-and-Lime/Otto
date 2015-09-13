@@ -46,7 +46,9 @@ groceries.run(function ($rootScope, auth, store, jwtHelper, $location) {
 });
 // End Auth0 services
 
-groceries.config(function ($stateProvider) {
+groceries.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+  $locationProvider.html5Mode(true);
+  $urlRouterProvider.otherwise('/');
   $stateProvider
     .state('login', {
       url: "/",

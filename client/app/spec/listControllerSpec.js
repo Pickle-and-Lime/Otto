@@ -30,6 +30,7 @@ describe('List Controller', function () {
     //Due to current front-end config, these calls will always be made on controller init
     $httpBackend.expectGET('/pantry/general').respond();
     $httpBackend.expectGET('/list/1').respond();
+    $httpBackend.expectGET('user/login.html').respond();
     createController();
 
     $httpBackend.flush();
