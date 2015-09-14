@@ -31,6 +31,7 @@
     "mongoose": "^4.1.4",
     "q": "^1.4.1",
     "redtape": "^1.0.0",
+    "request": "^2.61.0",
     "supertest": "^1.1.0",
     "synaptic": "^1.0.2",
     "tape": "^4.2.0"

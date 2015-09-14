@@ -6,6 +6,7 @@ var itemRouter = require('./routers/itemRouter');
 var householdRouter = require('./routers/householdRouter');
 var userRouter = require('./routers/userRouter');
 var buyRouter = require('./routers/buyRouter');
+var marketRouter = require('./routers/marketRouter');
 var db = require('./db.js');
 
 
@@ -28,6 +29,7 @@ app.use('/household', householdRouter);
 app.use('/user', userRouter);
 app.use('/buy', buyRouter);
 app.use('/item', itemRouter);
+app.use('/markets', marketRouter);
 
 module.exports = {
   app: app,

@@ -89,6 +89,7 @@ groceries.controller('landingController', function($scope, Seasonal, Landing, St
   var getMarketList = function() {
     Landing.findMarketbyLoc()
       .then(function(res) {
+        console.log('Markets',res);
         $scope.marketArray = res.data.results;
         // console.log($scope.marketArray);
         $scope.marketArray.forEach(function(market) {
@@ -131,14 +132,17 @@ groceries.factory('Landing', function($http) {
       return userZip;
     },
 
+    // findMarketbyLoc: function() {
+    //   var url = "//search.ams.usda.gov/farmersmarkets/v1/data.svc/zipSearch?zip=" + userZip;
+    //   return $http.get(url, {skipAuthorization: true});
+    // },
+
     findMarketbyLoc: function() {
-      var url = "//search.ams.usda.gov/farmersmarkets/v1/data.svc/zipSearch?zip=" + userZip;
-      return $http.get(url, {skipAuthorization: true});
+      return $http.get('/markets/byzip/'+userZip);
     },
 
     findMarketbyId: function(id) {
-      var url = "//search.ams.usda.gov/farmersmarkets/v1/data.svc/mktDetail?id=" + id;
-      return $http.get(url, {skipAuthorization: true});
+      return $http.get('/markets/byid/'+id);
     },
 
     makeMarketInfo: function(name, market) {
