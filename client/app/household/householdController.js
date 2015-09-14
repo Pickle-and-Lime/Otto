@@ -2,18 +2,20 @@
  * Household Controller: Controlls household.html and createHousehold.html
  * @module Household Controller
  */
-groceries.controller('householdController', ['$scope', '$http', '$location', 'auth', 'store', '$state',
+groceries.controller('householdController', ['$scope', '$http', '$location', 'auth', 'store', '$state', 'States',
   /**
   * Anonymous household controller function
   * @class householdController
   */
-  function ($scope, $http, $location, auth, store, $state) {
+  function ($scope, $http, $location, auth, store, $state, States) {
     /**
      * initializes $scope variables to store received data and interaction states (private)
      * @method init()
      */
     var init = function(){
-    //initialize object to hold all scope elements, avoids child scope issues with ng-if statements
+      // set state to 'household' when loading this view
+      States.setState('household');
+      //initialize object to hold all scope elements, avoids child scope issues with ng-if statements
       $scope.s = {};
       $scope.s.profile = auth.profile;
       $scope.s.profile.household = {};

@@ -188,6 +188,21 @@ groceries.config(function ($stateProvider, $urlRouterProvider, $locationProvider
             requiresLogin: true
       }
     })
+    .state('recipes', {
+      url: "/recipes",
+      views: {
+        "menu": { templateUrl: "ui/menu.html",
+                  controller: "menuController"
+                 },
+        "content1": {templateUrl: "recipes/recipes.html",
+                      controller: "recipeController"
+                    },
+        "title": { template: "Recipes"}
+      },
+      data: {
+            requiresLogin: true
+      }
+    })
     .state('account', {
       url: "/account",
       views: {

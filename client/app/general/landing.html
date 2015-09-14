@@ -1,21 +1,17 @@
-<div class="row hide-on-small-only">
-  <div class="col m6">
-    <ul class="collapsible" data-collapsible="accordion">
+<div class="row">
+  <div class="col s12 m6 l4">
+    <ul class="collapsible" data-collapsible="expandable">
 
       <li>
-        <div class="collapsible-header active"><i class="material-icons">whatshot</i>Vegetables In Season</div>
-        <div class="collapsible-body container">
+        <div class="collapsible-header active"><i class="material-icons">whatshot</i><strong>Products In Season</strong></div>
+        <div class="collapsible-body">
           <ul class="collection">
-            <li class="collection-item" ng-repeat="item in veggie">{{ item }}</li>
-          </ul>
-        </div>
-      </li>
-
-      <li>
-        <div class="collapsible-header"><i class="material-icons">whatshot</i>Fruits In Season</div>
-        <div class="collapsible-body container">
-          <ul class="collection">
-            <li class="collection-item" ng-repeat="item in fruit">{{ item }}</li>
+            <li class="collection-item" ng-repeat="obj in seasonalList | orderBy: 'name'">
+              {{ obj.name }}
+              <span class="right pantry-button" onclick="Materialize.toast('Added!',500)" ng-click="addSeasonalItem(obj.name)" ng-show="!obj.inList && !obj.inPantry">Add</span>
+              <span class="right pantry-button-disabled" ng-show="obj.inList">In List</span>
+              <span class="right pantry-button-disabled" ng-show="obj.inPantry">In Pantry</span>
+            </li>
           </ul>
         </div>
       </li>
@@ -23,13 +19,15 @@
     </ul>
   </div>
 
-  <div class="col m6">
+  <div class="col s12 m6 l8">
     <ul class="collapsible" data-collapsible="accordion">
       <li>
         <div class="collapsible-header active"><i class="material-icons">place</i>Farmer's Markets Nearby</div>
         <div class="collapsible-body">
 
-            <div class="card small" ng-repeat="market in markets">
+          <div class="row">
+
+            <div class="card small col s12 m12 l6" ng-repeat="market in markets">
               <div class="card-image waves-effect waves-block waves-light">
                 <img class="activator" ng-src="{{ market.image }}">
               </div>
@@ -44,6 +42,8 @@
               </div>
             </div>
 
+          </div>
+
         </div>
       </li>
     </ul>
@@ -51,51 +51,10 @@
 
 </div>
 
-<ul class="collapsible hide-on-med-and-up" data-collapsible="accordion">
-  <li>
-    <div class="collapsible-header"><i class="material-icons">whatshot</i>Vegetables In Season</div>
-    <div class="collapsible-body container">
-      <ul class="collection">
-        <li class="collection-item" ng-repeat="item in veggie">{{ item }}</li>
-      </ul>
-    </div>
-  </li>
-  <li>
-    <div class="collapsible-header"><i class="material-icons">whatshot</i>Fruits In Season</div>
-    <div class="collapsible-body container">
-      <ul class="collection">
-        <li class="collection-item" ng-repeat="item in fruit">{{ item }}</li>
-      </ul>
-    </div>
-  </li>
-  <li>
-    <div class="collapsible-header active"><i class="material-icons">place</i>Farmer's Markets Nearby</div>
-    <div class="collapsible-body">
-
-      <div class="row">
-        <div class="card col s12 small" ng-repeat="market in markets">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" ng-src="{{ market.image }}">
-          </div>
-          <div class="card-content">
-            <span class="activator grey-text text-darken-4">{{ market.name }}<i class="material-icons right">more_vert</i></span>
-            <p>{{ market.schedule }}</p>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">{{ market.name }}<i class="material-icons right">close</i></span>
-            <p><a ng-href="{{ market.map }}">{{ market.address }}</a></p>
-            <p>{{ market.description }}</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </li>
-</ul>
 <script>
   $(document).ready(function(){
     $('.collapsible').collapsible({
-      accordion : true // true for accordion style, false for expandable
+      accordion : false // true for accordion style, false for expandable
     });
   });
 </script>
