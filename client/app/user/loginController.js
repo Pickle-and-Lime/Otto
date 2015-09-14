@@ -39,11 +39,12 @@ groceries.controller('loginController', ['$scope', '$http', 'auth', 'store', '$l
                            zip: $scope.zip })
       .then(function(res){
         $scope.auth.profile.household = {householdId: res.data};
-        console.log('--yodata----> ', res.data);
         store.set('householdId', res.data);
+        store.set('zip', $scope.zip);
         $location.path('/landing');
       },
         function (err){
+          Materialize.toast('Ooops, check your connection and try again.', 10000);
           console.log(err);
         }
       );
@@ -52,6 +53,7 @@ groceries.controller('loginController', ['$scope', '$http', 'auth', 'store', '$l
       $http.get('/user/' + $scope.auth.profile.user_id.split('|')[1])
       .then(function(res){
         if (res.data.zip){
+          $scope.zip = res.data.zip;
           $scope.updateUser();
         }
         else $location.path('/zip');
