@@ -91,7 +91,8 @@ gulp.task('html', function() {
   gulp.src(paths.index)
   .pipe(htmlreplace({
       'css': 'assets/styles.min.css',
-      'js': 'app.min.js'
+      'js': 'app.min.js', 
+      'base': '<base href="/">'
   }))
   .pipe(minifyHTML())
   .pipe(gulp.dest('public/'));
@@ -139,7 +140,7 @@ gulp.task('watch', ['lint'], function() {
 gulp.task('open-dev', function(){
   setTimeout(function(){
     gulp.src(__filename)
-    .pipe(open({uri: 'http://localhost:1337/app/#/'}));
+    .pipe(open({uri: 'http://localhost:1337/app/'}));
   }, 1500);
 });
 
@@ -147,7 +148,7 @@ gulp.task('open-dev', function(){
 gulp.task('open-prod', function(){
   setTimeout(function(){
     gulp.src(__filename)
-    .pipe(open({uri: 'http://localhost:1337/#/'}));
+    .pipe(open({uri: 'http://localhost:1337/'}));
   }, 1500);
 });
 //Run production tasks
