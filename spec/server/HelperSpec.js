@@ -212,7 +212,7 @@ test('autoBuildList() should add items that the user needs', function(t){
       //Test for presence in pantry and fullyStocked = false 
         t.ok('Roots' in household.pantry, 'Roots added to pantry.');
         t.ok('Roots' in household.list, 'Roots added to list');
-        t.notOk(household.pantry['Roots'].fullyStocked, 'Roots not fully stocked.');
+        t.notOk(household.pantry.Roots.fullyStocked, 'Roots not fully stocked.');
 
         //Clear and close db connection
         Household.findOneAndRemove();

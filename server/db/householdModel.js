@@ -1,3 +1,9 @@
+/**
+* Creates a mongoose model and mongo schema for households
+* @module householdModel
+* @requires mongoose
+*/
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -9,4 +15,8 @@ var householdSchema = new Schema({
   sentInvites: [{type: String, unique: true}] // UserId
 }, { minimize: false } );
 
+/**
+* @class householdModel
+* @constructor
+*/
 module.exports = mongoose.model('household', householdSchema);

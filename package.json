@@ -27,7 +27,6 @@
     "body-parser": "^1.13.3",
     "express": "^4.13.3",
     "express-jwt": "^3.0.1",
-    "gulp": "^3.9.0",
     "mongoose": "^4.1.4",
     "q": "^1.4.1",
     "redtape": "^1.0.0",

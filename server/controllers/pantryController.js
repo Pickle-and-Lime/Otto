@@ -1,7 +1,7 @@
 /**
 * Provides methods for creating household pantries and lists
-* @module groceryHelpers
-* @requires Household, appPantry, PantryItem, pantryHelpers, Q
+* @module pantryCtrl
+* @requires householdModel, finalPantry, PantryItem, Q
 */
 
 var Household = require('../db/householdModel.js');
@@ -13,11 +13,11 @@ var Q = require('q');
 
 /** 
 * Provides methods for manipulating household shopping lists
-* @class pantryHelpers
+* @class pantryCtrl
 * @static
 */
 
-module.exports = pantryHelpers = {
+module.exports = pantryCtrl = {
   /**
   * Updates a household item's neural network with additional
   * training data provided when a user adds or removes an
@@ -38,10 +38,11 @@ module.exports = pantryHelpers = {
     var trained = pantryItem.train(itemProps.trainingSet);
     // Add new standalone fn to item pantry
     itemProps.network = trained.toString();
+    //update fullyStocked and tracked properties
     itemProps.fullyStocked = fullyStocked;
     itemProps.tracked = true;
     //Mark pantry modified because it is a mixed datatype in db
-    household.markModified('pantry')
+    household.markModified('pantry');
     //Save changes
     return household.save();
   },
@@ -228,16 +229,6 @@ module.exports = pantryHelpers = {
   * the general pantry, including the properties of each item
   */
   getAppPantry : function() {
-    // // Simply return a list of the key names in appPantry
-    // // which are all the products we track
-    // // The value could be anything the frontend needs
-    // var result = {};
-    // for (var item in appPantry) {
-    //   // result[item] = true;
-    //   result[item] = { // populating the master pantry list with the category
-    //     category: appPantry[item].category
-    //   };
-    // }
     return Q.fcall(function() {
       return appPantry;
     });
