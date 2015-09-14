@@ -27,6 +27,7 @@ describe('Pantry Controller', function () {
     //Due to current front-end config, these calls will always be made on controller init
     $httpBackend.expectGET('/pantry/general').respond();
     $httpBackend.expectGET('/pantry/household/1').respond();
+    $httpBackend.expectGET('/pantry/categories').respond();
     createController();
 
     $httpBackend.flush();
@@ -70,7 +71,7 @@ describe('Pantry Controller', function () {
     );
     $scope.addItem('item1');
     $httpBackend.flush();
-    expect($scope.pantryList.length).to.equal(3);
+    expect(Object.keys($scope.pantryList).length).to.equal(3);
   });
   
   it('removeItem() should send a request for item removal', function(){
@@ -82,7 +83,7 @@ describe('Pantry Controller', function () {
     $scope.removeItem('item1');
     $httpBackend.flush();
     expect($scope.removeItem).to.be.a('function');
-    expect($scope.pantryList.length).to.equal(2);
+    expect(Object.keys($scope.pantryList).length).to.equal(2);
   });
 
   it('ranOut() should POST the requested item to the list and update the list', function(){
@@ -93,7 +94,7 @@ describe('Pantry Controller', function () {
     );
     $scope.ranOut('item1');
     $httpBackend.flush();
-    expect($scope.pantryList.length).to.equal(3);
+    expect(Object.keys($scope.pantryList).length).to.equal(3);
   });
 
   it('needItem() should POST the requested item to the list and update the list', function(){
@@ -104,7 +105,7 @@ describe('Pantry Controller', function () {
     );
     $scope.needItem();
     $httpBackend.flush();
-    expect($scope.pantryList.length).to.equal(3);
+    expect(Object.keys($scope.pantryList).length).to.equal(3);
   });
 
 });

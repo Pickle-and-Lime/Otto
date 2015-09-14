@@ -45,9 +45,9 @@ describe('List Controller', function () {
   });*/
 
   it('toggleCheck() should toggle the checked property of an item', function(){
-    $scope.shoppingList = [{name: 'item1', checked: false}, {name: 'item2' , checked: false}, {name: 'item3', checked: false}];
+    $scope.shoppingList = { item1: { checked: false }, item2: { checked: false}, item3: { checked: false } };
     $scope.toggleCheck('item2');
-    expect($scope.shoppingList[1].checked).to.be(true);
+    expect($scope.shoppingList['item2'].checked).to.be(true);
   });
 
   it('checkoutList()', function(){
@@ -76,12 +76,12 @@ describe('List Controller', function () {
     $scope.shoppingList = [{clearly : 'incorrectValue'}];
     $httpBackend.expectPOST('/list').respond();
     $httpBackend.expectGET('/list/1').respond(
-      {item1 : {checked: true}, item2 : {checked: true}, item3 : {checked: true} }
+      { item1 : {checked: true}, item2 : {checked: true}, item3 : {checked: true} }
     );
     $scope.addItem('item1');
     $httpBackend.flush();
     //Test if pantry updated
-    expect($scope.shoppingList.length).to.equal(3);
+    expect(Object.keys($scope.shoppingList).length).to.equal(3);
   });
   
   it('removeItem() should DELETE the requested item and update the list', function(){
@@ -95,7 +95,7 @@ describe('List Controller', function () {
     $httpBackend.flush();
     expect($scope.removeItem).to.be.a('function');
     //Test if pantry updated
-    expect($scope.shoppingList.length).to.equal(3);
+    expect(Object.keys($scope.shoppingList).length).to.equal(3);
   });
 
 
