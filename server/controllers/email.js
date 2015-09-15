@@ -21,24 +21,21 @@ module.exports = {
   sendInvitationEmail : function(inviteeEmail, inviteId) {
     var link = "http://localhost:1337/user/invite/" + inviteId;
     var message = {
-      html: "<p>You have been invited to join a household in Rosie!" +
-            "Click on the link below to accept the invitation!</p>" +
-            "<a>" + link + "</a",
-      subject: "Test email",
+      html: '<p>You have been invited to join a household in Otto!<br>' +
+            'Click on the link below to accept the invitation.</p><br><br>' +
+            '<a href="'+link+'">Accept Invitation</a>',
+      subject: "Otto - Invitation to Join Household",
       from_email: "kamharrah@gmail.com",
-      from_name: "Rosie",
+      from_name: "Otto",
       to: [{
         email: inviteeEmail,
         type: "to"
-      }],
-      important: false
+      }]
     };
 
     mandrill_client.messages.send({
         message: message,
-        async: true,
-        ip_pool: "Main Pool",
-        sent_at: "example sent_at"
+        async: true
       }, function(result) {
         console.log(result);
       }, function(err) {
