@@ -34,7 +34,7 @@ groceries.controller('loginController', ['$scope', '$http', 'auth', 'store', '$l
 
     
     /**
-     * function to log a user in (calls Auth0 funciton auth.signin())
+     * function to log a user in (calls Auth0 function auth.signin())
      * @method login
      */
     $scope.login = function () {
