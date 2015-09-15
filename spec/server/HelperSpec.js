@@ -76,7 +76,6 @@ test('addToList() should add any item to the household\'s list', function(t){
       .then(function(){
         Household.findOne({ _id: household1._id }, 'list', function(err, household) {
           t.ok('Berries' in household.list, 'Berries added to list.');
-          console.log('THE LIST',household.list);
           t.ok(household.list.Berries.tags !== undefined, 'Berry tags added to list');
           t.ok('Chicken' in household.list, 'Chicken added to list.');
           t.ok(household.list.Chicken.category === 'Meat', 'Category added to chicken in list');
@@ -110,10 +109,18 @@ test('addTag() should add a tag to an item in household\'s pantry and list', fun
   .then(function(){
     addTag('Shredded', 'Chicken', household1._id)
     .then(function(){
-      Household.findOne({_id: household1._id }, 'pantry list', function(err, household){
-        t.ok(household.list.Chicken.tags.indexOf('Shredded') !== -1, 'Tag added to item in list');
-        t.ok(household.pantry.Chicken.tags.indexOf('Shredded') !== -1, 'Tag added to item in pantry');
-        t.end();
+      addTag('Cooked', 'Chicken', household1._id)
+      .then(function(){
+        Household.findOne({_id: household1._id }, 'pantry list', function(err, household){
+          t.ok(household.list.Chicken.tags.indexOf('Shredded') !== -1, 'Tag added to item in list');
+          t.ok(household.list.Chicken.userTags.indexOf('Shredded') !== -1, 'Tage added to userTags in list');
+          t.ok(household.pantry.Chicken.tags.indexOf('Shredded') !== -1, 'Tag added to item in pantry');
+
+          t.ok(household.list.Chicken.tags.indexOf('Cooked') !== -1, 'Tag added to item in list');
+          t.ok(household.list.Chicken.userTags.indexOf('Cooked') !== -1, 'Tage added to userTags in list');
+          t.ok(household.pantry.Chicken.tags.indexOf('Cooked') !== -1, 'Tag added to item in pantry');
+          t.end();
+        });
       });
     });
   });
@@ -126,6 +133,7 @@ test('addTag() should add a tag to an item not in the appPantry in household\'s 
     .then(function(){
       Household.findOne({_id: household1._id }, 'pantry list', function(err, household){
         t.ok(household.list.Guava.tags.indexOf('Whole') !== -1, 'Tag added to item in list');
+        t.ok(household.list.Guava.userTags.indexOf('Whole') !== -1, 'Tage added to userTags in list');
         t.ok(household.pantry.Guava.tags.indexOf('Whole') !== -1, 'Tag added to item in pantry');
         t.end();
       });
@@ -188,17 +196,14 @@ test('buy() should move selected items from the current list to the pantry, full
   
   addToList('Durian', household1._id)
   .then(function(){
-    addToList('Dessert', household1._id)
+    buy(['Guava'], household1._id)
     .then(function(){
-      buy(['Dessert'], household1._id)
-      .then(function(){
-        Household.findOne({_id: household1._id }, 'pantry list', function(err, household){
-          t.notOk('Dessert' in household.list, 'Dessert removed from list.');
-          t.equal(household.pantry.Dessert.fullyStocked, true, 'Dessert in pantry.');
-          t.ok(household.list.Durian, 'Durian still on list');
-          t.end();
-        });  
-      });
+      Household.findOne({_id: household1._id }, 'pantry list', function(err, household){
+        t.notOk('Guava' in household.list, 'Guava removed from list.');
+        t.equal(household.pantry.Guava.fullyStocked, true, 'Guava in pantry.');
+        t.ok(household.list.Durian, 'Durian still on list');
+        t.end();
+      });  
     });
   });
 });
