@@ -88,7 +88,7 @@ module.exports = userCtrl = {
 
   /**
    *  Creates a new User and a new Household for that user.
-   *  The user is added to the households `users` property.
+   *  The user is added to the household's `users` property.
    *
    *  @method createUser
    *  @param  {string}    userId
@@ -121,8 +121,8 @@ module.exports = userCtrl = {
   },
 
   /**
-   *  Adds the inviters Household information into the invitee's `invites` property,
-   *  and adds invitee's email to the households sent invites list.
+   *  Adds the inviter's Household information into the invitee's `invites` property,
+   *  and adds invitee's email to the household's sent invites list.
    *  If invitation already exists, do nothing and return successfully.
    *
    *  @method createInvitation
