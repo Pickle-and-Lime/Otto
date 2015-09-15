@@ -27,6 +27,7 @@
     "body-parser": "^1.13.3",
     "express": "^4.13.3",
     "express-jwt": "^3.0.1",
+    "mandrill-api": "^1.0.45",
     "mongoose": "^4.1.4",
     "q": "^1.4.1",
     "redtape": "^1.0.0",

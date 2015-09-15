@@ -1,4 +1,5 @@
 var Q = require('q');
+var crypto = require('crypto');
 
 /**
 * Provides general utility methods
@@ -29,5 +30,16 @@ module.exports = {
     return Q().then(function () {
       return arr.map(function (el) { return func(el); });
     }).all();
+  },
+
+  /**
+  * Generates a (generally) unique hash
+  *
+  * @method generateHash
+  * @return {String}
+  * A generated hash string
+  */  
+  generateHash : function() {
+    return crypto.randomBytes(10).toString('hex');
   }
 };

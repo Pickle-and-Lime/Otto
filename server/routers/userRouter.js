@@ -58,6 +58,27 @@ router.post('/', function(req, res) {
 });
 
 /**
+ *  GET /user/invite/:id
+ *  
+ *  Accepts an invitation via email
+ * 
+ *  Finds an invite via ID, then accepts the invitation for that user
+ *
+ *  Redirect to root of app (to load index.html) on success
+ */
+
+router.get('/invite/:id', function(req, res) {
+  var inviteId = req.params.id;
+  userController.updateInvitationViaEmail(inviteId)
+  .then(function() {
+    res.redirect('../../');
+  })
+  .catch(function(err) {
+    res.send(err);
+  });
+});
+
+/**
  *  POST /user/invite
  *  
  *  Creates an invitation for the user
@@ -105,7 +126,6 @@ router.put('/invite', function(req, res) {
     res.sendStatus(404);
   });
 });
-
 
 /**
  *  DELETE /user

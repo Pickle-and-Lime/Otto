@@ -9,7 +9,9 @@
 var Q = require('q');
 var Household = require('../db/householdModel.js');
 var User = require('../db/userModel.js');
+var Invite = require('../db/inviteModel');
 var utils = require('./utils.js');
+var email = require('./email.js');
 
 module.exports = userCtrl = {
 
@@ -130,22 +132,36 @@ module.exports = userCtrl = {
    *  @return {Promise}   Callback is supplied with invitee's User object.
   */
   createInvitation : function(householdId, inviteeEmail) {
-    return Household.findById(householdId)
-    .then(function(household) {
-      return User.findOne({ email: inviteeEmail })
-      .then(function(user) {
-        if (!user) throw new Error('Cannot find user');
-        user.invites.push(household._id);
-        household.sentInvites.push(user.userId);
+    // Generate unique inviteId to send to invitee
+    var inviteId = utils.generateHash();
+    return Q.fcall(email.sendInvitationEmail, inviteeEmail, inviteId)
+    .then(function() {
+      return Household.findById(householdId)
+      .then(function(household) {
+        return User.findOne({ email: inviteeEmail })
+        .then(function(user) {
+          if (!user) throw new Error('Cannot find user');
 
-        return household.save()
-        .then(user.save)
-        .then(function() {
-          // Call getUser to get properly formatted user object
-          return userCtrl.getUser(user.userId);
+          user.invites.push(household._id);
+          household.sentInvites.push(user.userId);
+
+          var invite = new Invite({
+            inviteId: inviteId,
+            householdId: householdId,
+            inviteeEmail: inviteeEmail
+          });
+
+          return household.save()
+          .then(user.save)
+          .then(invite.save)
+          .then(function() {
+            // Call getUser to get properly formatted user object
+            return userCtrl.getUser(user.userId);
+          });
         });
       });
     });
+
   },
 
   /**
@@ -195,6 +211,26 @@ module.exports = userCtrl = {
           return userCtrl.getUser(invitee.userId);
         });
       });
+    });
+  },
+
+  /**
+   *  Accepts an invitation via email
+   *
+   *  Looks up the required params for updateInvitation stored in
+   *  the Invite Model instance relating to the inviteId before
+   *  running the updateInvitation function.
+   *
+   *  @method updateInvitationViaEmail
+   *  @param  {string}    inviteId
+   *
+   *  @return {Promise}   Callback is supplied with invitee's User object
+   */
+  updateInvitationViaEmail : function(inviteId) {
+    return Invite.findOne({inviteId: inviteId})
+    .then(function(invite) {
+      if (!invite) throw new Error('Cannot find invite');
+      return userCtrl.updateInvitation(String(invite.householdId), invite.inviteeEmail, true);
     });
   }
 };
