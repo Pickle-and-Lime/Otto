@@ -26,7 +26,7 @@ module.exports = itemCtrl = {
     .then(function(household) {
       household.pantry[item].tags.push(tag);
       if (household.list[item]){
-        household.list[item].userTags = [];
+        household.list[item].userTags = household.list[item].userTags || [];
         household.list[item].userTags.push(tag);
         household.list[item].tags.push(tag);
       }
