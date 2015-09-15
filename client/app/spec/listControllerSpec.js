@@ -47,7 +47,7 @@ describe('List Controller', function () {
   it('toggleCheck() should toggle the checked property of an item', function(){
     $scope.shoppingList = { item1: { checked: false }, item2: { checked: false}, item3: { checked: false } };
     $scope.toggleCheck('item2');
-    expect($scope.shoppingList['item2'].checked).to.be(true);
+    expect($scope.shoppingList.item2.checked).to.be(true);
   });
 
   it('checkoutList()', function(){
