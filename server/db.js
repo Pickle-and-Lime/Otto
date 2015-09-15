@@ -1,3 +1,10 @@
+/**
+* Create mongod connection using mongoose
+* @module db
+* @class db
+* @requires mongoose
+*/
+
 /////// DB
 var mongoose = require('mongoose');
 

@@ -1,5 +1,4 @@
 var express = require('express');
-var Q = require('q');
 var itemController = require('../controllers/itemController.js');
 var router = express.Router();
 

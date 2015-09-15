@@ -1,5 +1,4 @@
 var express = require('express');
-var Q = require('q');
 var pantryController = require('../controllers/pantryController.js');
 var router = express.Router();
 
@@ -13,7 +12,6 @@ router.get('/household/:id', function(req, res) {
 
   pantryController.getPantry(household)
   .then(function(pantry) {
-    console.log('PANTRY', pantry);
     res.send(pantry);
   })
   .catch(function(err) {
@@ -56,7 +54,6 @@ router.post('/', function(req, res) {
 
   pantryController.addToPantry(item, household)
   .then(function(pantry) {
-    console.log('PANTRY',pantry);
     res.status(201).send(pantry);
   })
   .catch(function() {
@@ -72,7 +69,6 @@ router.post('/', function(req, res) {
 router.delete('/:id/:item', function(req, res) {
   var item = req.params.item;
   var household = req.params.id;
-  console.log('household:',household,'item:',item);
   pantryController.removeFromPantry(item, household)
   .then(function(pantry) {
     res.send(pantry);

@@ -13,7 +13,6 @@ var removeFromList = listController.removeFromList;
 var buy = listController.buy;
 var removeFromPantry = pantryController.removeFromPantry;
 var updateExpTime = pantryController.updateExpTime;
-var householdHelpers = require('./household-helpers.js');
 
 /////////////
 // EXAMPLE //

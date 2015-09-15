@@ -1,11 +1,22 @@
-var mongoose = require('mongoose');
+/**
+ * Provides methods for working with households
+ * @module householdCtrl
+ * @class householdCtrl
+ * @static
+ * @requires Q, householdModel, userModel, utils
+ */
+
 var Household = require('../db/householdModel.js');
 var User = require('../db/userModel.js');
 var Q = require('q');
 var utils = require('./utils.js');
 
-module.exports = householdHelpers = {
+module.exports = householdCtrl = {
 
+  /**
+  * @method getHousehold
+  * @param householdId
+  */
   getHousehold : function(householdId) {
     return Household.findById(householdId)
     .then(function(household) {
@@ -40,6 +51,11 @@ module.exports = householdHelpers = {
     });
   },
 
+  /**
+  * @method updateHousehold
+  * @param househodId 
+  * @param name
+  */
   updateHousehold : function(householdId, name) {
     return Household.findById(householdId)
     .then(function(household) {
@@ -48,6 +64,10 @@ module.exports = householdHelpers = {
     });
   },
 
+  /**
+  * @method removeHousehold
+  * @param householdId
+  */
   removeHousehold : function(householdId) {
     return Household.remove({ _id: householdId }, function(err) {
       if (err) console.error(err);

@@ -1,16 +1,17 @@
 /**
  * Provides methods for creating and updating Users
- * @class userHelpers
+ * @module userCtrl
+ * @class userCtrl
  * @static
+ * @requires Q, householdModel, userModel, utils
  */
 
-var mongoose = require('mongoose');
 var Q = require('q');
 var Household = require('../db/householdModel.js');
 var User = require('../db/userModel.js');
 var utils = require('./utils.js');
 
-module.exports = userHelpers = {
+module.exports = userCtrl = {
 
   /**
    *  Retrieves and returns User information.
@@ -73,7 +74,7 @@ module.exports = userHelpers = {
         });
       } else {
         // If user does not exist, create a new one
-        return userHelpers.createUser(userId, email, fullName, picture, zip)
+        return userCtrl.createUser(userId, email, fullName, picture, zip)
         .then(function(newUser) {
           return Q.fcall(function() {
             return newUser.householdId;
@@ -141,7 +142,7 @@ module.exports = userHelpers = {
         .then(user.save)
         .then(function() {
           // Call getUser to get properly formatted user object
-          return userHelpers.getUser(user.userId);
+          return userCtrl.getUser(user.userId);
         });
       });
     });
@@ -191,7 +192,7 @@ module.exports = userHelpers = {
         .then(invitee.save)
         .then(function() {
           // Call getUser to get properly formatted user object
-          return userHelpers.getUser(invitee.userId);
+          return userCtrl.getUser(invitee.userId);
         });
       });
     });

@@ -1,22 +1,18 @@
 /**
 * Provides methods for creating household pantries and lists
-* @module groceryHelpers
-* @requires Household, appPantry, PantryItem, pantryHelpers, Q
+* @module itemCtrl
+* @requires householdModel
 */
 
 var Household = require('../db/householdModel.js');
-var appPantry = require('../db/finalPantry.js').pantry;
-var PantryItem = require('./PantryItem.js');
-var pantryHelpers = require('./pantryController.js');
-var Q = require('q');
 
 /** 
 * Provides methods for manipulating household shopping lists
-* @class itemHelpers
+* @class itemCtrl
 * @static
 */
 
-module.exports = itemHelpers = {
+module.exports = itemCtrl = {
 
   /**
   * Adds new tags to an item in a household's shopping list, and saves it in the pantry for future use
@@ -64,4 +60,17 @@ module.exports = itemHelpers = {
       return household.save();
     });
   },
+
+  /**
+  * Calculate the amount of time that has passed since the item was purchased
+  * @method timeSincePurchase
+  * @param date {Date}
+  * the date the item was last purchased
+  * @return {Number}
+  * the time in days since the item was last purchased
+  */  
+  timeSincePurchase : function(date){
+    var diff = (new Date() - date.getTime())/ (24 * 60 * 60 * 1000);
+    return Math.round(diff);
+  }
 };

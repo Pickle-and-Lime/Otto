@@ -1,34 +1,23 @@
 /**
 * Provides methods for creating household pantries and lists
-* @module groceryHelpers
-* @requires Household, appPantry, PantryItem, pantryHelpers, Q
+* @module listCtrl
+* @requires householdModel, appPantry, PantryItem, pantryController, Q
 */
 
 var Household = require('../db/householdModel.js');
 var appPantry = require('../db/finalPantry.js').pantry;
 var PantryItem = require('./PantryItem.js');
-var pantryHelpers = require('./pantryController.js');
+var pantryController = require('./pantryController.js');
+var itemController = require('./itemController.js');
 var Q = require('q');
 
 /** 
 * Provides methods for manipulating household shopping lists
-* @class listHelpers
+* @class listCtrl
 * @static
 */
 
-module.exports = listHelpers = {
-  /**
-  * Calculate the amount of time that has passed since the item was purchased
-  * @method timeSincePurchase
-  * @param date {Date}
-  * the date the item was last purchased
-  * @return {Number}
-  * the time in days since the item was last purchased
-  */  
-  timeSincePurchase : function(date){
-    var diff = (new Date() - date.getTime())/ (24 * 60 * 60 * 1000);
-    return Math.round(diff);
-  },
+module.exports = listCtrl = {
 
   /**
   * Generates a shopping list for a household based upon the length of time since
@@ -50,14 +39,13 @@ module.exports = listHelpers = {
         //loop over everything in the pantry and determine if it should be added to the list
         for (var item in household.pantry) {
           //calculate how long since last bought
-          timeElapsed = listHelpers.timeSincePurchase(pantry[item].date);
+          timeElapsed = itemController.timeSincePurchase(pantry[item].date);
 
           //if it is a tracked item and Rosie thinks it's out, add it
           if (household.pantry[item].tracked){
             //Execute stringified function
             eval("var network = "+household.pantry[item].network);
             var prob = network([timeElapsed]);
-            // console.log(item, prob);
             if (prob >0.5){
               household.pantry[item].fullyStocked = false;
               household.markModified('pantry');
@@ -125,18 +113,18 @@ module.exports = listHelpers = {
         //if the item is already in their pantry, update Rosie's data for it
         if (itemProps){
           //calculate how long since last bought
-          var timeElapsed = listHelpers.timeSincePurchase(itemProps.date);
+          var timeElapsed = itemController.timeSincePurchase(itemProps.date);
           if (timeElapsed > 0) {
             // Add the updated training data to pantry item
             itemProps.trainingSet.push({input : [timeElapsed], output :[0.9]});
           }
 
           //Rebuild the standalone NN with the updated training data
-          return pantryHelpers.updateItemNetwork(item, itemProps, household, false);
+          return pantryController.updateItemNetwork(item, itemProps, household, false);
         } 
         //otherwise, add it to their pantry
         else {
-          return pantryHelpers.addToPantry(item, householdId)
+          return pantryController.addToPantry(item, householdId)
           .then(function(household) {
             if (household) {
               //Mark list modified because it is a mixed datatype in db
@@ -188,7 +176,7 @@ module.exports = listHelpers = {
         return household.save()
         .then(function(){
           //calculate how long since last bought
-          var timeElapsed = listHelpers.timeSincePurchase(itemProps.date);
+          var timeElapsed = itemController.timeSincePurchase(itemProps.date);
 
           //Update items tracked by Rosie
           if(itemProps.trainingSet){
@@ -198,7 +186,7 @@ module.exports = listHelpers = {
             
 
            //Rebuild the standalone NN with the updated training data
-           pantryHelpers.updateItemNetwork(item, itemProps, household, true)
+           pantryController.updateItemNetwork(item, itemProps, household, true)
            .then(function() {
              return Q.fcall(function() {
                return household.list;

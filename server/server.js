@@ -1,3 +1,10 @@
+/**
+* configures server routes
+* @module app
+* @class app
+* @requires express, body-parser, listRouter, pantryRouter, itemRouter, 
+* householdRouter, userRouter, buyRouter, merketRouter
+*/
 var express = require('express');
 var bodyParser = require('body-parser');
 var listRouter = require('./routers/listRouter');
@@ -7,14 +14,12 @@ var householdRouter = require('./routers/householdRouter');
 var userRouter = require('./routers/userRouter');
 var buyRouter = require('./routers/buyRouter');
 var marketRouter = require('./routers/marketRouter');
-var db = require('./db.js');
 
 
 var app = express();
 
 app.use(bodyParser.json());
 
-// Will need to adjust file paths once deployed
 // For local, navigate to 127.0.0.1:1337/app
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('./public'));
@@ -31,7 +36,4 @@ app.use('/buy', buyRouter);
 app.use('/item', itemRouter);
 app.use('/markets', marketRouter);
 
-module.exports = {
-  app: app,
-  db: db
-};
+module.exports = app;

@@ -1,5 +1,4 @@
 var express = require('express');
-var Q = require('q');
 var listController = require('../controllers/listController.js');
 var router = express.Router();
 
@@ -10,7 +9,6 @@ var router = express.Router();
 router.post('/', function(req, res) {
   var items = req.body.items;
   var household = req.body.household;
-  console.log('items:',items,'household:',household);
   listController.buy(items, household)
   .then(function() {
     res.sendStatus(201);

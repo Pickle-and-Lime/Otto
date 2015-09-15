@@ -80,13 +80,15 @@ gulp.task('clean', function (callback) {
 gulp.task('js', function () {
   return gulp.src(paths.clientScripts)
     .pipe(concat('app.min.js'))
+    //to ensure Angular dependencies are injected correctly
     .pipe(ngAnnotate())
     .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('public/'));
 });
 
-// Update index.html to use built js and css files; minify html files
+// Update index.html to use built js and css files and use correct base href; 
+//minify html files
 gulp.task('html', function() {
   gulp.src(paths.index)
   .pipe(htmlreplace({
@@ -116,7 +118,6 @@ gulp.task('images', function() {
 });
 
 // Copy and minify css files from the client folder to public/assets folder)
-
 gulp.task('styles', function() {
   return gulp.src(paths.styles)
   .pipe(autoprefixer("last 2 versions", "> 1%", "ie 8"))
@@ -174,17 +175,7 @@ gulp.task('default', ['documentation'],function() {
   .pipe(install());
 });
 
-//To use angularTemplates/Template caching
-// gulp.task('build:templates', function() {
-//   return gulp.src('client/app/**/*.html')
-//     .pipe(angularTemplates({module: 'GroceriesApp', basePath: 'app/'}))
-//     .pipe(concat('app.templates.min.js'))
-//     .pipe(uglify({mangle: false}))
-//     .pipe(gulp.dest('public/'));
-// });
-
 //Add testing tasks 
-
 gulp.task('front-end-test', function(done){
   new Server({
     configFile: __dirname + '/karma.conf.js',
