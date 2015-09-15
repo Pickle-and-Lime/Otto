@@ -21,7 +21,7 @@ module.exports = listCtrl = {
 
   /**
   * Generates a shopping list for a household based upon the length of time since
-  * the item was last purchased, and Rosie's calculated probability that the 
+  * the item was last purchased, and Otto's calculated probability that the 
   * household has run out of that item.
   * @method autoBuildList
   * @param householdId {String}
@@ -41,7 +41,7 @@ module.exports = listCtrl = {
           //calculate how long since last bought
           timeElapsed = itemController.timeSincePurchase(pantry[item].date);
 
-          //if it is a tracked item and Rosie thinks it's out, add it
+          //if it is a tracked item and Otto thinks it's out, add it
           if (household.pantry[item].tracked){
             //Execute stringified function
             eval("var network = "+household.pantry[item].network);
@@ -76,7 +76,7 @@ module.exports = listCtrl = {
   /**
   * Adds an item to a household's shopping list.
   * If the item is not already in their pantry, it adds it to the pantry as well.
-  * If the item is already in their pantry, it updates Rosie's neural network
+  * If the item is already in their pantry, it updates Otto's neural network
   * to train it to add the item to the list sooner.
   * @method addToList
   * @param item {String}
@@ -110,7 +110,7 @@ module.exports = listCtrl = {
         household.save();
         
         var itemProps = household.pantry[item];
-        //if the item is already in their pantry, update Rosie's data for it
+        //if the item is already in their pantry, update Otto's data for it
         if (itemProps){
           //calculate how long since last bought
           var timeElapsed = itemController.timeSincePurchase(itemProps.date);
@@ -154,7 +154,7 @@ module.exports = listCtrl = {
   /**
   * Removes an item from a household's shopping list is the user
   * doesn't want it there, but hasn't purchased it.
-  * It also updates Rosie's neural network to train it to 
+  * It also updates Otto's neural network to train it to 
   * add the item to the list later.
   * @method removeFromList
   * @param item {String}
@@ -178,7 +178,7 @@ module.exports = listCtrl = {
           //calculate how long since last bought
           var timeElapsed = itemController.timeSincePurchase(itemProps.date);
 
-          //Update items tracked by Rosie
+          //Update items tracked by Otto
           if(itemProps.trainingSet){
             // Add the updated training data to pantry item
             
