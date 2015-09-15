@@ -7,9 +7,8 @@ Run these commands within the project root directory
    3. `gulp development` - Runs the development environment and opens the browser; if the page does not load correctly, try refreshing 
    4. `gulp pre-prod` - Runs the production environment and opens the browser; if the page does not load correctly, try refreshing
 
-To view the documentation
+View the full [documentation](http://pickle-and-lime.github.io/Rosie/)
 ----------------------------------------------------
-   1. Open `out/index.html` in the browser 
 
 To edit the documentation in real time
 ----------------------------------------------------
