@@ -10,7 +10,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
   function ($scope, $http, $location, auth, store, $state, States) {
     /**
      * initializes $scope variables to store received data and interaction states (private)
-     * @method init()
+     * @method init
      */
     var init = function(){
       // set state to 'household' when loading this view
@@ -41,7 +41,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
 
     /**
      * function to request user info from server (private)
-     * @method getUser()
+     * @method getUser
      */
     var getUser = function(){
       $scope.s.getUserFinished = false;
@@ -59,7 +59,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
 
     /**
      * function to request household info from server (private)
-     * @method getHousehold()
+     * @method getHousehold
      */
     var getHousehold = function(){
       $scope.s.getHouseholdFinished = false;
@@ -84,7 +84,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
 
     /**
      * function to store email in local variable until submission occurs (attached to $scope.s)
-     * @method submitEmail()
+     * @method submitEmail
      */
     $scope.s.submitEmail = function(){
       if ($scope.s.currentEmail !== ""){
@@ -98,7 +98,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
     //emailForm is used to check if valid email has been entered, if so it enables add button
     /**
      * function to check that user inputs are valid
-     * @method checkInputs()
+     * @method checkInputs
      */
     $scope.s.checkInputs = function(emailForm){
       emailForm = emailForm || false;
@@ -126,7 +126,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
     //inserts the clicked email into the edit form, deletes it from the input object
     /**
      * function to edit email in list of unsent invitations
-     * @method editEmail()
+     * @method editEmail
      * @param email {String}
      * the email address to edit
      * @param index {Number}
@@ -149,7 +149,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
     //sends household information to server
     /**
      * function to send household information to server
-     * @method sendHousehold()
+     * @method sendHousehold
      * @param cb {Function}
      * callback to be executed on success
      */
@@ -175,7 +175,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
     //invites each user in an array to join a household, takes callback
     /**
      * function to send invite requests to server for a list of emails
-     * @method inviteUsers()
+     * @method inviteUsers
      * @param emails {Array}
      * array of "emails"
      * @param cb {Function}
@@ -209,7 +209,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
 
     /**
      * function to redirect to household page when inviteUsersFinished and sendHouseholdFinished
-     * @method redirect()
+     * @method redirect
      */
     var redirect = function(){
       console.log('redirect attempt: ' + $scope.s.inviteUsersFinished + " " + $scope.s.sendHouseholdFinished);
@@ -222,7 +222,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
     //submits the household data to server, then redirects to household page
     /**
      * function to submit household to server and then send any invites
-     * @method submitHousehold()
+     * @method submitHousehold
      */
     $scope.s.submitHousehold = function(){
       if ($scope.s.createButtonActive !== "disabled"){
@@ -234,7 +234,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
     //submits a single invite to server
     /**
      * function to submit a single invite to the server
-     * @method newInvite()
+     * @method newInvite
      * @param email {String}
      * email to be invited
      */
@@ -251,7 +251,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
 
     /**
      * function join household (attached to $scope.s)
-     * @method joinHouse()
+     * @method joinHouse
      * @param hhid {String}
      * hhid is the householdId to be joined
      */
@@ -266,7 +266,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
 
     /**
      * function to reject household invitation (attached to $scope.s)
-     * @method rejectHouse()
+     * @method rejectHouse
      * @param hhid {String}
      * hhid is the householdId to be rejected
      */
@@ -281,7 +281,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
 
     /**
      * function to send request to server to join household (private)
-     * @method updateHouse()
+     * @method updateHouse
      * @param hhid {String}
      * is the householdId to be joined
      * @param email {String}
