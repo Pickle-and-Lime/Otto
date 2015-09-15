@@ -15,6 +15,7 @@ var householdRouter = require('./routers/householdRouter');
 var userRouter = require('./routers/userRouter');
 var buyRouter = require('./routers/buyRouter');
 var marketRouter = require('./routers/marketRouter');
+var recipeRouter = require('./routers/recipeRouter');
 
 var app = express();
 
@@ -43,6 +44,7 @@ app.use('/user', userRouter);
 app.use('/buy', jwtCheck, buyRouter);
 app.use('/item', jwtCheck, itemRouter);
 app.use('/markets', jwtCheck, marketRouter);
+app.use('/recipes', jwtCheck, recipeRouter);
 
 app.all('/*', function(req, res, next) {
     // Just send the index.html for other files to support HTML5Mode
