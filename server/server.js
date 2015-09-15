@@ -36,4 +36,9 @@ app.use('/buy', buyRouter);
 app.use('/item', itemRouter);
 app.use('/markets', marketRouter);
 
+app.all('/*', function(req, res, next) {
+    // Just send the index.html for other files to support HTML5Mode
+    res.sendFile('index.html', { root: './public' });
+});
+
 module.exports = app;
