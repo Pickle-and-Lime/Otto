@@ -67,7 +67,8 @@ describe('Pantry Controller', function () {
     var spy = sinon.spy($scope, 'updatePantry');
 
     $scope.household = 1;
-    $httpBackend.expectPOST('/pantry').respond({pantryList: 'pantryList'});
+    $scope.pantryList = {testVal : {checked: false} };
+    $httpBackend.expectPOST('/pantry').respond();
     $httpBackend.expectGET('/pantry/household/1').respond(
       {item1 : {checked: true}, item2 : {checked: true}, item3 : {checked: true} }
     );
