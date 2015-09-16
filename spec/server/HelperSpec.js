@@ -112,13 +112,9 @@ test('addTag() should add a tag to an item in household\'s pantry and list', fun
       addTag('Cooked', 'Chicken', household1._id)
       .then(function(){
         Household.findOne({_id: household1._id }, 'pantry list', function(err, household){
-          t.ok(household.list.Chicken.tags.indexOf('Shredded') !== -1, 'Tag added to item in list');
           t.ok(household.list.Chicken.userTags.indexOf('Shredded') !== -1, 'Tage added to userTags in list');
-          t.ok(household.pantry.Chicken.tags.indexOf('Shredded') !== -1, 'Tag added to item in pantry');
 
-          t.ok(household.list.Chicken.tags.indexOf('Cooked') !== -1, 'Tag added to item in list');
           t.ok(household.list.Chicken.userTags.indexOf('Cooked') !== -1, 'Tage added to userTags in list');
-          t.ok(household.pantry.Chicken.tags.indexOf('Cooked') !== -1, 'Tag added to item in pantry');
           t.end();
         });
       });
@@ -132,9 +128,7 @@ test('addTag() should add a tag to an item not in the appPantry in household\'s 
     addTag('Whole', 'Guava', household1._id)
     .then(function(){
       Household.findOne({_id: household1._id }, 'pantry list', function(err, household){
-        t.ok(household.list.Guava.tags.indexOf('Whole') !== -1, 'Tag added to item in list');
         t.ok(household.list.Guava.userTags.indexOf('Whole') !== -1, 'Tage added to userTags in list');
-        t.ok(household.pantry.Guava.tags.indexOf('Whole') !== -1, 'Tag added to item in pantry');
         t.end();
       });
     });
@@ -145,12 +139,12 @@ test('editItem() should change an item\'s category ,expiration, and purchase dat
   var timePast = 4*24*60*60*1000;
   var date = new Date();
   date.setTime(date.getTime()-timePast);
-  editItem('Fruit',2, date, 'Guava', household1._id)
+  editItem('Fruit',2, date, 'Gooseberries', household1._id)
   .then(function(){
     Household.findOne({_id: household1._id }, 'pantry list', function(err, household){
-      t.ok(household.pantry.Guava.expiration === 2, 'Expiration changed for item in pantry');
-      t.ok(household.pantry.Guava.date.getTime() === date.getTime(), 'Expiration changed for item in pantry');
-      t.ok(household.pantry.Guava.category === 'Fruit', 'Category changed for item in pantry');
+      t.ok(household.pantry.Gooseberries.expiration === 2, 'Expiration changed for item in pantry');
+      t.ok(household.pantry.Gooseberries.date.getTime() === date.getTime(), 'Expiration changed for item in pantry');
+      t.ok(household.pantry.Gooseberries.category === 'Fruit', 'Category changed for item in pantry');
       t.end();
     });
   });
@@ -161,8 +155,8 @@ test('getPantry() should return a list of the items in the pantry', function(t){
   getPantry(household1._id)
   .then(function(pantry){
     t.ok(pantry.Milk, 'Item listed.');
-    t.ok(pantry.Berries, 'Item listed.');
-    t.ok(pantry.Chicken, 'All pantry items listed.');
+    t.ok(pantry.Gooseberries, 'Item listed.');
+    t.ok(pantry.Milk, 'All pantry items listed.');
 
     t.end(); 
   });
@@ -174,7 +168,6 @@ test('getAppPantry() should retrieve the names of items in the app pantry', func
   getAppPantry()
   .then(function(appPantry){
     t.ok(appPantry.Milk, 'App pantry list retrieved.');
-
     t.end();
   });
 
@@ -184,7 +177,7 @@ test('removeFromPantry() should remove items from the pantry', function(t){
   
   removeFromPantry('Chicken', household1._id)
   .then(function(){
-    Household.findOne({_id: household1._id }, 'pantry', function(err, household){
+    Household.findOne({_id: household1._id }, 'pantry list', function(err, household){
       t.notOk('Chicken' in household.pantry, 'Chicken removed from pantry.');
       t.end();
     });
