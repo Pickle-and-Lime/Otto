@@ -4,7 +4,9 @@ groceries.controller('landingController', function($scope, Seasonal, Landing, St
   States.setState('landing');
   // grab household id from angular storage
   $scope.household = store.get('householdId');
-  console.log('householdId:', $scope.household);
+  // grab user zip code from angular storage
+  $scope.zip = store.get('zip');
+  console.log('householdId:', $scope.household, 'zipcode:', $scope.zip);
   // functions to load correct set of seasonal fruits and veggies
   $scope.month = (new Date()).getMonth();
   console.log('month is:', $scope.month);
@@ -113,7 +115,7 @@ groceries.controller('landingController', function($scope, Seasonal, Landing, St
       });
   };
 
-  Landing.setZip('95818'); // this should be set by user within app
+  Landing.setZip($scope.zip); // this should be set by user within app
 
   getMarketList();
 

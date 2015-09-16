@@ -1,3 +1,24 @@
+/* Styles for list item tags */
+.confirm-delete {
+  box-shadow: 1px 1px 7px #999;
+  padding: 10px;
+  margin: 10px;
+  font-size: 0.9em;
+}
+
+.tags {
+  width: 100%;
+}
+
+.item-tag {
+  font-size: 0.7em;
+  padding: 1px 3px;
+  margin: 2px 2px;
+  background-color: #999;
+  color: white;
+  display: inline-block;
+}
+
 /* Styles for pantry builder */
 .item-name {
   width: 50%;

@@ -29,9 +29,9 @@ router.post('/data', function(req, res) {
   var household = req.body.household;
   var category = req.body.category;
   var expiration = req.body.expiration;
-  var purchase = req.body.purchase;
+  var purchase = new Date(req.body.purchase);
 
-  itemController.editItem(category, expiration, date, item, household)
+  itemController.editItem(category, expiration, purchase, item, household)
   .then(function(pantry) {
     res.status(201).send(pantry);
   })
