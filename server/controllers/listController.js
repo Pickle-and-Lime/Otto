@@ -235,32 +235,38 @@ module.exports = listCtrl = {
     return Household.findOne({ _id: householdId }, 'pantry list')
     .then(function(household){
       if (household) {
+        var toPantry = [];
+
         items.forEach(function(item) {
           //update the date to today
           //delete the item from the shopping list
-          delete household.list[item];   
-          if (household.pantry[item] === undefined) {
-            pantryController.addToPantry(item, householdId);
-            // .then(function(){
-            //   console.log('PANTRY HERE',household.pantry[item]);
-            //   household.pantry[item].date = new Date();
-            //   household.pantry[item].fullyStocked = true;               
-            // });
-          } else{
+          delete household.list[item];
+          if (household.pantry[item]){
             household.pantry[item].date = new Date();
             household.pantry[item].fullyStocked = true;     
+            // household.pantry[item].tags.push(item.userTags);   
+          } else {
+            toPantry.push(item);
           }
-          
         });
         //Mark pantry and list modified because they are of mixed datatype in db
         household.markModified('pantry');
         household.markModified('list');
         
         //Save changes
-        return household.save()
+        household.save();        
+        
+        function add(items){
+          return items.reduce(function(curr, next){
+            return curr.then(function(){
+              return pantryController.addToPantry(next, householdId);
+            });
+          }, Q());
+        }
+        
+        return add(toPantry)
         .then(function() {
           return Q.fcall(function() {
-            console.log('asldkfj', household.pantry);
             // May need to return something here
             return household;
           });

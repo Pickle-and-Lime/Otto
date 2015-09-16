@@ -178,7 +178,6 @@ test('removeFromPantry() should remove items from the pantry', function(t){
   removeFromPantry('Chicken', household1._id)
   .then(function(){
     Household.findOne({_id: household1._id }, 'pantry list', function(err, household){
-      console.log('LIST', household.list);
       t.notOk('Chicken' in household.pantry, 'Chicken removed from pantry.');
       t.end();
     });
