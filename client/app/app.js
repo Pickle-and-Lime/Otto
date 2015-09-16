@@ -48,6 +48,7 @@ groceries.run(function ($rootScope, auth, store, jwtHelper, $location) {
 
 groceries.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
+  $urlRouterProvider.when('/household/', '/household');
   $urlRouterProvider.otherwise('/');
   $stateProvider
     .state('login', {
@@ -57,7 +58,12 @@ groceries.config(function ($stateProvider, $urlRouterProvider, $locationProvider
                       controller: "loginController" 
                     },
         "title": { template: "Otto" }
-      }
+      },
+      onEnter: ['auth', '$location', function (auth, $location){
+        if (auth.isAuthenticated){
+          $location.path( "/landing" );
+        }
+      }]
     })
     .state('about', {
       url: "/about",
