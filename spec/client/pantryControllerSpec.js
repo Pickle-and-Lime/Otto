@@ -63,7 +63,9 @@ describe('Pantry Controller', function () {
   });
 
   it('addItem() should add an item to the pantry and update the scope pantry', function(){
-    
+    //Update pantry is the final result of these functions, if it is called then behavior is as desired
+    var spy = sinon.spy($scope, 'updatePantry');
+
     $scope.household = 1;
     $httpBackend.expectPOST('/pantry').respond({pantryList: 'pantryList'});
     $httpBackend.expectGET('/pantry/household/1').respond(
@@ -71,10 +73,15 @@ describe('Pantry Controller', function () {
     );
     $scope.addItem('item1');
     $httpBackend.flush();
-    expect(Object.keys($scope.pantryList).length).to.equal(3);
+
+    //Test if updateList was called
+    expect(spy.called).to.equal(true);
   });
   
   it('removeItem() should send a request for item removal', function(){
+    //Update pantry is the final result of these functions, if it is called then behavior is as desired
+    var spy = sinon.spy($scope, 'updatePantry');
+
     $scope.household = 1;
     $httpBackend.expectDELETE('/pantry/1/item1').respond({pantryList: 'pantryList'});
     $httpBackend.expectGET('/pantry/household/1').respond(
@@ -83,10 +90,15 @@ describe('Pantry Controller', function () {
     $scope.removeItem('item1');
     $httpBackend.flush();
     expect($scope.removeItem).to.be.a('function');
-    expect(Object.keys($scope.pantryList).length).to.equal(2);
+    
+    //Test if updateList was called
+    expect(spy.called).to.equal(true);
   });
 
   it('ranOut() should POST the requested item to the list and update the list', function(){
+    //Update pantry is the final result of these functions, if it is called then behavior is as desired
+    var spy = sinon.spy($scope, 'updatePantry');
+
     $scope.household = 1;
     $httpBackend.expectPOST('/list').respond({pantryList: 'pantryList'});
     $httpBackend.expectGET('/pantry/household/1').respond(
@@ -94,10 +106,14 @@ describe('Pantry Controller', function () {
     );
     $scope.ranOut('item1');
     $httpBackend.flush();
-    expect(Object.keys($scope.pantryList).length).to.equal(3);
+
+    //Test if updateList was called
+    expect(spy.called).to.equal(true);
   });
 
   it('needItem() should POST the requested item to the list and update the list', function(){
+    //Update pantry is the final result of these functions, if it is called then behavior is as desired
+    var spy = sinon.spy($scope, 'updatePantry');
     $scope.household = 1;
     $httpBackend.expectPOST('/list').respond({pantryList: 'pantryList'});
     $httpBackend.expectGET('/pantry/household/1').respond(
@@ -105,7 +121,9 @@ describe('Pantry Controller', function () {
     );
     $scope.needItem();
     $httpBackend.flush();
-    expect(Object.keys($scope.pantryList).length).to.equal(3);
+
+    //Test if updateList was called
+    expect(spy.called).to.equal(true);
   });
 
 });

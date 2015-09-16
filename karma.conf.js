@@ -10,7 +10,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'sinon'],
 
 
     // list of files / patterns to load in the browser
@@ -26,7 +26,7 @@ module.exports = function(config) {
       'client/app/app.js',
       'client/app/**/*.js',
       'node_modules/expect.js/index.js',
-      'client/app/spec/*.js'
+      'spec/client/*.js'
     ],
 
 
