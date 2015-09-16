@@ -79,7 +79,7 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
   $scope.getCategories();
   // this adds a pantry item to the list
   $scope.addItem = function(item) {
-    if (item && item.length) { // only add if there is something in userItem string
+    if (item && item.length && !$scope.pantryList[item]) {
       Lists.addToList('/pantry', item, $scope.household)
         .then(function(res) {
           console.log('POST /pantry:', res.data);
@@ -90,6 +90,16 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
           console.log('POST /pantry:', err);
         });
     }
+  };
+  // these variables and functions handle pantry item deletion confirmation
+  $scope.toDelete = '';
+
+  $scope.isDelete = function(item) {
+    return item === $scope.toDelete;
+  };
+
+  $scope.toggleDelete = function(item) {
+    $scope.toDelete = $scope.toDelete === item ? '' : item;
   };
   // this removes a pantry item from the list
   $scope.removeItem = function(item) {
@@ -102,6 +112,41 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
         console.log('ERROR DELETE /pantry:', err);
       });
   };
+  // these variables and functions handle pantry item editing
+  $scope.activeItem = '';
+  $scope.editedDate = (new Date()).toDateString();
+  $scope.editedCategory = 'Alcohol';
+  $scope.editedExpiration = (new Date()).toDateString();
+  $scope.editVisible = false;
+  $scope.editingCategory = false;
+
+  $scope.toggleEditCategory = function() {
+    $scope.editingCategory = !$scope.editingCategory;
+  };
+
+  $scope.setCategory = function(item) {
+    $scope.editedCategory = item;
+    $scope.toggleEditCategory();
+  };
+
+  $scope.toggleActive = function(item) {
+    $scope.activeItem = item;
+    $scope.editVisible = !$scope.editVisible;
+  };
+
+  $scope.submitItemEdits = function() {
+    if ($scope.activeItem.length && $scope.household && $scope.editedCategory && $scope.editedExpiration && $scope.editedDate) { // submit only if all args exist
+      // console.log('Date Formats:', $scope.editedDate, $scope.editedExpiration);
+      Lists.editItemData($scope.activeItem, $scope.household, $scope.editedCategory, $scope.editedExpiration, $scope.editedDate)
+        .then(function(res) {
+          console.log('SUBMIT:', res.data);
+          $scope.updatePantry();
+        }, function(err) {
+          console.log('SUBMIT:', err);
+        });
+    }
+  };
+
   // ranOut will send a request to add the item to the shopping list, and update the pantry
   $scope.ranOut = function(item) {
     if (item && item.length) { // only add if there is something in userItem string
@@ -150,5 +195,24 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
   // check if a particular item is fullyStocked
   $scope.isStocked = function(item) {
     return $scope.pantryList[item].fullyStocked;
+  };
+
+  // Make shortened date string for an item to display in pantry
+  $scope.makeDate = function(item) {
+    var date = new Date($scope.pantryList[item].date);
+    return date.toDateString();
+  };
+
+  // make date using the current active item for editing
+  $scope.makeActiveDate = function() {
+    $scope.makeDate($scope.activeItem);
+  };
+
+  // Make expiration date based on original purchase date and expiration number from item
+  $scope.makeExpiration = function(item) {
+    var oldDate = (new Date($scope.pantryList[item].date)).valueOf();
+    var elapsed = $scope.pantryList[item].expiration * 24 * 60 * 60 * 1000;
+    var newTime = oldDate + elapsed;
+    return (new Date(newTime)).toDateString();
   };
 });

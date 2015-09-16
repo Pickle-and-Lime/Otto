@@ -29,8 +29,14 @@ module.exports = itemCtrl = {
       }
       if (household.list[item]){
         household.list[item].userTags = household.list[item].userTags || [];
-        household.list[item].userTags.push(tag);
-        // household.list[item].tags.push(tag);
+        // only push tag to userTags array if it doesn't already exist
+        if (household.list[item].userTags.indexOf(tag) === -1) {
+          household.list[item].userTags.push(tag);
+        }
+        // only push tag to tags array if it doesn't already exist
+        if (household.list[item].tags.indexOf(tag) === -1) {
+          household.list[item].tags.push(tag);
+        }
       }
       //Mark list modified because it is a mixed datatype in db
       household.markModified('pantry');

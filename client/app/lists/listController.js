@@ -11,8 +11,8 @@ groceries.controller('listController', function ($scope, $state, Lists, auth, st
         // console.log('GET /list:', res.data);
         $scope.shoppingList = res.data;
         $scope.shoppingByCategory = $scope.listConverter(res.data);
-        // console.log('shoppingList:', $scope.shoppingList);
-        // console.log('shoppingByCategory:', $scope.shoppingByCategory);
+        console.log('shoppingList:', $scope.shoppingList);
+        console.log('shoppingByCategory:', $scope.shoppingByCategory);
       }, function(err) {
         console.log('GET /list: ERROR', err);
       });
@@ -34,7 +34,7 @@ groceries.controller('listController', function ($scope, $state, Lists, auth, st
 
   // add item from text input to shopping list on backend
   $scope.addItem = function(item) {
-    if (item && item.length) { // only add if there is something in userItem string
+    if (item && item.length && !$scope.shoppingList[item]) {
       Lists.addToList('/list', item, $scope.household)
         .then(function(res) {
           console.log('POST to /list', res);
@@ -102,6 +102,29 @@ groceries.controller('listController', function ($scope, $state, Lists, auth, st
     }
     return returnArray;
   };
+  // add tags to current item
+  $scope.addTags = function(item, newTag) {
+    if (newTag && newTag.length) {
+      $scope.shoppingList[item].newTag = '';
+      Lists.addItemTag(item, $scope.household, newTag)
+        .then(function(res) {
+          console.log('addTags:', res.data);
+          $scope.shoppingList = res.data.list;
+        }, function(err) {
+          console.log('addTags ERR:', err);
+        });
+    }
+  };
+  // active tag input starts as nothing
+  $scope.activeTag = '';
+  // tells whether tag input div for that item is visible
+  $scope.isActiveTag = function(item) {
+    return item === $scope.activeTag;
+  };
+  // sets the active tag div on click
+  $scope.toggleActiveTag = function(item) {
+    $scope.activeTag = item === $scope.activeTag ? '' : item;
+  };
 
 });
 
@@ -123,7 +146,20 @@ groceries.factory('Lists', function($http) {
     buyList: function(itemsArray, household) {
       return $http.post('/buy', {items: itemsArray, household: household});
     },
-    // helper function to get household Id from server
+    // helper function to add a tag to a shopping list item
+    addItemTag: function(item, household, tag) {
+      return $http.post('/item/tag', {item: item, household: household, tag: tag});
+    },
+    // helper function to post item data changes
+    editItemData: function(item, household, category, expiration, purchase) {
+      var time1 = (new Date(purchase)).getTime();
+      var time2 = (new Date(expiration)).getTime();
+      var elapsed = (time2 - time1) / 86400000;
+      elapsed = elapsed > 0 ? elapsed : 1;
+      var obj = {item: item, household: household, category: category, expiration: elapsed, purchase: purchase};
+      console.log('POST /item/data:', obj);
+      return $http.post('/item/data', obj);
+    },
     
 
     arrayConverter: function(object) {
