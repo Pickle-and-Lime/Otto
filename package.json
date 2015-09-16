@@ -58,6 +58,8 @@
     "karma": "^0.13.9",
     "karma-chrome-launcher": "^0.2.0",
     "karma-jasmine": "^0.3.6",
-    "run-sequence": "^1.1.2"
+    "karma-sinon": "^1.0.4",
+    "run-sequence": "^1.1.2",
+    "sinon": "^1.16.1"
   }
 }

@@ -37,13 +37,6 @@ describe('List Controller', function () {
     $httpBackend.verifyNoOutstandingRequest();
   }));
 
-  /*it('updateList() should retrieve the household\'s pantry from the server', function(){
-    $httpBackend.expectGET('/pantry/household/1').respond({pantryList: 'pantryList'});
-    $scope.household = 1;
-    $scope.updatePantry();
-    expect($scope.updateList).to.be.a('function');
-  });*/
-
   it('toggleCheck() should toggle the checked property of an item', function(){
     $scope.shoppingList = { item1: { checked: false }, item2: { checked: false}, item3: { checked: false } };
     $scope.toggleCheck('item2');
@@ -72,6 +65,9 @@ describe('List Controller', function () {
 
 
   it('addItem() should POST the requested item and update the list', function(){
+    //Update list is the final result of these functions, if it is called then behavior is as desired
+    var spy = sinon.spy($scope, 'updateList');
+    
     $scope.household = 1;
     $scope.shoppingList = [{clearly : 'incorrectValue'}];
     $httpBackend.expectPOST('/list').respond();
@@ -80,11 +76,14 @@ describe('List Controller', function () {
     );
     $scope.addItem('item1');
     $httpBackend.flush();
-    //Test if pantry updated
-    expect(Object.keys($scope.shoppingList).length).to.equal(3);
+    //Test if updateList was called
+    expect(spy.called).to.equal(true);
   });
   
   it('removeItem() should DELETE the requested item and update the list', function(){
+    //Update list is the final result of these functions, if it is called then behavior is as desired
+    var spy = sinon.spy($scope, 'updateList');
+
     $scope.household = 1;
     $scope.shoppingList = [{clearly : 'incorrectValue'}];
     $httpBackend.expectDELETE('/list/1/item1').respond({pantryList: 'pantryList'});
@@ -94,8 +93,8 @@ describe('List Controller', function () {
     $scope.removeItem('item1');
     $httpBackend.flush();
     expect($scope.removeItem).to.be.a('function');
-    //Test if pantry updated
-    expect(Object.keys($scope.shoppingList).length).to.equal(3);
+    //Test if updateList was called
+    expect(spy.called).to.equal(true);
   });
 
 
