@@ -52,7 +52,7 @@ module.exports = listCtrl = {
               household.save();
             }
           }
-          if (!household.pantry[item].fullyStocked){
+          if (!household.pantry[item].fullyStocked && !household.list[item]){
             household.list[item] = {checked: false, tags: pantry[item].tags, category: pantry[item].category};          
           }
         }
@@ -108,7 +108,6 @@ module.exports = listCtrl = {
         household.markModified('list');
         //needed to pass specs, though behavior seems ok in app without these
         household.save();
-        
         var itemProps = household.pantry[item];
         //if the item is already in their pantry, update Otto's data for it
         if (itemProps){
@@ -124,26 +123,26 @@ module.exports = listCtrl = {
         } 
         //otherwise, add it to their pantry
         else {
-          return pantryController.addToPantry(item, householdId)
-          .then(function(household) {
-            if (household) {
-              //Mark list modified because it is a mixed datatype in db
-              household.pantry[item].fullyStocked = false;
+        //   return pantryController.addToPantry(item, householdId)
+        //   .then(function(household) {
+        //     if (household) {
+        //       //Mark list modified because it is a mixed datatype in db
+        //       household.pantry[item].fullyStocked = false;
 
-              //Mark pantry modified because they are of mixed datatype in db
-              household.markModified('pantry');
+        //       //Mark pantry modified because they are of mixed datatype in db
+        //       household.markModified('pantry');
               
-              //Save changes
+        //       //Save changes
               return household.save()
               .then(function() {
                 return Q.fcall(function() {
                   return household.list;
                 });
               });
-            } else {
-              throw new Error('Household not found');
-            }
-          });
+        //     } else {
+        //       throw new Error('Household not found');
+        //     }
+        //   });
         }
       } else {
         throw new Error('Household not found');
@@ -176,38 +175,40 @@ module.exports = listCtrl = {
         return household.save()
         .then(function(){
           //calculate how long since last bought
-          var timeElapsed = itemController.timeSincePurchase(itemProps.date);
+          if (itemProps){
+            var timeElapsed = itemController.timeSincePurchase(itemProps.date);
 
-          //Update items tracked by Otto
-          if(itemProps.trainingSet){
-            // Add the updated training data to pantry item
-            
-            itemProps.trainingSet.push({input : [timeElapsed], output :[0.1]});
-            
+            //Update items tracked by Otto
+            if(itemProps.trainingSet){
+              // Add the updated training data to pantry item
+              
+              itemProps.trainingSet.push({input : [timeElapsed], output :[0.1]});
+              
 
-           //Rebuild the standalone NN with the updated training data
-           pantryController.updateItemNetwork(item, itemProps, household, true)
-           .then(function() {
-             return Q.fcall(function() {
-               return household.list;
+             //Rebuild the standalone NN with the updated training data
+             pantryController.updateItemNetwork(item, itemProps, household, true)
+             .then(function() {
+               return Q.fcall(function() {
+                 return household.list;
+               });
              });
-           });
 
-          }
-          else{
-            //restock in pantry
-            itemProps.fullyStocked = true;
-            //Mark pantry and list modified because they are of mixed datatype in db
-            household.markModified('list');
-            household.markModified('pantry');
-            
-            //Save changes
-            return household.save()
-            .then(function() {
-              return Q.fcall(function() {
-                return household.list;
+            }
+            else{
+              //restock in pantry
+              itemProps.fullyStocked = true;
+              //Mark pantry and list modified because they are of mixed datatype in db
+              household.markModified('list');
+              household.markModified('pantry');
+              
+              //Save changes
+              return household.save()
+              .then(function() {
+                return Q.fcall(function() {
+                  return household.list;
+                });
               });
-            });
+            }
           }
         });
 
@@ -236,11 +237,20 @@ module.exports = listCtrl = {
       if (household) {
         items.forEach(function(item) {
           //update the date to today
-          household.pantry[item].date = new Date();
-          household.pantry[item].fullyStocked = true;     
-          
           //delete the item from the shopping list
           delete household.list[item];   
+          if (household.pantry[item] === undefined) {
+            pantryController.addToPantry(item, householdId);
+            // .then(function(){
+            //   console.log('PANTRY HERE',household.pantry[item]);
+            //   household.pantry[item].date = new Date();
+            //   household.pantry[item].fullyStocked = true;               
+            // });
+          } else{
+            household.pantry[item].date = new Date();
+            household.pantry[item].fullyStocked = true;     
+          }
+          
         });
         //Mark pantry and list modified because they are of mixed datatype in db
         household.markModified('pantry');
@@ -250,6 +260,7 @@ module.exports = listCtrl = {
         return household.save()
         .then(function() {
           return Q.fcall(function() {
+            console.log('asldkfj', household.pantry);
             // May need to return something here
             return household;
           });

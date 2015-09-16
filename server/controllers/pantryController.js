@@ -110,6 +110,7 @@ module.exports = pantryCtrl = {
             tags : [],
             seasons : []
           }; 
+          console.log('asldfkjasldkfjasldkfjasdlfkj', household.pantry);
           //Mark pantry modified because it is a mixed datatype in db
           household.markModified('pantry');
           //Save changes
