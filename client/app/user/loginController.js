@@ -9,7 +9,7 @@ groceries.controller('loginController', ['$scope', '$http', 'auth', 'store', '$l
   */
   function ($scope, $http, auth, store, $location, States) {
     /**
-     * function to initialize scope variables
+     * function to initialize scope variables, check authentication status
      * @method init
      */
     var init = function(){
@@ -39,6 +39,22 @@ groceries.controller('loginController', ['$scope', '$http', 'auth', 'store', '$l
      */
     $scope.login = function () {
       auth.signin({}, function (profile, token) {
+        // Success callback
+        store.set('token', token);
+        store.set('profile', profile);
+        getUser();
+      }, function (err) {
+        // Error callback
+        console.log('Error in loginController: ', err);
+      });
+    };
+
+    /**
+     * function to sign a user up (calls Auth0 funciton auth.signup())
+     * @method signup
+     */
+    $scope.signup = function () {
+      auth.signup({}, function (profile, token) {
         // Success callback
         store.set('token', token);
         store.set('profile', profile);
