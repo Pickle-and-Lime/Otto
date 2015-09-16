@@ -1,6 +1,15 @@
 var express = require('express');
+var jwt = require('express-jwt');
 var userController = require('../controllers/userController.js');
 var router = express.Router();
+
+// Auth0 JWT validation
+var client_secret = process.env.AUTH0_CLIENT_SECRET ||
+                    require('../../config/config').Auth0ClientSecret;
+var jwtCheck = jwt({
+  secret: new Buffer(client_secret, 'base64'),
+  audience: 'Vk8WOzc8NcNXTngDQfYqEvGe00jdK92d'
+});
 
 /**
  *  GET /user/:id
@@ -21,7 +30,7 @@ var router = express.Router();
  *            ]
  *          }
  */
-router.get('/:id', function(req, res) {
+router.get('/:id', jwtCheck, function(req, res) {
   var userId = req.params.id;
   userController.getUser(userId)
   .then(function(user) {
@@ -42,7 +51,7 @@ router.get('/:id', function(req, res) {
  *  Receives { "userId": "123abc", "email": "example@site.com"}
  *  @return String householdId
  */
-router.post('/', function(req, res) {
+router.post('/', jwtCheck, function(req, res) {
   var userId = req.body.userId;
   var email = req.body.email;
   var fullName = req.body.fullName;
@@ -63,6 +72,7 @@ router.post('/', function(req, res) {
  *  Accepts an invitation via email
  * 
  *  Finds an invite via ID, then accepts the invitation for that user
+ *  Note: This route does not require an Auth header from Auth0
  *
  *  Redirect to root of app (to load index.html) on success
  */
@@ -90,7 +100,7 @@ router.get('/invite/:id', function(req, res) {
  *  @return 200 if successful, 404 if unsuccessful
  */
 
-router.post('/invite', function(req, res) {
+router.post('/invite', jwtCheck, function(req, res) {
   var household = req.body.household;
   var inviteeEmail = req.body.inviteeEmail;
   userController.createInvitation(household, inviteeEmail)
@@ -114,7 +124,7 @@ router.post('/invite', function(req, res) {
  *  @return Kate's new householdId if successful, 404 if unsuccessful
  */
 
-router.put('/invite', function(req, res) {
+router.put('/invite', jwtCheck, function(req, res) {
   var household = req.body.household;
   var inviteeEmail = req.body.inviteeEmail;
   var accept = req.body.accept;
@@ -131,7 +141,7 @@ router.put('/invite', function(req, res) {
  *  DELETE /user
  *
  */
-router.delete('/', function(req, res) {
+router.delete('/', jwtCheck, function(req, res) {
   res.sendStatus(200);
 });
 
