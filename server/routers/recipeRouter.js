@@ -44,6 +44,15 @@ router.get('/:search', function(req, res) {
         if (match.smallImageUrls[0].charAt(4)===':'){
           picture = match.smallImageUrls[0].substring(0,4) + "s" + match.smallImageUrls[0].substring(4);
         }
+        var length = picture.length;
+            console.log('before',picture);
+        picture = picture.substring(0,length-3) + "l" + picture.substring(length-2);
+            console.log('after',picture);
+        // for (var i = 0; i < picture.length; i++) {
+        //   if(picture.substring(i,i+2)==="=s"){
+        //     picture = picture.substring(0,i+1) + "l" + picture.substring(i+2);
+        //   }
+        // }
         recipes.push({
           name: match.recipeName,
           time: time(match.totalTimeInSeconds),
@@ -52,6 +61,7 @@ router.get('/:search', function(req, res) {
           ingredients: capitalizeAll(match.ingredients)
         });
       });
+      console.log(recipes);
       res.send(recipes);
     }
   });
