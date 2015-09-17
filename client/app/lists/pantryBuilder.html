@@ -5,9 +5,9 @@
     <li class="collection-item pantry-list-item" ng-repeat="item in masterList | filter: {type: category}" ng-show="checkVisible(category)">
       <span class="item-name">{{ item.name }}</span>
       <span class="item-options">
-        <span class="pantry-button" ng-show="!loadingPantry() && !inPantry(item.name)" ng-click="addItem(item.name)" onclick="Materialize.toast('Added To Pantry',500)">Have</span>
-        <span class="pantry-button" ng-show="!loadingPantry() && !inPantry(item.name)" ng-click="needItem(item.name)" onclick="Materialize.toast('Added To Shopping List',500)">Need</span>
-        <span class="pantry-button-disabled" ng-show="!loadingPantry() && inPantry(item.name)">Added</span>
+        <span class="pantry-button" ng-show="!loadingPantry() && !isAdded(item.name)" ng-click="addItem(item.name)" onclick="Materialize.toast('Added To Pantry',500)">Have</span>
+        <span class="pantry-button" ng-show="!loadingPantry() && !isAdded(item.name)" ng-click="needItem(item.name)" onclick="Materialize.toast('Added To Shopping List',500)">Need</span>
+        <span class="pantry-button-disabled" ng-show="!loadingPantry() && isAdded(item.name)">Added</span>
         <span class="pantry-button-loading" ng-show="loadingPantry()">Loading...</span>
       </span>
     </li>

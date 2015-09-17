@@ -2,9 +2,8 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 
-var keys = require('../../config/config.js');
-var appKey = keys.yummlyAppKey;
-var appID =keys.yummlyAppID;
+var appKey = process.env.YUMMLY_API_KEY || require('../../config/config.js').yummlyAppKey;
+var appID = process.env.YUMMLY_API_ID || require('../../config/config.js').yummlyAppID;
 
 /**
  *  GET /recipes/search
@@ -44,6 +43,8 @@ router.get('/:search', function(req, res) {
         if (match.smallImageUrls[0].charAt(4)===':'){
           picture = match.smallImageUrls[0].substring(0,4) + "s" + match.smallImageUrls[0].substring(4);
         }
+        var length = picture.length;
+        picture = picture.substring(0,length-3) + "l" + picture.substring(length-2);
         recipes.push({
           name: match.recipeName,
           time: time(match.totalTimeInSeconds),
@@ -52,6 +53,7 @@ router.get('/:search', function(req, res) {
           ingredients: capitalizeAll(match.ingredients)
         });
       });
+      console.log(recipes);
       res.send(recipes);
     }
   });
