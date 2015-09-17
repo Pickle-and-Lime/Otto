@@ -14,7 +14,9 @@
   <div class="col s12">
     <div class="row">
       <div class="card small col s12 m6 l4" ng-repeat="recipe in recipes">
-        <img class="activator" ng-src="{{ recipe.image }}">
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator" ng-src="{{ recipe.image }}">
+        </div>
         <div class="card-content">
           <span class="activator card-title grey-text text-darken-4">{{ recipe.name }}<i class="material-icons right">more_vert</i></span>
           <p>{{ recipe.time }}</p>
@@ -24,8 +26,8 @@
         <div class="card-reveal">
           <span class="card-title grey-text text-darken-4">{{ recipe.name }}<i class="material-icons right">close</i></span>
           <div>
-            <p>Click any ingredient to add it to your shopping list</p>
-            <span class="pantry-button" onclick="Materialize.toast('Added!',500)" ng-click="addAllIngredients(recipe.ingredients)" >Add all ingredients to list</span>
+            <span class="">Click any ingredient to add it to your shopping list</span>
+            <span class="pantry-button right" onclick="Materialize.toast('Added!',500)" ng-click="addAllIngredients(recipe.ingredients)" >Add all</span>
           </div>
           <div class="tags"><span class="item-tag" ng-repeat="ingredient in recipe.ingredients" onclick="Materialize.toast('Added!',500)" ng-click="addIngredient(ingredient)">{{ ingredient }}</span></div>
         </div>
