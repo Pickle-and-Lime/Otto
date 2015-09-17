@@ -5,6 +5,7 @@
       <input id="recipeTerms" type="text" ng-model="searchTerms">
       <label for="recipeTerms">What do you want to cook?</label>
       <button class="btn waves-effect waves-light green right" ng-click="search(searchTerms)">Search</button>
+      <span class="right">Recipe search powered by <a href=\'http://www.yummly.com/recipes\'><img alt='Yummly' src='http://static.yummly.com/api-logo.png'/></a></span>
     </div>
   </form>
 </div>
@@ -18,6 +19,7 @@
           <span class="activator card-title grey-text text-darken-4">{{ recipe.name }}<i class="material-icons right">more_vert</i></span>
           <p>{{ recipe.time }}</p>
           <p>{{ recipe.rating }}/5 stars</p>
+          <p>{{ recipe.attribution}}</p>
         </div>
         <div class="card-reveal">
           <span class="card-title grey-text text-darken-4">{{ recipe.name }}<i class="material-icons right">close</i></span>
