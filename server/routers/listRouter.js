@@ -42,14 +42,14 @@ router.post('/multiple', function(req, res) {
   var items = req.body.item;
   var household = req.body.household;
 
-  function add(items){
+  var add = function(items){
     return items.reduce(function(curr, next){
       return curr.then(function(){
         return listController.addToList(next, household);
       });
     }, Q());
       
-  }
+  };
   add(items)
   .then(function(list) {
     res.status(201).send(items);
