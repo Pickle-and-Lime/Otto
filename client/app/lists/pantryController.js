@@ -131,6 +131,18 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
 
   $scope.toggleActive = function(item) {
     $scope.activeItem = item;
+    console.log($scope.pantryList[item]);
+    $scope.editedCategory = $scope.pantryList[item].category || $scope.editedCategory;
+    $scope.editedDate = (new Date($scope.pantryList[item].date)).toDateString() || $scope.editedDate;
+    var expMils = $scope.pantryList[item].expiration*24*60*60*1000;
+    var expDateMils = new Date($scope.pantryList[item].date).getTime()+expMils;
+    $scope.editedExpiration = (new Date(expDateMils)).toDateString() || $scope.editedExpiration;
+    if (!$scope.editVisible){
+      $scope.editVisible = !$scope.editVisible;
+    }
+  };
+
+  $scope.cancelEdits = function(){
     $scope.editVisible = !$scope.editVisible;
   };
 
@@ -139,6 +151,7 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
       // console.log('Date Formats:', $scope.editedDate, $scope.editedExpiration);
       Lists.editItemData($scope.activeItem, $scope.household, $scope.editedCategory, $scope.editedExpiration, $scope.editedDate)
         .then(function(res) {
+          $scope.editVisible = !$scope.editVisible;
           console.log('SUBMIT:', res.data);
           $scope.updatePantry();
         }, function(err) {
