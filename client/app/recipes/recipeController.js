@@ -3,13 +3,16 @@ groceries.controller('recipeController', function ($scope, $state, Lists, Recipe
   States.setState('recipes');
   $scope.household = store.get('householdId');
   $scope.search = function(searchTerm) {
-    Recipes.searchRecipes(searchTerm)
+    if (searchTerm && searchTerm.length){
+      Recipes.searchRecipes(searchTerm)
       .then(function(res) {
+        $scope.searchTerms = '';
         $scope.recipes = res.data;
         console.log('sample SUCCESS:', res.data);
       }, function(err) {
         console.log('sample ERR:', err);
       });
+    }
   };
 
   $scope.addAllIngredients = function(ingredients) {
