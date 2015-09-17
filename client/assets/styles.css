@@ -135,6 +135,12 @@
   margin-left: auto;
   margin-right: auto;
 }
+.get-started-button {
+  display: block;
+  max-width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .pending {
   font-size: .75em; 
 }
@@ -158,3 +164,35 @@
   margin: 0 auto;
   max-width: 95%;
 }
+.computer-image {
+  max-width: 90%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.list-image {
+  max-width: 80%;
+}
+.white-text {
+  color: white;
+}
+.padded-title {
+  margin-top: -15px;
+  padding-bottom: 20px;
+}
+.padded-title-2 {
+  padding-bottom: 5px;
+  margin-top: 20px;
+}
+.margin-bottom {
+  margin-bottom: -20px;
+}
+.margin-edit-1 {
+  padding-bottom: 30px; 
+  padding-top: 15px;
+}
+.margin-edit-2 {
+  margin-bottom: -20px;
+  margin-top: -20px; 
+  padding-top: 40px
+}
+
