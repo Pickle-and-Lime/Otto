@@ -34,26 +34,37 @@ groceries.controller('landingController', function($scope, Seasonal, Landing, St
         console.log('GET /pantry ERR', err);
       });
   };
+  // function that updates shopping list from backend
+  $scope.updateList = function() {
+    Lists.getList('/list/' + $scope.household)
+      .then(function(res) {
+        // console.log('GET /list:', res.data);
+        $scope.shoppingList = res.data;
+        $scope.updatePantry();
+      }, function(err) {
+        console.log('GET /list: ERROR', err);
+      });
+  };
   // addSeasonalItem adds it to our shopping list
   $scope.addSeasonalItem = function(item) {
     Lists.addToList('/list', item, $scope.household)
       .then(function(res) {
         // console.log('POST to /list', res);
         // update shopping list after add
-        $scope.updatePantry();
+        $scope.updateList();
       }, function(err) {
         console.log('POST to /list ERROR', err);
       });
   };
   // update the general list and shopping list
-  $scope.updatePantry();
+  $scope.updateList();
   // function that filters the masterList to only show items in season
   var seasonalFilter = function(list) {
     $scope.seasonalList = [];
     list.forEach(function(itemObj) {
       if (itemObj.season.indexOf($scope.month) !== -1) {
         // modify itemObj with inList and inPantry properties
-        itemObj.inList = !!$scope.pantryList[itemObj.name] && !$scope.pantryList[itemObj.name].fullyStocked;
+        itemObj.inList = !!$scope.shoppingList[itemObj.name];
         itemObj.inPantry = !!$scope.pantryList[itemObj.name] && $scope.pantryList[itemObj.name].fullyStocked;
         $scope.seasonalList.push(itemObj);
       }
@@ -61,21 +72,21 @@ groceries.controller('landingController', function($scope, Seasonal, Landing, St
     console.log('filtered List:', $scope.seasonalList);
   };
   // helpers to find if an item is in the stocked in the pantry or if it is in the list
-  $scope.inPantry = function(item) {
-    if (!$scope.pantryList[item]) {
-      return false;
-    } else {
-      return $scope.pantryList[item].fullyStocked;
-    }
-  };
+  // $scope.inPantry = function(item) {
+  //   if (!$scope.pantryList[item]) {
+  //     return false;
+  //   } else {
+  //     return $scope.pantryList[item].fullyStocked;
+  //   }
+  // };
 
-  $scope.inList = function(item) {
-    if (!$scope.pantryList[item]) {
-      return false;
-    } else {
-      return !$scope.pantryList[item].fullyStocked;
-    }
-  };
+  // $scope.inList = function(item) {
+  //   if (!$scope.pantryList[item]) {
+  //     return false;
+  //   } else {
+  //     return !$scope.pantryList[item].fullyStocked;
+  //   }
+  // };
 
   /* this will get populated with Farmer's Market objects in the following form:
     {
