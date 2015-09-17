@@ -30,6 +30,7 @@
     "mandrill-api": "^1.0.45",
     "mongoose": "^4.1.4",
     "q": "^1.4.1",
+    "request-promise": "^0.4.3",
     "redtape": "^1.0.0",
     "request": "^2.61.0",
     "supertest": "^1.1.0",
@@ -60,7 +61,6 @@
     "karma-chrome-launcher": "^0.2.0",
     "karma-jasmine": "^0.3.6",
     "karma-sinon": "^1.0.4",
-    "request-promise": "^0.4.3",
     "run-sequence": "^1.1.2",
     "sinon": "^1.16.1"
   }
