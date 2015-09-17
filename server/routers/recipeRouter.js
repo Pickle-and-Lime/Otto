@@ -1,44 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
-var rp = require('request-promise');
-var Q = require('q');
 
 var keys = require('../../config/config.js');
 var appKey = keys.yummlyAppKey;
 var appID =keys.yummlyAppID;
-
-var capitalize = function(string){
-  var capitalized = [];
-  string.split(' ').forEach(function(word){
-    capitalized.push(word.charAt(0).toUpperCase() + word.slice(1));
-  });
-  return capitalized.join(' ');
-};
-var capitalizeAll = function(array){
-  return array.map(capitalize);
-};
-var time = function(time){
-  var mins = time/60;
-  if (mins<60){
-    return mins.toString()+" min";
-  } else {
-    return Math.floor(mins/60).toString()+" hr " + (mins%60).toString()+" min";
-  }
-};
-
-var getInfo = function(recipes, results){
-  recipes.forEach(function(recipe){
-    results.push({
-      name: recipe.recipeName,
-      time: time(recipe.totalTimeInSeconds),
-      rating: recipe.rating,
-      ingredients: capitalizeAll(recipe.ingredients),
-      idUrl : 'http://api.yummly.com/v1/api/recipe/'+recipe.id+'?_app_id='+appID+'&_app_key='+appKey
-    });
-  });
-  return results;  
-};
 
 /**
  *  GET /recipes/search
@@ -47,35 +13,73 @@ var getInfo = function(recipes, results){
 router.get('/:search', function(req, res) {
   var search = req.params.search;
   var url = "http://api.yummly.com/v1/api/recipes?_app_id="+appID+"&_app_key="+appKey+"&q="+search;
-  var recipes = [];
 
-  rp.get(url)
-  .then(function(body){
-    var data = JSON.parse(body);
-    Q.fcall(getInfo, data.matches, recipes)
-    .then(function(results){
-      return recipes.reduce(function(curr, next){
-        return curr.then(function(){
-          return rp.get(next.idUrl)
-          .then(function(body){
-            image = JSON.parse(body).images[0].hostedLargeUrl;
-            if (image.charAt(4)===':'){
-              image = image.substring(0,4) + "s" + image.substring(4);
-            }
-            next.picture = image;
-          });
-        });
-      }, Q())
-      .then(function(){
-        res.send(recipes);
+  request.get(url, function(error, response, body){
+    var recipes = [];
+    var picture;
+    var time = function(time){
+      var mins = time/60;
+      if (mins<60){
+        return mins.toString()+" min";
+      } else {
+        return Math.floor(mins/60).toString()+" hr " + (mins%60).toString()+" min";
+      }
+    };
+
+    var capitalize = function(string){
+      var capitalized = [];
+      string.split(' ').forEach(function(word){
+        capitalized.push(word.charAt(0).toUpperCase() + word.slice(1));
       });
-    })
-  .catch(function() {
-    res.status(404).send('Cannot find recipes');
-  });
-    
+      return capitalized.join(' ');
+    };
+    var capitalizeAll = function(array){
+      return array.map(capitalize);
+    };
+    if (error){
+      console.log(error);
+      res.status(404).send('Cannot retrieve recipes');
+    } else{
+      JSON.parse(body).matches.forEach(function(match){
+        if (match.smallImageUrls[0].charAt(4)===':'){
+          picture = match.smallImageUrls[0].substring(0,4) + "s" + match.smallImageUrls[0].substring(4);
+        }
+        recipes.push({
+          name: match.recipeName,
+          time: time(match.totalTimeInSeconds),
+          image: picture, //match.smallImageUrls[0],
+          rating: match.rating,
+          ingredients: capitalizeAll(match.ingredients)
+        });
+      });
+      res.send(recipes);
+    }
   });
 });
 
 
 module.exports = router;
+
+// var search = 'sriracha+chicken';
+// var url = "http://api.yummly.com/v1/api/recipes?_app_id="+appID+"&_app_key="+appKey+"&q="+search;
+
+// request.get(url, function(error, response, body){
+//   if (error){
+//     res.status(404).send('Cannot retrieve household pantry');
+//   } else{
+//     console.log(JSON.parse(body).matches[0]);
+//     // res.send(body);
+//   }
+// });
+
+// var recId = 'Honey-Sriracha-Chicken-962777';
+// var idUrl = 'http://api.yummly.com/v1/api/recipe/'+recId+'?_app_id='+appID+'&_app_key='+appKey;
+
+// request.get(idUrl, function(error, response, body){
+//   if (error){
+//     res.status(404).send('Cannot retrieve household pantry');
+//   } else{
+//     console.log(JSON.parse(body));
+//     // res.send(body);
+//   }
+// });
