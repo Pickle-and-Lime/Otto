@@ -3,18 +3,15 @@
   <h2 class="header center-align" id="login-logo">Otto</h2>
 </div>
 
-<!-- Parallax image 1 -->
-<div class="parallax-container" style="height: 250px">
-  <div class="parallax"><img src="../assets/login1.jpg"></div>
-</div>
-
 <!-- Sign Up content Area -->
-<div class="green lighten-5">
-  <div class="container-600">
-    <div class="section phrase-container">
-      <div class="row">
-        <h5 class="center-align"><span class="logo-inline">Otto</span> is the shopping list that <em>builds itself.</em></h5>
-        <p class="center-align">Sign up now and let <span class="logo-inline">Otto</span> start working for you.</p>
+<div class="green lighten-5 margin-edit-1">
+  <div class="row valign-wrapper green lighten-5" style="margin-bottom: 0px">
+    <div class="col l6 m6 s12">
+      <div class="phrase-container">
+        <div class="row">
+          <h5 class="center-align"><span class="logo-inline">Otto</span> is the shopping list that <em>builds itself.</em></h5>
+          <p class="center-align">Sign up now and let <span class="logo-inline">Otto</span> start working for you.</p>
+        </div>
         <div class="row valign-wrapper">
           <div class="col s12">
             <!-- Signin button, calls Auth0 login() function -->
@@ -27,8 +24,116 @@
             <h6 class="center-align"><a href="#" ng-click="login()" class="center-align">Sign In</a></h6>
           </div>
         </div>
+
       </div>
     </div>
+
+    <div class="col l6 m6 s12 hide-on-small-only">
+      <div class="center-align">
+        <img class="computer-image valign" src="/assets/phone-computer.png">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row hide-on-med-and-up">
+    <div class="col s12">
+      <div class="center-align">
+        <img class="computer-image" src="/assets/phone-computer.png">
+      </div>
+    </div>
+  </div>
+
+  <div class="row hide-on-med-and-up">
+    <div class="col s12">
+      <div class="center-align">
+        <a href="https://play.google.com/store/apps/details?id=com.otto.list" target="_blank"><img src="/assets/android.png"></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row hide-on-small-only">
+    <div class="col m7 l7 offset-m5 offset-l5">
+      <div class="center-align">
+        <a href="https://play.google.com/store/apps/details?id=com.otto.list" target="_blank"><img src="/assets/android.png"></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="green  margin-edit-2">
+  <div class="row">
+
+    <div class="col s12 hide-on-med-and-up">
+      <div class="center-align">
+        <h5 class="white-text padded-title-2"><span class="logo-inline">1.</span> Make your list</h5>
+      </div>
+    </div>
+
+    <div class="col s12 m4 l4">
+      <div class="center-align">
+        <img class="list-image" src="/assets/list.png">
+      </div>
+    </div>
+
+    <div class="row hide-on-med-and-up">
+    </div>
+
+    <div class="col s12 hide-on-med-and-up">
+      <div class="center-align">
+        <h5 class="white-text padded-title-2"><span class="logo-inline">2.</span> Stock your pantry</h5>
+      </div>
+    </div>
+
+    <div class="col s12 m4 l4">
+      <div class="center-align">
+        <img class="list-image" src="/assets/shelf.png">
+      </div>
+    </div>
+
+    <div class="row hide-on-med-and-up">
+    </div>
+
+    <div class="col s12 hide-on-med-and-up">
+      <div class="center-align">
+        <h5 class="white-text padded-title-2"><span class="logo-inline">3. Otto</span> keeps track!</h5>
+      </div>
+    </div>
+
+    <div class="col s12 m4 l4">
+      <div class="center-align">
+        <img style="margin-top: 40px" class="list-image" src="/assets/otter.png">
+        <ul style="margin-bottom: 50px" class="white-text">
+        <em>
+          <li><h5>✓ What you have</h5></li>
+          <li><h5>✓ What you need</h5></li>
+          <li><h5>✓ Never make a<br>shopping list again!</h5></li>
+        </em>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row hide-on-small-only">
+
+    <div class="col m4 l4">
+      <div class="center-align">
+        <h5 class="white-text padded-title"><span class="logo-inline">1.</span> Make your list</h5>
+      </div>
+    </div>
+
+    <div class="col m4 l4">
+      <div class="center-align">
+        <h5 class="white-text padded-title"><span class="logo-inline">2.</span> Stock your pantry</h5>
+      </div>
+    </div>
+
+    <div class="col m4 l4">
+      <div class="center-align">
+        <h5 class="white-text padded-title"><span class="logo-inline">3. Otto</span> keeps track!</h5>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -37,7 +142,33 @@
   <div class="parallax"><img src="../assets/login2.jpg"></div>
 </div>
 
-<!-- Jquery to enable parallax -->
+<div class="section green lighten-5 valign-wrapper">
+  <div class="row container">
+    <div class="row">
+      <div class="col s12">
+        <h4 class="center-align">Try <span class="logo-inline">Otto</span></h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <a href ng-click="signup()" class="valign green waves-effect waves-light btn-large get-started-button">Get Started</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="parallax-container margin-bottom">
+  <div class="parallax"><img src="../assets/login1.jpg"></div>
+</div>
+
+<footer class="page-footer green hide-overflow">
+  <div class="container">
+    <div class="row center-align">
+      <h5><a class="white-text" ui-sref="about">Meet team <span class="logo-inline">Otto!</span></a></h5>
+    </div>
+  </div>
+</footer>
+
 <script>
   $(document).ready(function(){
     $('.parallax').parallax();
