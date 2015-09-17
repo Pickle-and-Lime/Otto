@@ -30,22 +30,38 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
     return $scope.visibleCategory === category;
   };
   // check whether an item from pantryBuilder is in the pantry
-  $scope.inPantry = function(item) {
-    // console.log('firing inPantry');
-    if ($scope.pantryList === undefined) { // if somehow pantryList hasn't been populated yet
-      return false; 
-    } else {
-      for (var key in $scope.pantryList) {
-        if (key === item) {
-          return true;
-        }
-      }
+  // $scope.inPantry = function(item) {
+  //   // console.log('firing inPantry');
+  //   if ($scope.pantryList === undefined) { // if somehow pantryList hasn't been populated yet
+  //     return false; 
+  //   } else {
+  //     return !!$scope.pantryList[item];
+  //   }
+  // };
+  // // check whether an item from pantryBuilder is in the shopping list
+  // $scope.inList = function(item) {
+  //   // console.log('firing inPantry');
+  //   if ($scope.shoppingList === undefined) { // if somehow shoppingList hasn't been populated yet
+  //     return false; 
+  //   } else {
+  //     return !!$scope.shoppingList[item];
+  //   }
+  // };
+  // check whether the item has been added into either shopping list or pantry list
+  $scope.isAdded = function(item) {
+    if (!$scope.shoppingList && !$scope.pantryList) { // if neither list is loaded
       return false;
+    } else if (!!$scope.shoppingList && !$scope.pantryList) { // shoppingList loaded but not pantryList
+      return !!$scope.shoppingList[item];
+    } else if (!$scope.shoppingList && !!$scope.pantryList) { // pantryList loaded but not shoppingList
+      return !!$scope.pantryList[item];
+    } else { // both lists loaded
+      return !!$scope.shoppingList[item] || !!$scope.pantryList[item];
     }
   };
-  // check whether pantry list is still loading
+  // check whether pantry or shopping list is still loading
   $scope.loadingPantry = function() {
-    return !$scope.pantryList;
+    return !$scope.pantryList || !$scope.shoppingList;
   };
 
   // function that updates pantryList from backend
@@ -55,13 +71,22 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
         // console.log('GET /pantry', res.data);
         $scope.pantryList = res.data;
         $scope.pantryByCategory = $scope.pantryConverter(res.data);
-        console.log('pantryByCategory:', $scope.pantryByCategory);
+        // console.log('pantryByCategory:', $scope.pantryByCategory);
         console.log('pantryList:', $scope.pantryList);
       }, function(err) {
         console.log('GET /pantry ERR', err);
       });
   };
-
+  // function that updates shoppingList from backend
+  $scope.updateList = function() {
+    Lists.getList('/list/' + $scope.household)
+      .then(function(res) {
+        console.log('shoppingList:', res.data);
+        $scope.shoppingList = res.data;
+      }, function(err) {
+        console.log('GET /list: ERROR', err);
+      });
+  };
   // function that updates masterList from backend
   $scope.updateMaster = function() {
     Lists.getList('/pantry/general', $scope.household)
@@ -75,6 +100,7 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
   };
   // update general list and pantry list and category list
   $scope.updateMaster();
+  $scope.updateList();
   $scope.updatePantry();
   $scope.getCategories();
   // this adds a pantry item to the list
@@ -178,8 +204,8 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
     Lists.addToList('/list', item, $scope.household)
       .then(function(res) {
         console.log('POST /list:', res.data);
-        // update pantry list on completion
-        $scope.updatePantry();
+        // update shopping list on completion
+        $scope.updateList();
       }, function(err) {
         console.log('POST /list:', err);
       });
