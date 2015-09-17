@@ -1,6 +1,9 @@
 node_modules/
 bower_components/
 client/lib
+out/
+public/
+config/
 *.log
 .floo
 .flooignore

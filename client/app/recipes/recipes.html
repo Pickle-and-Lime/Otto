@@ -1,0 +1,29 @@
+<form class="col s12 m6 l4">
+  <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix">search</i>
+      <input id="recipeTerms" type="text" ng-model="searchTerms">
+      <label for="recipeTerms">What do you want to cook?</label>
+    </div>
+    <button class="btn waves-effect waves-light green right" ng-click="search(searchTerms)">Search</button>
+  </div>
+</form>
+
+<div class="row">
+  <div class="col s12 m6 l8">
+    <div><i class="material-icons">library_books</i>Recipes</div>
+      <div class="row">
+        <div class="card small col s12 m12 l6" ng-repeat="recipe in recipes">
+          <img class="activator" ng-src="{{ recipe.image }}">
+          <div class="card-content">
+            <span class="activator grey-text text-darken-4">{{ recipe.name }}</span>
+            <p>{{ recipe.time }}</p>
+            <p>{{ recipe.rating }}/5</p>
+            <p><span ng-repeat="ingredient in recipe.ingredients" onclick="Materialize.toast('Added!',500)" ng-click="addIngredient(ingredient)">{{ ingredient }} ,</span></p>
+          </div>
+          <span class="right pantry-button" onclick="Materialize.toast('Added!',500)" ng-click="addAllIngredients(recipe.ingredients)" >Add all ingredients to list</span>
+        </div>
+      </div>
+  </div>
+
+</div>

@@ -1,0 +1,43 @@
+From List View:
+Get shoppingList using GET request to /list
+Create shoppingListObj using shoppingList
+Render shoppingListObj with checkboxes using Angular ng-repeat
+Checkboxes flip state of boolean in shoppingListObj
+Get master list of items using GET request to /pantry/general 
+ (might want to find a different way to do this in future iteration)
+Use master list to filter in input text search
+When Add button is clicked, do POST to /list to manually add item to list
+- On successful rendering, we need to GET the new shopping list from server
+- On successful GET, we need to re-create the shoppingListObj
+(Maybe add in swipe function on list items to bring up a delete option?)
+When Checkout button is clicked, controller should go through shoppingListObj and push 
+checked items into array in {items: []} data object
+- Then POST this data object to /buy
+- Possibly need to GET the new shoppingList, then re-create the shoppingListObj
+
+From Pantry View: 
+
+buyRouter:
+POST to /buy to checkout from Shopping List
+Data is {items: [array of item strings...], household: "string of household name"}
+
+householdRouter:
+GET to /household to...
+POST to /household to...
+DELETE to /household to ...
+
+listRouter:
+GET to /list to return the shopping list for this particular household
+- Need to send {household: "household name"} as part of request
+POST to /list to manually add an item to the shopping list
+- Data is {item: "item name", household: "household name"}
+DELETE to /list to manually delete an item from the shopping list
+- Data is {item: "item name", household: "household name"}
+
+pantryRouter:
+GET to /pantry to return pantry items for that household
+GET to /pantry/general to return master list of pantry items from the app
+POST to /pantry to manually add an item to the pantry list
+- Data is {item: "item name", household: "household name"}
+DELETE to /pantry to manually delete an item from the pantry list
+- Data is {item: "item name", household: "household name"}

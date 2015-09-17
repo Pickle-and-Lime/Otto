@@ -1,0 +1,42 @@
+<div>
+  <div class="navbar-fixed">
+    <nav class="green">
+      <div class="nav-wrapper">
+        <a class="brand-logo header-logo logo-inline" ui-view="title">Otto</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a class="non-tab" ui-sref="landing">Dashboard</a></li>
+          <li><a class="non-tab" ui-sref="recipes">Recipes</a></li>
+          <li><a class="non-tab" ui-sref="account">Account</a></li>
+          <li><a class="non-tab" ui-sref="about">About <span class="logo-inline">Otto</span></a></li>
+          <li><a href="#" class="non-tab" ng-click="logout()">Logout</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+          <li><a class="non-tab" ui-sref="landing">Dashboard</a></li>
+          <li><a class="non-tab" ui-sref="recipes">Recipes</a></li>
+          <li><a class="non-tab" ui-sref="account">Account</a></li>
+          <li><a class="non-tab" ui-sref="about">About <span class="logo-inline">Otto</span></a></li>
+          <li><a href="#" class="non-tab" ng-click="logout()">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="col s12" id="tab-bar">
+    <ul class="tabs">
+      <li class="tab col s4"><a href="#" class="tab-button black-text" ng-class="{'tab-selected': matchState('list')}" ng-click="goToState('list')">List</a></li>
+      <li class="tab col s4"><a href="#" class="tab-button black-text" ng-class="{'tab-selected': matchState('pantry')}" ng-click="goToState('pantry')">Pantry</a></li>
+      <li class="tab col s4"><a href="#" class="tab-button black-text" ng-class="{'tab-selected': matchState('household')}" ng-click="goToState('household')">Household</a></li>
+    </ul>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    $('.button-collapse').sideNav({
+      menuWidth: 240, // Default is 240
+      edge: 'left', // Choose the horizontal origin
+      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+    });
+    $('ul.tabs').tabs();
+  });
+</script>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- build:base-->
+    <base href="/app/">
+    <!-- endbuild -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Compiled and minified CSS -->
+    <!-- <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css"> -->
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <!-- build:css -->
+    <link rel="stylesheet" href="../assets/styles.css">
+    <!-- endbuild -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="120x120" href="../assets/icon-iphone.png">
+    <meta name="apple-mobile-web-app-title" content="Otto">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default-translucent">
+    <!-- Compiled and minified JavaScript -->
+  </head>
+
+  <body ng-app="GroceriesApp">
+
+    <div ui-view="menu"></div>
+    <div ui-view="content1"></div>
+    <div ui-view="content2"></div>
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+          
+    <!-- build:js -->
+    <script src="app.js"></script>
+    <script src="user/loginController.js"></script>
+    <script src="ui/menuController.js"></script>
+    <script src="lists/listController.js"></script>
+    <script src="lists/pantryController.js"></script>
+    <script src="general/landingController.js"></script>
+    <script src="general/seasonalFactory.js"></script>
+    <script src="household/householdController.js"></script>
+    <script src="recipes/recipeController.js"></script>
+    <!-- endbuild -->
+
+    <!-- Auth0 Stuff  -->
+    <!-- We use client cookies to save the user credentials -->
+    <script src="//code.angularjs.org/1.2.16/angular-cookies.min.js"></script>
+
+    <!-- Auth0 Lock script and AngularJS module -->
+    <script src="//cdn.auth0.com/js/lock-7.5.min.js"></script>
+    <!-- angular-jwt and angular-storage -->
+    <script type="text/javascript" src="//cdn.rawgit.com/auth0/angular-storage/master/dist/angular-storage.js"></script>
+    <script type="text/javascript" src="//cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js"></script>
+
+    <script src="//cdn.auth0.com/w2/auth0-angular-4.js"> </script>
+    
+
+  </body>
+</html>

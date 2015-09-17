@@ -1,10 +1,10 @@
 {
-  "name": "Rosie",
+  "name": "Otto",
   "version": "0.0.1",
   "authors": [
     "Eric King <e.king117@gmail.com>"
   ],
-  "description": "Rosie: The shopping list that builds itself.",
+  "description": "Otto: The shopping list that builds itself.",
   "license": "MIT",
   "ignore": [
     "**/.*",
@@ -12,5 +12,10 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "angular": "~1.4.5",
+    "angular-ui-router": "~0.2.15",
+    "materialize": "~0.97.0"
+  }
 }

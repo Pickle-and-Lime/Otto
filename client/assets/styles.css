@@ -1,0 +1,160 @@
+/* Styles for list item tags */
+.confirm-delete {
+  box-shadow: 1px 1px 7px #999;
+  padding: 10px;
+  margin: 10px;
+  font-size: 0.9em;
+}
+
+.tags {
+  width: 100%;
+}
+
+.item-tag {
+  font-size: 0.7em;
+  padding: 1px 3px;
+  margin: 2px 2px;
+  background-color: #999;
+  color: white;
+  display: inline-block;
+}
+
+/* Styles for pantry builder */
+.item-name {
+  width: 50%;
+  text-align: left;
+  display: inline-block;
+  /*border: 1px solid black;*/
+}
+
+.item-options {
+  width: 50%;
+  text-align: right;
+  display: inline-block;
+  /*border: 1px solid black;*/
+  float: right;
+}
+
+.pantry-button {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 0px 5px;
+  padding: 0px 5px;
+}
+
+.pantry-button-disabled {
+  color: #4caf50;
+  border: 1px solid #4caf50;
+  border-radius: 5px;
+  margin: 0px 5px;
+  padding: 0px 5px;
+}
+
+.pantry-button-loading {
+  color: red;
+  border: 1px solid red;
+  border-radius: 5px;
+  margin: 0px 5px;
+  padding: 0px 5px;
+}
+
+.tab-selected {
+  font-weight: bold;
+  /*background-color: #4caf50;*/
+  text-shadow: 1px 1px 2px #999;
+}
+
+/* Make pantry items in typeahead highlight on hover */
+.pantry-list-item:hover {
+  background-color: #ddd;
+}
+
+.tabs .indicator {
+  position: absolute;
+  bottom: 0;
+  height: 0px;
+  background-color: #f6b2b5;
+  will-change: left, right; 
+}
+
+#tab-bar.hidden {
+  display: none;
+}
+
+#tab-bar {
+  height: 50px;
+  position: relative;
+  clear: both;
+  z-index: 997;
+}
+
+#tab-bar ul {
+  position: fixed;
+  border: 1px solid black;
+}
+
+#tab-bar ul li {
+  /*border: 1px solid black;*/
+}
+#login-logo {
+  font-family: Pacifico, cursive; 
+  -ms-transform: rotate(-10deg); /* IE 9 */
+  -webkit-transform: rotate(-10deg); /* Chrome, Safari, Opera */
+  transform: rotate(-10deg);
+  color: white;
+  margin-top: 3px;
+  margin-bottom: 7px;
+}
+.logo-inline {
+  font-family: Pacifico, cursive;
+}
+.header-logo {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.header-image{
+  max-height: 50px;
+  max-width: 50px;
+}
+.container-600 {
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.profile-image {
+  display: block;
+  max-height: 40%;
+  max-width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.signup-button {
+  display: block;
+  max-width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.pending {
+  font-size: .75em; 
+}
+.invite-reject-icon {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+}
+.invite-reject-icon:hover{
+  color: #ef5350 !important;
+}
+.phrase-container {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.hide-overflow {
+  overflow: hidden;
+}
+.slideshow {
+  display: block;
+  margin: 0 auto;
+  max-width: 95%;
+}

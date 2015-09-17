@@ -1,10 +1,15 @@
 {
-  "name": "Rosie",
+  "name": "Otto",
   "version": "0.0.1",
-  "description": "Rosie: The shopping list that builds itself.",
+  "description": "Otto: The shopping list that builds itself.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "node spec/**/*.js",
+    "postinstall": "gulp production"
+  },
+  "engines": {
+    "node": "0.12.7"
   },
   "repository": {
     "type": "git",
@@ -17,9 +22,45 @@
   },
   "homepage": "https://github.com/Pickle-and-Lime/Rosie",
   "dependencies": {
-    "gulp": "^3.9.0"
+    "angular-storage": "0.0.13",
+    "auth0": "^0.8.2",
+    "body-parser": "^1.13.3",
+    "express": "^4.13.3",
+    "express-jwt": "^3.1.0",
+    "mandrill-api": "^1.0.45",
+    "mongoose": "^4.1.4",
+    "q": "^1.4.1",
+    "redtape": "^1.0.0",
+    "request": "^2.61.0",
+    "supertest": "^1.1.0",
+    "synaptic": "^1.0.2",
+    "tape": "^4.2.0"
   },
   "devDependencies": {
-    "gulp": "^3.9.0"
+    "del": "^2.0.1",
+    "expect.js": "^0.3.1",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.0.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-connect": "^2.2.0",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-html-replace": "^1.5.1",
+    "gulp-imagemin": "^2.3.0",
+    "gulp-install": "^0.5.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-minify-html": "^1.0.4",
+    "gulp-ng-annotate": "^1.1.0",
+    "gulp-nodemon": "^2.0.4",
+    "gulp-open": "^1.0.0",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.4.0",
+    "imagemin-pngquant": "^4.2.0",
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.9",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-jasmine": "^0.3.6",
+    "karma-sinon": "^1.0.4",
+    "run-sequence": "^1.1.2",
+    "sinon": "^1.16.1"
   }
 }

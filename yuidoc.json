@@ -1,0 +1,8 @@
+{
+    "name": "Otto",
+    "description": "Otto: The shopping list that builds itself.",
+    "version": "0.0.1",
+    "options": {
+        "exclude": "lib, node_modules"
+    }
+}
