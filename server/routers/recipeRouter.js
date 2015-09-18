@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 
-var appKey = process.env.YUMMLY_API_KEY || require('../../config/config.js').yummlyAppKey;
-var appID = process.env.YUMMLY_API_ID || require('../../config/config.js').yummlyAppID;
+var appKey = process.env.YUMMLY_API_KEY;
+var appID = process.env.YUMMLY_API_ID;
 
 /**
  *  GET /recipes/search
