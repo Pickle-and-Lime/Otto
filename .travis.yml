@@ -13,7 +13,8 @@ script:
   - gulp front-end-travis
   - gulp back-end-test
   - gulp production
-#Don't build any branch besides master
+#Don't build any branch besides master and dev
 branches: 
   only:
     - dev
+    - master

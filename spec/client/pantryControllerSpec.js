@@ -26,6 +26,7 @@ describe('Pantry Controller', function () {
 
     //Due to current front-end config, these calls will always be made on controller init
     $httpBackend.expectGET('/pantry/general').respond();
+    $httpBackend.expectGET('/list/1').respond();
     $httpBackend.expectGET('/pantry/household/1').respond();
     $httpBackend.expectGET('/pantry/categories').respond();
     createController();
@@ -114,12 +115,13 @@ describe('Pantry Controller', function () {
 
   it('needItem() should POST the requested item to the list and update the list', function(){
     //Update pantry is the final result of these functions, if it is called then behavior is as desired
-    var spy = sinon.spy($scope, 'updatePantry');
+    var spy = sinon.spy($scope, 'updateList');
     $scope.household = 1;
     $httpBackend.expectPOST('/list').respond({pantryList: 'pantryList'});
-    $httpBackend.expectGET('/pantry/household/1').respond(
+    $httpBackend.expectGET('/list/1').respond();
+    /*$httpBackend.expectGET('/pantry/household/1').respond(
       {item1 : {checked: true}, item2 : {checked: true}, item3 : {checked: true} }
-    );
+    );*/
     $scope.needItem();
     $httpBackend.flush();
 
