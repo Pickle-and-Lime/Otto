@@ -19,7 +19,7 @@ module.exports = {
    *  @param {string}     inviteId
    */
   sendInvitationEmail : function(inviteeEmail, inviteId) {
-    var link = "http://localhost:1337/user/invite/" + inviteId;
+    var link = "http://ottolist.us/api/user/invite/" + inviteId;
     var message = {
       html: '<p>You have been invited to join a household in Otto!<br>' +
             'Click on the link below to accept the invitation.</p><br><br>' +
