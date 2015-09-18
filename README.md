@@ -7,6 +7,9 @@ Run these commands within the project root directory
    3. `gulp development` - Runs the development environment and opens the browser; if the page does not load correctly, try refreshing 
    4. `gulp pre-prod` - Runs the production environment and opens the browser; if the page does not load correctly, try refreshing
 
+   Note: You must export the necessary API keys in ~/.bashrc, then
+   run `source ~/.bashrc` to update the environment variables.
+
 View the full [documentation](http://pickle-and-lime.github.io/Rosie/)
 ----------------------------------------------------
 
