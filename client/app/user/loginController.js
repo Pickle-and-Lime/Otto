@@ -83,7 +83,7 @@ groceries.controller('loginController', ['$scope', '$http', 'auth', 'store', '$l
      */
     $scope.updateUser = function(){
       $scope.zipSubmitted = true;
-      $http.post('/user', {userId: $scope.auth.profile.user_id.split('|')[1],
+      $http.post('/api/user', {userId: $scope.auth.profile.user_id.split('|')[1],
                            fullName: $scope.auth.profile.name,
                            email: $scope.auth.profile.email,
                            picture: $scope.auth.profile.picture,
@@ -106,7 +106,7 @@ groceries.controller('loginController', ['$scope', '$http', 'auth', 'store', '$l
      * @method getUser
      */
     var getUser = function(){
-      $http.get('/user/' + $scope.auth.profile.user_id.split('|')[1])
+      $http.get('/api/user/' + $scope.auth.profile.user_id.split('|')[1])
       .then(function(res){
         if (res.data.zip){
           $scope.zip = res.data.zip;
