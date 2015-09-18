@@ -3,7 +3,6 @@ bower_components/
 client/lib
 out/
 public/
-trueConfig/
 *.log
 .floo
 .flooignore
