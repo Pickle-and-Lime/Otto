@@ -107,6 +107,9 @@ gulp.task('html', function() {
 // Images task — copy all images to public folder and minify
 gulp.task('images', function() {
   // Image files from app/assets
+  gulp.src('client/assets/favicon.ico')
+  .pipe(gulp.dest('public/assets/'));
+  
   return gulp.src(paths.images)
   .pipe(imagemin({
       progressive: true,
