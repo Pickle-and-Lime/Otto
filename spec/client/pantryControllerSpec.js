@@ -25,10 +25,10 @@ describe('Pantry Controller', function () {
     };
 
     //Due to current front-end config, these calls will always be made on controller init
-    $httpBackend.expectGET('/pantry/general').respond();
-    $httpBackend.expectGET('/list/1').respond();
-    $httpBackend.expectGET('/pantry/household/1').respond();
-    $httpBackend.expectGET('/pantry/categories').respond();
+    $httpBackend.expectGET('/api/pantry/general').respond();
+    $httpBackend.expectGET('/api/list/1').respond();
+    $httpBackend.expectGET('/api/pantry/household/1').respond();
+    $httpBackend.expectGET('/api/pantry/categories').respond();
     createController();
 
     $httpBackend.flush();
@@ -41,7 +41,7 @@ describe('Pantry Controller', function () {
   });
 
   it('updatePantry() should retrieve the household\'s pantry from the server', function(){
-    $httpBackend.expectGET('/pantry/household/1').respond({pantryList: 'pantryList'});
+    $httpBackend.expectGET('/api/pantry/household/1').respond({pantryList: 'pantryList'});
     $scope.household = 1;
     $scope.updatePantry();
     $httpBackend.flush();
@@ -55,7 +55,7 @@ describe('Pantry Controller', function () {
   });
 
   it('updateMaster() should retrieve the master pantry from the backend', function(){
-    $httpBackend.expectGET('/pantry/general').respond(
+    $httpBackend.expectGET('/api/pantry/general').respond(
       {item1 : {checked: true}, item2 : {checked: true}, item3 : {checked: true}
     });
     $scope.updateMaster();
@@ -69,8 +69,8 @@ describe('Pantry Controller', function () {
 
     $scope.household = 1;
     $scope.pantryList = {testVal : {checked: false} };
-    $httpBackend.expectPOST('/pantry').respond();
-    $httpBackend.expectGET('/pantry/household/1').respond(
+    $httpBackend.expectPOST('/api/pantry').respond();
+    $httpBackend.expectGET('/api/pantry/household/1').respond(
       {item1 : {checked: true}, item2 : {checked: true}, item3 : {checked: true} }
     );
     $scope.addItem('item1');
@@ -85,8 +85,8 @@ describe('Pantry Controller', function () {
     var spy = sinon.spy($scope, 'updatePantry');
 
     $scope.household = 1;
-    $httpBackend.expectDELETE('/pantry/1/item1').respond({pantryList: 'pantryList'});
-    $httpBackend.expectGET('/pantry/household/1').respond(
+    $httpBackend.expectDELETE('/api/pantry/1/item1').respond({pantryList: 'pantryList'});
+    $httpBackend.expectGET('/api/pantry/household/1').respond(
       { item2 : {checked: true}, item3 : {checked: true} }
     );
     $scope.removeItem('item1');
@@ -102,8 +102,8 @@ describe('Pantry Controller', function () {
     var spy = sinon.spy($scope, 'updatePantry');
 
     $scope.household = 1;
-    $httpBackend.expectPOST('/list').respond({pantryList: 'pantryList'});
-    $httpBackend.expectGET('/pantry/household/1').respond(
+    $httpBackend.expectPOST('/api/list').respond({pantryList: 'pantryList'});
+    $httpBackend.expectGET('/api/pantry/household/1').respond(
       {item1 : {checked: true}, item2 : {checked: true}, item3 : {checked: true} }
     );
     $scope.ranOut('item1');
@@ -117,8 +117,8 @@ describe('Pantry Controller', function () {
     //Update pantry is the final result of these functions, if it is called then behavior is as desired
     var spy = sinon.spy($scope, 'updateList');
     $scope.household = 1;
-    $httpBackend.expectPOST('/list').respond({pantryList: 'pantryList'});
-    $httpBackend.expectGET('/list/1').respond();
+    $httpBackend.expectPOST('/api/list').respond({pantryList: 'pantryList'});
+    $httpBackend.expectGET('/api/list/1').respond();
     /*$httpBackend.expectGET('/pantry/household/1').respond(
       {item1 : {checked: true}, item2 : {checked: true}, item3 : {checked: true} }
     );*/

@@ -28,8 +28,8 @@ describe('List Controller', function () {
     };
     
     //Due to current front-end config, these calls will always be made on controller init
-    $httpBackend.expectGET('/pantry/general').respond();
-    $httpBackend.expectGET('/list/1').respond();
+    $httpBackend.expectGET('/api/pantry/general').respond();
+    $httpBackend.expectGET('/api/list/1').respond();
     $httpBackend.expectGET('user/login.html').respond();
     createController();
 
@@ -46,8 +46,8 @@ describe('List Controller', function () {
   it('checkoutList()', function(){
     $scope.household = 1;
     $scope.shoppingList = [{name: 'item1', checked: true}, {name: 'item2' , checked: false}, {name: 'item3', checked: true}];
-    $httpBackend.expectPOST('/buy').respond();
-    $httpBackend.expectGET('/list/1').respond();
+    $httpBackend.expectPOST('/api/buy').respond();
+    $httpBackend.expectGET('/api/list/1').respond();
     $scope.checkoutList();
     //In future, use spy to check args sent to POST req
     expect($scope.checkoutList).to.be.a('function');
@@ -55,7 +55,7 @@ describe('List Controller', function () {
 
   it('updateMaster() should update the master list', function(){
     $scope.household = 1;
-    $httpBackend.expectGET('/pantry/general').respond(
+    $httpBackend.expectGET('/api/pantry/general').respond(
       {item1 : {checked: true}, item2 : {checked: true}, item3 : {checked: true}
     });
     $scope.updateMaster();
@@ -70,8 +70,8 @@ describe('List Controller', function () {
     
     $scope.household = 1;
     $scope.shoppingList = [{clearly : 'incorrectValue'}];
-    $httpBackend.expectPOST('/list').respond();
-    $httpBackend.expectGET('/list/1').respond(
+    $httpBackend.expectPOST('/api/list').respond();
+    $httpBackend.expectGET('/api/list/1').respond(
       { item1 : {checked: true}, item2 : {checked: true}, item3 : {checked: true} }
     );
     $scope.addItem('item1');
@@ -86,8 +86,8 @@ describe('List Controller', function () {
 
     $scope.household = 1;
     $scope.shoppingList = [{clearly : 'incorrectValue'}];
-    $httpBackend.expectDELETE('/list/1/item1').respond({pantryList: 'pantryList'});
-    $httpBackend.expectGET('/list/1').respond(
+    $httpBackend.expectDELETE('/api/list/1/item1').respond({pantryList: 'pantryList'});
+    $httpBackend.expectGET('/api/list/1').respond(
       {item1 : {checked: true}, item2 : {checked: true}, item3 : {checked: true} }
     );
     $scope.removeItem('item1');
