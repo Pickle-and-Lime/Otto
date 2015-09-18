@@ -45,7 +45,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
      */
     var getUser = function(){
       $scope.s.getUserFinished = false;
-      $http.get('/user/' + $scope.s.profile.user_id.split('|')[1])
+      $http.get('/api/user/' + $scope.s.profile.user_id.split('|')[1])
       .then(function(res){
         console.log('getUser(): ', res);
         $scope.s.profile.household.user = res.data;
@@ -63,7 +63,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
      */
     var getHousehold = function(){
       $scope.s.getHouseholdFinished = false;
-      $http.get('/household/' + $scope.s.profile.household.id)
+      $http.get('/api/household/' + $scope.s.profile.household.id)
         .then(function(res){
           console.log('getHousehold(): ', res.data);
           angular.extend($scope.s.profile.household, res.data);
@@ -157,7 +157,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
       cb = cb || null;
       $scope.s.sendHouseholdFinished = false;
       console.log('sendHousehold: ' + $scope.s.profile.household.id + ' ' + $scope.s.inputs.householdName);
-      $http.put('/household', {household: $scope.s.profile.household.id, name: $scope.s.inputs.householdName})
+      $http.put('/api/household', {household: $scope.s.profile.household.id, name: $scope.s.inputs.householdName})
         .then(function(res){
           console.log('sentHoushold: ', res);
           $scope.s.sendHouseholdFinished = true;
@@ -186,7 +186,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
       $scope.s.inviteUsersFinished = false;
       var todo = [emails.length, 0];
       emails.forEach(function(email){
-        $http.post('/user/invite', {household: $scope.s.profile.household.id, inviteeEmail: email})
+        $http.post('/api/user/invite', {household: $scope.s.profile.household.id, inviteeEmail: email})
         .then(function(res){
           console.log('sending invite...');
           todo[1]++;
@@ -297,7 +297,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
         console.log("Must pass 3 args to updateHouse");
         return;
       }
-      $http.put('/user/invite', {household: hhid, inviteeEmail: email, accept: accept})
+      $http.put('/api/user/invite', {household: hhid, inviteeEmail: email, accept: accept})
       .then(function(res){
         if (cb){
           cb(res);

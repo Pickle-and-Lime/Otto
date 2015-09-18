@@ -29,7 +29,7 @@ groceries.factory('Recipes', function($http) {
   return {
     searchRecipes: function(searchString) {
       var searchEncoded = searchString.split(' ').join('+');
-      return $http.get('/recipes/'+searchEncoded);
+      return $http.get('/api/recipes/'+searchEncoded);
     }
   };
 });
