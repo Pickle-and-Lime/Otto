@@ -129,6 +129,7 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
   };
   // this removes a pantry item from the list
   $scope.removeItem = function(item) {
+    $scope.toggleDelete(item);
     Lists.removeFromList('/pantry/' + $scope.household + '/' + item)
       .then(function(res) {
         console.log('DELETE /pantry:', res.data);
