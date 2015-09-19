@@ -61,27 +61,3 @@ router.get('/:search', function(req, res) {
 
 
 module.exports = router;
-
-// var search = 'sriracha+chicken';
-// var url = "http://api.yummly.com/v1/api/recipes?_app_id="+appID+"&_app_key="+appKey+"&q="+search;
-
-// request.get(url, function(error, response, body){
-//   if (error){
-//     res.status(404).send('Cannot retrieve household pantry');
-//   } else{
-//     console.log(JSON.parse(body).matches[0]);
-//     // res.send(body);
-//   }
-// });
-
-// var recId = 'Honey-Sriracha-Chicken-962777';
-// var idUrl = 'http://api.yummly.com/v1/api/recipe/'+recId+'?_app_id='+appID+'&_app_key='+appKey;
-
-// request.get(idUrl, function(error, response, body){
-//   if (error){
-//     res.status(404).send('Cannot retrieve household pantry');
-//   } else{
-//     console.log(JSON.parse(body));
-//     // res.send(body);
-//   }
-// });
