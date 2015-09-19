@@ -20,7 +20,7 @@ var gulp = require('gulp'),
 
 //Common paths
 var paths = {
-  scripts: ['./client/app/**/*.js','./server/**/*.js', './index.js','./spec/**/*.js'],
+  scripts: ['./client/app/**/*.js','./server/**/*.js', './index.js','./spec/**/*.js','./gulpfile.js'],
   clientScripts: ['./client/app/**/*.js', '!./client/app/spec/**/*.js'],
   styles: ['./client/assets/**/*.css'],
   index: './client/app/index.html',
@@ -39,7 +39,6 @@ function runCommand(command) {
     });
   };
 }
-
 
 //Start mongodb
 gulp.task('mongo', runCommand('mongod'));
@@ -106,7 +105,6 @@ gulp.task('html', function() {
 
 // Images task — copy all images to public folder and minify
 gulp.task('images', function() {
-  // Image files from app/assets
   gulp.src('client/assets/favicon.ico')
   .pipe(gulp.dest('public/assets/'));
   
@@ -116,7 +114,6 @@ gulp.task('images', function() {
       svgoPlugins: [{removeViewBox: false}],
       use: [pngquant()]
   }))
-  // will be put in the public/images folder
   .pipe(gulp.dest('public/assets/'));
 });
 
@@ -126,7 +123,6 @@ gulp.task('styles', function() {
   .pipe(autoprefixer("last 2 versions", "> 1%", "ie 8"))
   .pipe(cssmin())
   .pipe(concat('styles.min.css'))
-  // Optionally add autoprefixer
   .pipe(gulp.dest('public/assets/'));
 });
 
@@ -155,6 +151,7 @@ gulp.task('open-prod', function(){
     .pipe(open({uri: 'http://localhost:1337/'}));
   }, 1500);
 });
+
 //Run production tasks
 gulp.task('production', function(callback){
   runSequence('clean',

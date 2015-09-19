@@ -46,8 +46,8 @@ app.use('/api/markets', jwtCheck, marketRouter);
 app.use('/api/recipes', jwtCheck, recipeRouter);
 
 app.all('/*', function(req, res, next) {
-    // Just send the index.html for other files to support HTML5Mode
-    res.sendFile('index.html', { root: './public' });
+  // Just send the index.html for other files to support HTML5Mode
+  res.sendFile('index.html', { root: './public' });
 });
 
 module.exports = app;
