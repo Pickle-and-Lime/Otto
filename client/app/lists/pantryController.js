@@ -168,6 +168,13 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
     }
   };
 
+  $scope.updateExp = function(item){
+    var oldDate = (new Date($scope.editedDate)).valueOf();
+    var elapsed = $scope.pantryList[item].expiration * 24 * 60 * 60 * 1000;
+    var newTime = oldDate + elapsed;
+    $scope.editedExpiration = (new Date(newTime)).toDateString();
+  };
+
   $scope.cancelEdits = function(){
     $scope.editVisible = !$scope.editVisible;
   };
