@@ -18,6 +18,13 @@ When preparing a pull Request
   3. `git push origin feat/FEATURE_TITLE`
   4. Pull request to feature branch on github.com
 
+To edit the documentation in real time
+----------------------------------------------------
+   1. Run `yuidoc . --server` from the root directory
+   2. Navigate to `http://127.0.0.1:3000/`
+   3. Refer to the [YUIDoc Syntax Reference](http://yui.github.io/yuidoc/syntax/index.html) to add to the documentation
+   4. Refresh the browser to view changes
+
 To contribute to the GitHub Pages documentation
 ----------------------------------------------------
 1. After writing your documentation, rebase any recent changes from the main project repo: `git pull --rebase upstream dev`
