@@ -12,7 +12,7 @@ Run these commands within the project root directory
    Note: You must export the necessary API keys in ~/.bashrc, then
    run `source ~/.bashrc` to update the environment variables.
 
-View the full [documentation](http://pickle-and-lime.github.io/Rosie/)
+View the full [documentation](http://pickle-and-lime.github.io/Otto/)
 ----------------------------------------------------
 
 Additional Screenshots
