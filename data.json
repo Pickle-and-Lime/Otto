@@ -1,0 +1,1653 @@
+{
+    "project": {
+        "name": "Rosie",
+        "description": "Rosie: The shopping list that builds itself.",
+        "version": "0.0.1"
+    },
+    "files": {
+        "client/app/household/householdController.js": {
+            "name": "client/app/household/householdController.js",
+            "modules": {
+                "Household Controller": 1
+            },
+            "classes": {
+                "householdController": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "client/app/user/loginController.js": {
+            "name": "client/app/user/loginController.js",
+            "modules": {
+                "Login Controller": 1
+            },
+            "classes": {
+                "loginController": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/controllers/PantryItem.js": {
+            "name": "server/controllers/PantryItem.js",
+            "modules": {
+                "PantryItem": 1
+            },
+            "classes": {
+                "PantryItem": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/controllers/householdController.js": {
+            "name": "server/controllers/householdController.js",
+            "modules": {
+                "householdCtrl": 1
+            },
+            "classes": {
+                "householdCtrl": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/controllers/itemController.js": {
+            "name": "server/controllers/itemController.js",
+            "modules": {
+                "itemCtrl": 1
+            },
+            "classes": {
+                "itemCtrl": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/controllers/listController.js": {
+            "name": "server/controllers/listController.js",
+            "modules": {
+                "listCtrl": 1
+            },
+            "classes": {
+                "listCtrl": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/controllers/pantryController.js": {
+            "name": "server/controllers/pantryController.js",
+            "modules": {
+                "pantryCtrl": 1
+            },
+            "classes": {
+                "pantryCtrl": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/controllers/userController.js": {
+            "name": "server/controllers/userController.js",
+            "modules": {
+                "userCtrl": 1
+            },
+            "classes": {
+                "userCtrl": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/controllers/utils.js": {
+            "name": "server/controllers/utils.js",
+            "modules": {
+                "utils": 1
+            },
+            "classes": {
+                "utils": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/db/householdModel.js": {
+            "name": "server/db/householdModel.js",
+            "modules": {
+                "householdModel": 1
+            },
+            "classes": {
+                "householdModel": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/db/userModel.js": {
+            "name": "server/db/userModel.js",
+            "modules": {
+                "userModel": 1
+            },
+            "classes": {
+                "userModel": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/routers/buyRouter.js": {
+            "name": "server/routers/buyRouter.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/routers/householdRouter.js": {
+            "name": "server/routers/householdRouter.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/routers/itemRouter.js": {
+            "name": "server/routers/itemRouter.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/routers/listRouter.js": {
+            "name": "server/routers/listRouter.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/routers/marketRouter.js": {
+            "name": "server/routers/marketRouter.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/routers/pantryRouter.js": {
+            "name": "server/routers/pantryRouter.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/routers/userRouter.js": {
+            "name": "server/routers/userRouter.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/db.js": {
+            "name": "server/db.js",
+            "modules": {
+                "db": 1
+            },
+            "classes": {
+                "db": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/server.js": {
+            "name": "server/server.js",
+            "modules": {
+                "app": 1
+            },
+            "classes": {
+                "app": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "Household Controller": {
+            "name": "Household Controller",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "householdController": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "client/app/household/householdController.js",
+            "line": 6,
+            "description": "Household Controller: Controlls household.html and createHousehold.html"
+        },
+        "Login Controller": {
+            "name": "Login Controller",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "loginController": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "client/app/user/loginController.js",
+            "line": 6,
+            "description": "Login Controller: Controlls login.html, account.html, zip.html"
+        },
+        "PantryItem": {
+            "name": "PantryItem",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "PantryItem": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "server/controllers/PantryItem.js",
+            "line": 13,
+            "description": "This module sets up individual items in the general pantry\nIt creates a neural network for each item and sets default values for\nthe trainingSet and average time to expiration for each item.\nIt also creates methods for creating and updating user-specific pantry items.",
+            "requires": [
+                "synaptic"
+            ]
+        },
+        "householdCtrl": {
+            "name": "householdCtrl",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "householdCtrl": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "server/controllers/householdController.js",
+            "line": 1,
+            "description": "Provides methods for working with households",
+            "static": 1,
+            "requires": [
+                "Q",
+                "householdModel",
+                "userModel",
+                "utils"
+            ]
+        },
+        "itemCtrl": {
+            "name": "itemCtrl",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "itemCtrl": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "server/controllers/itemController.js",
+            "line": 9,
+            "description": "Provides methods for creating household pantries and lists",
+            "requires": [
+                "householdModel"
+            ]
+        },
+        "listCtrl": {
+            "name": "listCtrl",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "listCtrl": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "server/controllers/listController.js",
+            "line": 14,
+            "description": "Provides methods for creating household pantries and lists",
+            "requires": [
+                "householdModel",
+                "appPantry",
+                "PantryItem",
+                "pantryController",
+                "Q"
+            ]
+        },
+        "pantryCtrl": {
+            "name": "pantryCtrl",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "pantryCtrl": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "server/controllers/pantryController.js",
+            "line": 14,
+            "description": "Provides methods for creating household pantries and lists",
+            "requires": [
+                "householdModel",
+                "finalPantry",
+                "PantryItem",
+                "Q"
+            ]
+        },
+        "userCtrl": {
+            "name": "userCtrl",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "userCtrl": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "server/controllers/userController.js",
+            "line": 1,
+            "description": "Provides methods for creating and updating Users",
+            "static": 1,
+            "requires": [
+                "Q",
+                "householdModel",
+                "userModel",
+                "utils"
+            ]
+        },
+        "utils": {
+            "name": "utils",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "utils": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "server/controllers/utils.js",
+            "line": 8,
+            "description": "Provides general utility methods",
+            "requires": [
+                "Q"
+            ]
+        },
+        "householdModel": {
+            "name": "householdModel",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "householdModel": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "server/db/householdModel.js",
+            "line": 18,
+            "description": "Creates a mongoose model and mongo schema for households",
+            "requires": [
+                "mongoose"
+            ]
+        },
+        "userModel": {
+            "name": "userModel",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "userModel": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "server/db/userModel.js",
+            "line": 20,
+            "description": "Creates a mongoose model and mongo schema for users",
+            "requires": [
+                "mongoose"
+            ]
+        },
+        "db": {
+            "name": "db",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "db": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "server/db.js",
+            "line": 1,
+            "description": "Create mongod connection using mongoose",
+            "requires": [
+                "mongoose"
+            ]
+        },
+        "app": {
+            "name": "app",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "app": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "server/server.js",
+            "line": 1,
+            "description": "configures server routes",
+            "requires": [
+                "express",
+                "body-parser",
+                "listRouter",
+                "pantryRouter",
+                "itemRouter",
+                "householdRouter",
+                "userRouter",
+                "buyRouter",
+                "merketRouter"
+            ]
+        }
+    },
+    "classes": {
+        "householdController": {
+            "name": "householdController",
+            "shortname": "householdController",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Household Controller",
+            "namespace": "",
+            "file": "client/app/household/householdController.js",
+            "line": 6,
+            "description": "Anonymous household controller function"
+        },
+        "loginController": {
+            "name": "loginController",
+            "shortname": "loginController",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Login Controller",
+            "namespace": "",
+            "file": "client/app/user/loginController.js",
+            "line": 6,
+            "description": "Anonymous login controller function"
+        },
+        "PantryItem": {
+            "name": "PantryItem",
+            "shortname": "PantryItem",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PantryItem",
+            "namespace": "",
+            "file": "server/controllers/PantryItem.js",
+            "line": 13,
+            "description": "Creates a neural network and trainer for an item",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "item",
+                    "description": "\nthe name of the item",
+                    "type": "String"
+                }
+            ]
+        },
+        "householdCtrl": {
+            "name": "householdCtrl",
+            "shortname": "householdCtrl",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "householdCtrl",
+            "namespace": "",
+            "file": "server/controllers/householdController.js",
+            "line": 1,
+            "description": "Provides methods for working with households"
+        },
+        "itemCtrl": {
+            "name": "itemCtrl",
+            "shortname": "itemCtrl",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "itemCtrl",
+            "namespace": "",
+            "file": "server/controllers/itemController.js",
+            "line": 9,
+            "description": "Provides methods for manipulating household shopping lists",
+            "static": 1
+        },
+        "listCtrl": {
+            "name": "listCtrl",
+            "shortname": "listCtrl",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "listCtrl",
+            "namespace": "",
+            "file": "server/controllers/listController.js",
+            "line": 14,
+            "description": "Provides methods for manipulating household shopping lists",
+            "static": 1
+        },
+        "pantryCtrl": {
+            "name": "pantryCtrl",
+            "shortname": "pantryCtrl",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "pantryCtrl",
+            "namespace": "",
+            "file": "server/controllers/pantryController.js",
+            "line": 14,
+            "description": "Provides methods for manipulating household shopping lists",
+            "static": 1
+        },
+        "userCtrl": {
+            "name": "userCtrl",
+            "shortname": "userCtrl",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "userCtrl",
+            "namespace": "",
+            "file": "server/controllers/userController.js",
+            "line": 1,
+            "description": "Provides methods for creating and updating Users"
+        },
+        "utils": {
+            "name": "utils",
+            "shortname": "utils",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "utils",
+            "namespace": "",
+            "file": "server/controllers/utils.js",
+            "line": 8,
+            "description": "Provides general utility methods",
+            "static": 1
+        },
+        "householdModel": {
+            "name": "householdModel",
+            "shortname": "householdModel",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "householdModel",
+            "namespace": "",
+            "file": "server/db/householdModel.js",
+            "line": 18,
+            "is_constructor": 1
+        },
+        "userModel": {
+            "name": "userModel",
+            "shortname": "userModel",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "userModel",
+            "namespace": "",
+            "file": "server/db/userModel.js",
+            "line": 20,
+            "is_constructor": 1
+        },
+        "db": {
+            "name": "db",
+            "shortname": "db",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "db",
+            "namespace": "",
+            "file": "server/db.js",
+            "line": 1,
+            "description": "Create mongod connection using mongoose"
+        },
+        "app": {
+            "name": "app",
+            "shortname": "app",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "app",
+            "namespace": "",
+            "file": "server/server.js",
+            "line": 1,
+            "description": "configures server routes"
+        }
+    },
+    "elements": {},
+    "classitems": [
+        {
+            "file": "client/app/household/householdController.js",
+            "line": 11,
+            "description": "initializes $scope variables to store received data and interaction states (private)",
+            "itemtype": "method",
+            "name": "init",
+            "class": "householdController",
+            "module": "Household Controller"
+        },
+        {
+            "file": "client/app/household/householdController.js",
+            "line": 42,
+            "description": "function to request user info from server (private)",
+            "itemtype": "method",
+            "name": "getUser",
+            "class": "householdController",
+            "module": "Household Controller"
+        },
+        {
+            "file": "client/app/household/householdController.js",
+            "line": 60,
+            "description": "function to request household info from server (private)",
+            "itemtype": "method",
+            "name": "getHousehold",
+            "class": "householdController",
+            "module": "Household Controller"
+        },
+        {
+            "file": "client/app/household/householdController.js",
+            "line": 85,
+            "description": "function to store email in local variable until submission occurs (attached to $scope.s)",
+            "itemtype": "method",
+            "name": "submitEmail",
+            "class": "householdController",
+            "module": "Household Controller"
+        },
+        {
+            "file": "client/app/household/householdController.js",
+            "line": 99,
+            "description": "function to check that user inputs are valid",
+            "itemtype": "method",
+            "name": "checkInputs",
+            "class": "householdController",
+            "module": "Household Controller"
+        },
+        {
+            "file": "client/app/household/householdController.js",
+            "line": 127,
+            "description": "function to edit email in list of unsent invitations",
+            "itemtype": "method",
+            "name": "editEmail",
+            "params": [
+                {
+                    "name": "email",
+                    "description": "\nthe email address to edit",
+                    "type": "String"
+                },
+                {
+                    "name": "index",
+                    "description": "\nthe index of the email within the $scope.s.inputs.emails array",
+                    "type": "Number"
+                }
+            ],
+            "class": "householdController",
+            "module": "Household Controller"
+        },
+        {
+            "file": "client/app/household/householdController.js",
+            "line": 150,
+            "description": "function to send household information to server",
+            "itemtype": "method",
+            "name": "sendHousehold",
+            "params": [
+                {
+                    "name": "cb",
+                    "description": "\ncallback to be executed on success",
+                    "type": "Function"
+                }
+            ],
+            "class": "householdController",
+            "module": "Household Controller"
+        },
+        {
+            "file": "client/app/household/householdController.js",
+            "line": 176,
+            "description": "function to send invite requests to server for a list of emails",
+            "itemtype": "method",
+            "name": "inviteUsers",
+            "params": [
+                {
+                    "name": "emails",
+                    "description": "\narray of \"emails\"",
+                    "type": "Array"
+                },
+                {
+                    "name": "cb",
+                    "description": "\ncallback to be executed when invites are successfuly sent",
+                    "type": "Function"
+                }
+            ],
+            "class": "householdController",
+            "module": "Household Controller"
+        },
+        {
+            "file": "client/app/household/householdController.js",
+            "line": 210,
+            "description": "function to redirect to household page when inviteUsersFinished and sendHouseholdFinished",
+            "itemtype": "method",
+            "name": "redirect",
+            "class": "householdController",
+            "module": "Household Controller"
+        },
+        {
+            "file": "client/app/household/householdController.js",
+            "line": 223,
+            "description": "function to submit household to server and then send any invites",
+            "itemtype": "method",
+            "name": "submitHousehold",
+            "class": "householdController",
+            "module": "Household Controller"
+        },
+        {
+            "file": "client/app/household/householdController.js",
+            "line": 235,
+            "description": "function to submit a single invite to the server",
+            "itemtype": "method",
+            "name": "newInvite",
+            "params": [
+                {
+                    "name": "email",
+                    "description": "\nemail to be invited",
+                    "type": "String"
+                }
+            ],
+            "class": "householdController",
+            "module": "Household Controller"
+        },
+        {
+            "file": "client/app/household/householdController.js",
+            "line": 252,
+            "description": "function join household (attached to $scope.s)",
+            "itemtype": "method",
+            "name": "joinHouse",
+            "params": [
+                {
+                    "name": "hhid",
+                    "description": "\nhhid is the householdId to be joined",
+                    "type": "String"
+                }
+            ],
+            "class": "householdController",
+            "module": "Household Controller"
+        },
+        {
+            "file": "client/app/household/householdController.js",
+            "line": 267,
+            "description": "function to reject household invitation (attached to $scope.s)",
+            "itemtype": "method",
+            "name": "rejectHouse",
+            "params": [
+                {
+                    "name": "hhid",
+                    "description": "\nhhid is the householdId to be rejected",
+                    "type": "String"
+                }
+            ],
+            "class": "householdController",
+            "module": "Household Controller"
+        },
+        {
+            "file": "client/app/household/householdController.js",
+            "line": 282,
+            "description": "function to send request to server to join household (private)",
+            "itemtype": "method",
+            "name": "updateHouse",
+            "params": [
+                {
+                    "name": "hhid",
+                    "description": "\nis the householdId to be joined",
+                    "type": "String"
+                },
+                {
+                    "name": "email",
+                    "description": "\nis the current users email",
+                    "type": "String"
+                },
+                {
+                    "name": "accept",
+                    "description": "\ntrue to accept invitation, false to reject",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "cb",
+                    "description": "\ncallback to be executed on success",
+                    "type": "Function"
+                }
+            ],
+            "class": "householdController",
+            "module": "Household Controller"
+        },
+        {
+            "file": "client/app/user/loginController.js",
+            "line": 11,
+            "description": "function to initialize scope variables",
+            "itemtype": "method",
+            "name": "init",
+            "class": "loginController",
+            "module": "Login Controller"
+        },
+        {
+            "file": "client/app/user/loginController.js",
+            "line": 24,
+            "description": "function to check for valid zip code",
+            "itemtype": "method",
+            "name": "checkZip",
+            "class": "loginController",
+            "module": "Login Controller"
+        },
+        {
+            "file": "client/app/user/loginController.js",
+            "line": 36,
+            "description": "function to log a user in (calls Auth0 funciton auth.signin())",
+            "itemtype": "method",
+            "name": "login",
+            "class": "loginController",
+            "module": "Login Controller"
+        },
+        {
+            "file": "client/app/user/loginController.js",
+            "line": 52,
+            "description": "function log a user out (calls Auth0 auth.signout()) and clear set angular-storage variables",
+            "itemtype": "method",
+            "name": "logout",
+            "class": "loginController",
+            "module": "Login Controller"
+        },
+        {
+            "file": "client/app/user/loginController.js",
+            "line": 64,
+            "description": "function to send user information to server to be stored in db, set angular-stoarge vars, redirect to /landing",
+            "itemtype": "method",
+            "name": "updateUser",
+            "class": "loginController",
+            "module": "Login Controller"
+        },
+        {
+            "file": "client/app/user/loginController.js",
+            "line": 88,
+            "description": "function to get user information from server (after Auth0 signin)",
+            "itemtype": "method",
+            "name": "getUser",
+            "class": "loginController",
+            "module": "Login Controller"
+        },
+        {
+            "file": "server/controllers/PantryItem.js",
+            "line": 29,
+            "description": "Trains an instance of a pantry item with the given trainingSet\nand exports a standalone (trained) neural network as a\nmethod for that item with no library dependencies.\nSee [Synaptic documentation](https://github.com/cazala/synaptic/wiki/Trainer)",
+            "itemtype": "method",
+            "name": "train",
+            "params": [
+                {
+                    "name": "trainingSet",
+                    "description": "\nAn array of objects with input and output data for the\nneural network. Ex: `[{input: [1], output: [0.1]},{input: [3], output: [0.9]}]`",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "see [Synaptic documentation](https://github.com/cazala/synaptic/wiki/Networks#standalone)",
+                "type": "Function"
+            },
+            "class": "PantryItem",
+            "module": "PantryItem"
+        },
+        {
+            "file": "server/controllers/householdController.js",
+            "line": 16,
+            "itemtype": "method",
+            "name": "getHousehold",
+            "params": [
+                {
+                    "name": "householdId",
+                    "description": ""
+                }
+            ],
+            "class": "householdCtrl",
+            "module": "householdCtrl"
+        },
+        {
+            "file": "server/controllers/householdController.js",
+            "line": 54,
+            "itemtype": "method",
+            "name": "updateHousehold",
+            "params": [
+                {
+                    "name": "househodId",
+                    "description": ""
+                },
+                {
+                    "name": "name",
+                    "description": ""
+                }
+            ],
+            "class": "householdCtrl",
+            "module": "householdCtrl"
+        },
+        {
+            "file": "server/controllers/householdController.js",
+            "line": 67,
+            "itemtype": "method",
+            "name": "removeHousehold",
+            "params": [
+                {
+                    "name": "householdId",
+                    "description": ""
+                }
+            ],
+            "class": "householdCtrl",
+            "module": "householdCtrl"
+        },
+        {
+            "file": "server/controllers/itemController.js",
+            "line": 17,
+            "description": "Adds new tags to an item in a household's shopping list, and saves it in the pantry for future use",
+            "itemtype": "method",
+            "name": "addTag",
+            "params": [
+                {
+                    "name": "tag",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "item",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "householdId",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "class": "itemCtrl",
+            "module": "itemCtrl"
+        },
+        {
+            "file": "server/controllers/itemController.js",
+            "line": 39,
+            "description": "Edits data associated with an item in a household's pantry",
+            "itemtype": "method",
+            "name": "editItem",
+            "params": [
+                {
+                    "name": "category",
+                    "description": "\nThe category to which the item belongs",
+                    "type": "String"
+                },
+                {
+                    "name": "expiration",
+                    "description": "\nThe estimated expiration time for an item",
+                    "type": "String"
+                },
+                {
+                    "name": "purchased",
+                    "description": "\nThe date the item was last purchased",
+                    "type": "String"
+                },
+                {
+                    "name": "item",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "householdId",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "class": "itemCtrl",
+            "module": "itemCtrl"
+        },
+        {
+            "file": "server/controllers/itemController.js",
+            "line": 64,
+            "description": "Calculate the amount of time that has passed since the item was purchased",
+            "itemtype": "method",
+            "name": "timeSincePurchase",
+            "params": [
+                {
+                    "name": "date",
+                    "description": "\nthe date the item was last purchased",
+                    "type": "Date"
+                }
+            ],
+            "return": {
+                "description": "the time in days since the item was last purchased",
+                "type": "Number"
+            },
+            "class": "itemCtrl",
+            "module": "itemCtrl"
+        },
+        {
+            "file": "server/controllers/listController.js",
+            "line": 22,
+            "description": "Generates a shopping list for a household based upon the length of time since\nthe item was last purchased, and Rosie's calculated probability that the \nhousehold has run out of that item.",
+            "itemtype": "method",
+            "name": "autoBuildList",
+            "params": [
+                {
+                    "name": "householdId",
+                    "description": "\nthe string that identifies a household in the database",
+                    "type": "String"
+                }
+            ],
+            "class": "listCtrl",
+            "module": "listCtrl"
+        },
+        {
+            "file": "server/controllers/listController.js",
+            "line": 76,
+            "description": "Adds an item to a household's shopping list.\nIf the item is not already in their pantry, it adds it to the pantry as well.\nIf the item is already in their pantry, it updates Rosie's neural network\nto train it to add the item to the list sooner.",
+            "itemtype": "method",
+            "name": "addToList",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "\nthe name of the item",
+                    "type": "String"
+                },
+                {
+                    "name": "householdId",
+                    "description": "\nthe string that identifies a household in the database",
+                    "type": "String"
+                }
+            ],
+            "class": "listCtrl",
+            "module": "listCtrl"
+        },
+        {
+            "file": "server/controllers/listController.js",
+            "line": 154,
+            "description": "Removes an item from a household's shopping list is the user\ndoesn't want it there, but hasn't purchased it.\nIt also updates Rosie's neural network to train it to \nadd the item to the list later.",
+            "itemtype": "method",
+            "name": "removeFromList",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "\nthe name of the item",
+                    "type": "String"
+                },
+                {
+                    "name": "householdId",
+                    "description": "\nthe string that identifies a household in the database",
+                    "type": "String"
+                }
+            ],
+            "class": "listCtrl",
+            "module": "listCtrl"
+        },
+        {
+            "file": "server/controllers/listController.js",
+            "line": 220,
+            "description": "Removes an item from a household's shopping list, updating\nthe last purchased date for that item in the pantry and setting\nit's `fullyStocked` property to `true`.",
+            "itemtype": "method",
+            "name": "buy",
+            "params": [
+                {
+                    "name": "items",
+                    "description": "\nan array of the names of the items",
+                    "type": "Array"
+                },
+                {
+                    "name": "householdId",
+                    "description": "\nthe string that identifies a household in the database",
+                    "type": "String"
+                }
+            ],
+            "class": "listCtrl",
+            "module": "listCtrl"
+        },
+        {
+            "file": "server/controllers/pantryController.js",
+            "line": 21,
+            "description": "Updates a household item's neural network with additional\ntraining data provided when a user adds or removes an\nitem from their shopping list.",
+            "itemtype": "method",
+            "name": "updateItemNetwork",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "\nthe name of the item to update",
+                    "type": "String"
+                },
+                {
+                    "name": "itemProps",
+                    "description": "\nthe current properties of the item in the household's pantry",
+                    "type": "Object"
+                },
+                {
+                    "name": "household",
+                    "description": "\nthe household object returned from the database",
+                    "type": "Object"
+                },
+                {
+                    "name": "fullyStocked",
+                    "description": "\nif true, the item is fully stocked, if false, it is not",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "pantryCtrl",
+            "module": "pantryCtrl"
+        },
+        {
+            "file": "server/controllers/pantryController.js",
+            "line": 50,
+            "description": "Adds an item to a household's pantry when they either purchase the item, \nor add it from the app's general pantry list.",
+            "itemtype": "method",
+            "name": "addToPantry",
+            "static": 1,
+            "params": [
+                {
+                    "name": "item",
+                    "description": "\nthe name of the item",
+                    "type": "String"
+                },
+                {
+                    "name": "householdId",
+                    "description": "\nthe string that identifies a household in the database",
+                    "type": "String"
+                },
+                {
+                    "name": "month",
+                    "description": "\nallows manual input of the month the item was last purchased",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "now"
+                },
+                {
+                    "name": "day",
+                    "description": "\nallows manual input of the day the item was last purchased",
+                    "type": "String",
+                    "optional": true,
+                    "optdefault": "now"
+                }
+            ],
+            "class": "pantryCtrl",
+            "module": "pantryCtrl"
+        },
+        {
+            "file": "server/controllers/pantryController.js",
+            "line": 125,
+            "description": "Completely removes an item from a households's pantry",
+            "itemtype": "method",
+            "name": "removeFromPantry",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "\nthe name of the item",
+                    "type": "String"
+                },
+                {
+                    "name": "householdId",
+                    "description": "\nthe string that identifies a household in the database",
+                    "type": "String"
+                }
+            ],
+            "class": "pantryCtrl",
+            "module": "pantryCtrl"
+        },
+        {
+            "file": "server/controllers/pantryController.js",
+            "line": 165,
+            "description": "Updates an item's default expiration time",
+            "itemtype": "method",
+            "name": "updateExpTime",
+            "params": [
+                {
+                    "name": "item",
+                    "description": "\nthe name of the item",
+                    "type": "String"
+                },
+                {
+                    "name": "householdId",
+                    "description": "\nthe string that identifies a household in the database",
+                    "type": "String"
+                },
+                {
+                    "name": "time",
+                    "description": "\nthe length of time (in days) from purchase to expiration",
+                    "type": "Number"
+                }
+            ],
+            "class": "pantryCtrl",
+            "module": "pantryCtrl"
+        },
+        {
+            "file": "server/controllers/pantryController.js",
+            "line": 191,
+            "description": "Return a specific household's pantry",
+            "itemtype": "method",
+            "name": "getPantry",
+            "params": [
+                {
+                    "name": "householdId",
+                    "description": "\nthe string that identifies a household in the database",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "the household's pantry, including the properties of each item",
+                "type": "Object"
+            },
+            "class": "pantryCtrl",
+            "module": "pantryCtrl"
+        },
+        {
+            "file": "server/controllers/pantryController.js",
+            "line": 225,
+            "description": "Return the general pantry",
+            "itemtype": "method",
+            "name": "getPantry",
+            "return": {
+                "description": "the general pantry, including the properties of each item",
+                "type": "Object"
+            },
+            "class": "pantryCtrl",
+            "module": "pantryCtrl"
+        },
+        {
+            "file": "server/controllers/userController.js",
+            "line": 16,
+            "description": "Retrieves and returns User information.",
+            "itemtype": "method",
+            "name": "getUser",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Callback is supplied with User object. The\nUser object is slightly modified to not show full details of any\nhouseholds in its list of invitations",
+                "type": "Promise"
+            },
+            "class": "userCtrl",
+            "module": "userCtrl"
+        },
+        {
+            "file": "server/controllers/userController.js",
+            "line": 54,
+            "description": "Retrieves and returns the householdId for a user.\n\nIf the user does not exist, it will create a new user with the\nsupplied userId and email. In this way, there is no separation\nbetween signing in and signing up from the client's perspective.",
+            "itemtype": "method",
+            "name": "getHouseholdForUser",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "email",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Callback is supplied with user's householdId.",
+                "type": "Promise"
+            },
+            "class": "userCtrl",
+            "module": "userCtrl"
+        },
+        {
+            "file": "server/controllers/userController.js",
+            "line": 87,
+            "description": "Creates a new User and a new Household for that user.\nThe user is added to the households `users` property.",
+            "itemtype": "method",
+            "name": "createUser",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "email",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Callback is supplied with new User object.",
+                "type": "Promise"
+            },
+            "class": "userCtrl",
+            "module": "userCtrl"
+        },
+        {
+            "file": "server/controllers/userController.js",
+            "line": 121,
+            "description": "Adds the inviters Household information into the invitee's `invites` property,\nand adds invitee's email to the households sent invites list.\nIf invitation already exists, do nothing and return successfully.",
+            "itemtype": "method",
+            "name": "createInvitation",
+            "params": [
+                {
+                    "name": "householdId",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "inviteeEmail",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Callback is supplied with invitee's User object.",
+                "type": "Promise"
+            },
+            "class": "userCtrl",
+            "module": "userCtrl"
+        },
+        {
+            "file": "server/controllers/userController.js",
+            "line": 151,
+            "description": "Accepts or rejects the invitation.\n\nAccepting will change the invitee's HouseholdId to\nthe creator's householdId, and add the invitee's email\nto the creator household's users list.\n\nBoth accept and reject will remove the household's invite from\nthe User's `invites` array, and from the household's `sentInvites` array",
+            "itemtype": "method",
+            "name": "updateInvitation",
+            "params": [
+                {
+                    "name": "householdId",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "inviteeEmail",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "accept",
+                    "description": "",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "Callback is supplied with invitee's User object",
+                "type": "Promise"
+            },
+            "class": "userCtrl",
+            "module": "userCtrl"
+        },
+        {
+            "file": "server/controllers/utils.js",
+            "line": 15,
+            "description": "Iterates over an array, mapping the returned value from the iterator\nfunction to an array using promises. This allows us to use .then after\nthe mapping function completes",
+            "itemtype": "method",
+            "name": "promiseMap",
+            "params": [
+                {
+                    "name": "arr",
+                    "description": "\nThe array to iterate over",
+                    "type": "Array"
+                },
+                {
+                    "name": "func",
+                    "description": "\nThe function to call on each element in the array",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "A promise, which the first argument supplied will be the mapped array",
+                "type": "Promise"
+            },
+            "class": "utils",
+            "module": "utils"
+        },
+        {
+            "file": "server/routers/buyRouter.js",
+            "line": 5,
+            "description": "POST /buy\nPurchase list of items from shopping cart",
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/householdRouter.js",
+            "line": 5,
+            "description": "GET /household\nReturns the household information",
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/householdRouter.js",
+            "line": 20,
+            "description": "PUT /household\nUpdate information for household\nFor now, only updating Name property",
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/householdRouter.js",
+            "line": 37,
+            "description": "DELETE /household",
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/itemRouter.js",
+            "line": 5,
+            "description": "POST /tag\nManually add tags to item",
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/itemRouter.js",
+            "line": 23,
+            "description": "POST /data\nManually edit expiration and purchase dates of item",
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/listRouter.js",
+            "line": 5,
+            "description": "GET /list/:id\nReturns the list generated for the requesting household",
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/listRouter.js",
+            "line": 21,
+            "description": "POST /list\nManually add item to list",
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/listRouter.js",
+            "line": 38,
+            "description": "DELETE /list\nManually remove item from list",
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/marketRouter.js",
+            "line": 5,
+            "description": "GET /byzip/:zipcode\nRetrieve a list of local farmer's markets by user zip code",
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/marketRouter.js",
+            "line": 22,
+            "description": "GET /byid/:id\nRetrieve a list of local farmer's markets by id",
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/pantryRouter.js",
+            "line": 5,
+            "description": "GET /pantry/household/:id\nReturns the pantry for the household\nIncludes two lists: tracked and untracked",
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/pantryRouter.js",
+            "line": 22,
+            "description": "GET /pantry/general\nReturns the general pantry (all items)",
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/pantryRouter.js",
+            "line": 46,
+            "description": "POST /pantry\nAdd item to pantry from pantry builder\nNote: For items bought, use /buy",
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/pantryRouter.js",
+            "line": 64,
+            "description": "DELETE /pantry\nRemove item from pantry\nNote: This will not add the item to shopping list",
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/userRouter.js",
+            "line": 5,
+            "description": "GET /user/:id\n \nRetrieves information about user, including received outstanding/pending invites",
+            "return": {
+                "description": "JSON\n        ,\n            {...}\n          ]\n        }",
+                "type": "!~YUIDOC_LINE~!          userId:\"abc\", !~YUIDOC_LINE~!          email:\"test@example.com\", !~YUIDOC_LINE~!          householdId:\"def\", !~YUIDOC_LINE~!          invites: [ !~YUIDOC_LINE~!            {!~YUIDOC_LINE~!              householdName: 'Example Name',!~YUIDOC_LINE~!              householdId: '123abc'!~YUIDOC_LINE~!"
+            },
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/userRouter.js",
+            "line": 35,
+            "description": "POST /user\n\nIf User exists, return householdId\nIf User doesn't exist, create new User and new Household\n  and return householdId\n\nReceives { \"userId\": \"123abc\", \"email\": \"example@site.com\"}",
+            "return": {
+                "description": "String householdId"
+            },
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/userRouter.js",
+            "line": 60,
+            "description": "POST /user/invite\n\nCreates an invitation for the user\n \nInvites a user, by email, to a household specified by ID in the request\n\nE.g. John (householdId = abc123) invites Kate at kate@gmail.com\nReceives { \"household\": \"abc123\", \"inviteeEmail\": \"kate@gmail.com\"}",
+            "return": {
+                "description": "200 if successful, 404 if unsuccessful"
+            },
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/userRouter.js",
+            "line": 84,
+            "description": "PUT /user/invite\n\nUpdates user invitation\n\nEither accepts or rejects pending invitation\n\nE.g. Kate accepts John's invitation\nReceives { household: \"abc123\", inviteeEmail: \"kate@gmail.com\", accept: true }",
+            "return": {
+                "description": "Kate's new householdId if successful, 404 if unsuccessful"
+            },
+            "class": "db",
+            "module": "userModel"
+        },
+        {
+            "file": "server/routers/userRouter.js",
+            "line": 110,
+            "description": "DELETE /user",
+            "class": "db",
+            "module": "userModel"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "Missing item type\nPOST /buy\nPurchase list of items from shopping cart",
+            "line": " server/routers/buyRouter.js:5"
+        },
+        {
+            "message": "Missing item type\nGET /household\nReturns the household information",
+            "line": " server/routers/householdRouter.js:5"
+        },
+        {
+            "message": "Missing item type\nPUT /household\nUpdate information for household\nFor now, only updating Name property",
+            "line": " server/routers/householdRouter.js:20"
+        },
+        {
+            "message": "Missing item type\nDELETE /household",
+            "line": " server/routers/householdRouter.js:37"
+        },
+        {
+            "message": "Missing item type\nPOST /tag\nManually add tags to item",
+            "line": " server/routers/itemRouter.js:5"
+        },
+        {
+            "message": "Missing item type\nPOST /data\nManually edit expiration and purchase dates of item",
+            "line": " server/routers/itemRouter.js:23"
+        },
+        {
+            "message": "Missing item type\nGET /list/:id\nReturns the list generated for the requesting household",
+            "line": " server/routers/listRouter.js:5"
+        },
+        {
+            "message": "Missing item type\nPOST /list\nManually add item to list",
+            "line": " server/routers/listRouter.js:21"
+        },
+        {
+            "message": "Missing item type\nDELETE /list\nManually remove item from list",
+            "line": " server/routers/listRouter.js:38"
+        },
+        {
+            "message": "Missing item type\nGET /byzip/:zipcode\nRetrieve a list of local farmer's markets by user zip code",
+            "line": " server/routers/marketRouter.js:5"
+        },
+        {
+            "message": "Missing item type\nGET /byid/:id\nRetrieve a list of local farmer's markets by id",
+            "line": " server/routers/marketRouter.js:22"
+        },
+        {
+            "message": "Missing item type\nGET /pantry/household/:id\nReturns the pantry for the household\nIncludes two lists: tracked and untracked",
+            "line": " server/routers/pantryRouter.js:5"
+        },
+        {
+            "message": "Missing item type\nGET /pantry/general\nReturns the general pantry (all items)",
+            "line": " server/routers/pantryRouter.js:22"
+        },
+        {
+            "message": "Missing item type\nPOST /pantry\nAdd item to pantry from pantry builder\nNote: For items bought, use /buy",
+            "line": " server/routers/pantryRouter.js:46"
+        },
+        {
+            "message": "Missing item type\nDELETE /pantry\nRemove item from pantry\nNote: This will not add the item to shopping list",
+            "line": " server/routers/pantryRouter.js:64"
+        },
+        {
+            "message": "Missing item type\nGET /user/:id\n \nRetrieves information about user, including received outstanding/pending invites",
+            "line": " server/routers/userRouter.js:5"
+        },
+        {
+            "message": "Missing item type\nPOST /user\n\nIf User exists, return householdId\nIf User doesn't exist, create new User and new Household\n  and return householdId\n\nReceives { \"userId\": \"123abc\", \"email\": \"example@site.com\"}",
+            "line": " server/routers/userRouter.js:35"
+        },
+        {
+            "message": "Missing item type\nPOST /user/invite\n\nCreates an invitation for the user\n \nInvites a user, by email, to a household specified by ID in the request\n\nE.g. John (householdId = abc123) invites Kate at kate@gmail.com\nReceives { \"household\": \"abc123\", \"inviteeEmail\": \"kate@gmail.com\"}",
+            "line": " server/routers/userRouter.js:60"
+        },
+        {
+            "message": "Missing item type\nPUT /user/invite\n\nUpdates user invitation\n\nEither accepts or rejects pending invitation\n\nE.g. Kate accepts John's invitation\nReceives { household: \"abc123\", inviteeEmail: \"kate@gmail.com\", accept: true }",
+            "line": " server/routers/userRouter.js:84"
+        },
+        {
+            "message": "Missing item type\nDELETE /user",
+            "line": " server/routers/userRouter.js:110"
+        }
+    ]
+}
