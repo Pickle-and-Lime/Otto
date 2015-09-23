@@ -151,11 +151,11 @@ groceries.factory('Landing', function($http) {
     // },
 
     findMarketbyLoc: function() {
-      return $http.get('/markets/byzip/'+userZip);
+      return $http.get('/api/markets/byzip/'+userZip);
     },
 
     findMarketbyId: function(id) {
-      return $http.get('/markets/byid/'+id);
+      return $http.get('/api/markets/byid/'+id);
     },
 
     makeMarketInfo: function(name, market) {

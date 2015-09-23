@@ -29,26 +29,25 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Auth0 JWT validation
-var client_secret = process.env.AUTH0_CLIENT_SECRET ||
-                    require('../config/config').Auth0ClientSecret;
+var client_secret = process.env.AUTH0_CLIENT_SECRET;
 var jwtCheck = jwt({
   secret: new Buffer(client_secret, 'base64'),
   audience: 'Vk8WOzc8NcNXTngDQfYqEvGe00jdK92d'
 });
 
-// All protected except GET /user/invite/:id from email
-app.use('/list', jwtCheck, listRouter);
-app.use('/pantry', jwtCheck, pantryRouter);
-app.use('/household', jwtCheck, householdRouter);
-app.use('/user', userRouter);
-app.use('/buy', jwtCheck, buyRouter);
-app.use('/item', jwtCheck, itemRouter);
-app.use('/markets', jwtCheck, marketRouter);
-app.use('/recipes', jwtCheck, recipeRouter);
+// All protected except GET /api/user/invite/:id from email
+app.use('/api/list', jwtCheck, listRouter);
+app.use('/api/pantry', jwtCheck, pantryRouter);
+app.use('/api/household', jwtCheck, householdRouter);
+app.use('/api/user', userRouter);
+app.use('/api/buy', jwtCheck, buyRouter);
+app.use('/api/item', jwtCheck, itemRouter);
+app.use('/api/markets', jwtCheck, marketRouter);
+app.use('/api/recipes', jwtCheck, recipeRouter);
 
 app.all('/*', function(req, res, next) {
-    // Just send the index.html for other files to support HTML5Mode
-    res.sendFile('index.html', { root: './public' });
+  // Just send the index.html for other files to support HTML5Mode
+  res.sendFile('index.html', { root: './public' });
 });
 
 module.exports = app;

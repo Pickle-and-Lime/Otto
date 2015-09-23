@@ -45,13 +45,11 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
      */
     var getUser = function(){
       $scope.s.getUserFinished = false;
-      $http.get('/user/' + $scope.s.profile.user_id.split('|')[1])
+      $http.get('/api/user/' + $scope.s.profile.user_id.split('|')[1])
       .then(function(res){
-        console.log('getUser(): ', res);
         $scope.s.profile.household.user = res.data;
         $scope.s.getUserFinished = true;
       }, function(err){
-        console.log('Error in getUser: ', err);
         $scope.s.getUserFinished = false;
         Materialize.toast('Ooops, check your connection and try again.', 10000);
       });
@@ -63,16 +61,14 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
      */
     var getHousehold = function(){
       $scope.s.getHouseholdFinished = false;
-      $http.get('/household/' + $scope.s.profile.household.id)
+      $http.get('/api/household/' + $scope.s.profile.household.id)
         .then(function(res){
-          console.log('getHousehold(): ', res.data);
           angular.extend($scope.s.profile.household, res.data);
           if ($scope.s.profile.household.name !== ""){
             $location.path( "/household" );
           }
           $scope.s.getHouseholdFinished = true;
         }, function(err){
-          console.log('ERROR in householdController getHousehold()', err);
           $scope.s.getHouseholdFinished = false;
           Materialize.toast('Ooops, check your connection and try again.', 10000);
       });
@@ -156,17 +152,14 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
     var sendHousehold = function(cb){
       cb = cb || null;
       $scope.s.sendHouseholdFinished = false;
-      console.log('sendHousehold: ' + $scope.s.profile.household.id + ' ' + $scope.s.inputs.householdName);
-      $http.put('/household', {household: $scope.s.profile.household.id, name: $scope.s.inputs.householdName})
+      $http.put('/api/household', {household: $scope.s.profile.household.id, name: $scope.s.inputs.householdName})
         .then(function(res){
-          console.log('sentHoushold: ', res);
           $scope.s.sendHouseholdFinished = true;
           if (cb){
             cb();
           }
           redirect();
         }, function(err){
-          console.log('ERROR in householdController sendHousehold()', err);
           $scope.submitted = false;
           Materialize.toast('Ooops, check your connection and try again.', 10000);
       });
@@ -186,12 +179,10 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
       $scope.s.inviteUsersFinished = false;
       var todo = [emails.length, 0];
       emails.forEach(function(email){
-        $http.post('/user/invite', {household: $scope.s.profile.household.id, inviteeEmail: email})
+        $http.post('/api/user/invite', {household: $scope.s.profile.household.id, inviteeEmail: email})
         .then(function(res){
-          console.log('sending invite...');
           todo[1]++;
           if (todo[0] === todo[1]){
-            console.log('all invites sent...');
             $scope.s.inviteUsersFinished = true;
             redirect();
             if (cb){
@@ -200,9 +191,10 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
           }
 
         },function(err){
-          console.log('ERROR in householdController inviteUsers(): ', err);
-          $scope.submitted = false;
-          Materialize.toast('Ooops, check your connection and try again.', 10000);
+          $scope.s.submitted =  false;
+          $scope.s.currentEmail = "";
+          $location.path( "/household" );
+          Materialize.toast('User must join Otto before they can be invited to your Household.', 10000);
         });
       });
     };
@@ -212,9 +204,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
      * @method redirect
      */
     var redirect = function(){
-      console.log('redirect attempt: ' + $scope.s.inviteUsersFinished + " " + $scope.s.sendHouseholdFinished);
       if ($scope.s.inviteUsersFinished && $scope.s.sendHouseholdFinished){
-        console.log('redirecting...');
         $location.path( "/household" );
       }
     };
@@ -294,16 +284,14 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
     var updateHouse = function(hhid, email, accept, cb){
       cb = cb || null;
       if (hhid === null || email === null || accept === null){
-        console.log("Must pass 3 args to updateHouse");
         return;
       }
-      $http.put('/user/invite', {household: hhid, inviteeEmail: email, accept: accept})
+      $http.put('/api/user/invite', {household: hhid, inviteeEmail: email, accept: accept})
       .then(function(res){
         if (cb){
           cb(res);
         }
       }, function(err){
-        console.log("ERROR in updateHouse: ", err);
       });
     };
   }

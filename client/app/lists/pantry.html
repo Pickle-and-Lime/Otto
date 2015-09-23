@@ -18,14 +18,14 @@
     <div class="input-field confirm-delete hide-on-small-only" ng-show="editVisible">
       <div>Editing Item: <strong>{{ activeItem }}</strong></div>
       <div>Edit Purchase Date:</div>
-      <input type="date" class="datepicker" ng-model="editedDate">
+      <input type="date" class="datepicker" ng-model="editedDate" ng-change="updateExp(activeItem)">
       <div>Edit Expiration Date:</div>
       <input type="date" class="datepicker" ng-model="editedExpiration">
       <div>Edit Category: <strong ng-click="toggleEditCategory()">{{ editedCategory }}</strong><br></div>
       <div ng-show="editingCategory" ng-click="setCategory(item)" ng-repeat="item in categories">{{item}}</div>
       <div>
         <br><button class="btn waves-effect waves-light green" ng-click="submitItemEdits()" onclick="Materialize.toast('Item Data Edited',500)">Submit</button>
-        <button class="btn waves-effect waves-light red lighten-1" ng-click="cancelEdits()" onclick="Materialize.toast('Cancel',500)">Cancel</button></div>
+        <button class="btn waves-effect waves-light red lighten-1" ng-click="cancelEdits()" onclick="Materialize.toast('Canceled',500)">Cancel</button></div>
     </div>
   </form>
 

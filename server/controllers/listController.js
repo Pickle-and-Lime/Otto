@@ -123,26 +123,13 @@ module.exports = listCtrl = {
         } 
         //otherwise, add it to their pantry
         else {
-        //   return pantryController.addToPantry(item, householdId)
-        //   .then(function(household) {
-        //     if (household) {
-        //       //Mark list modified because it is a mixed datatype in db
-        //       household.pantry[item].fullyStocked = false;
-
-        //       //Mark pantry modified because they are of mixed datatype in db
-        //       household.markModified('pantry');
-              
-        //       //Save changes
-              return household.save()
-              .then(function() {
-                return Q.fcall(function() {
-                  return household.list;
-                });
-              });
-        //     } else {
-        //       throw new Error('Household not found');
-        //     }
-        //   });
+          //Save changes
+          return household.save()
+          .then(function() {
+            return Q.fcall(function() {
+              return household.list;
+            });
+          });
         }
       } else {
         throw new Error('Household not found');

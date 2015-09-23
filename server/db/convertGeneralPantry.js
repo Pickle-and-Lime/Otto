@@ -20,7 +20,9 @@ var trainingSets = {
 
 var data = {};
 var categoriesObj = {};
-fs.readFileSync("buildGenPantry.txt").toString().split('\n').forEach(function (line) {
+fs.readFileSync("buildGenPantry.txt")
+  .toString().split('\n')
+  .forEach(function (line) {
     var item = line.split(";");
     var name = item[0];
     data[name] = {};

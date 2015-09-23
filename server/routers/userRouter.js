@@ -4,8 +4,7 @@ var userController = require('../controllers/userController.js');
 var router = express.Router();
 
 // Auth0 JWT validation
-var client_secret = process.env.AUTH0_CLIENT_SECRET ||
-                    require('../../config/config').Auth0ClientSecret;
+var client_secret = process.env.AUTH0_CLIENT_SECRET;
 var jwtCheck = jwt({
   secret: new Buffer(client_secret, 'base64'),
   audience: 'Vk8WOzc8NcNXTngDQfYqEvGe00jdK92d'

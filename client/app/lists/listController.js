@@ -132,23 +132,23 @@ groceries.factory('Lists', function($http) {
   return {
     // general helper for getting list from backend
     getList: function(path, household) {
-      return $http.get(path, {data: {household: household}}); // params might be an object with 'household1'
+      return $http.get('/api' + path, {data: {household: household}}); // params might be an object with 'household1'
     }, 
     // general helper for adding item to a list on the backend
     addToList: function(path, item, household) { // unknown if household needs to be input for now
-      return $http.post(path, {item: item, household: household});
+      return $http.post('/api' + path, {item: item, household: household});
     },
     // general helper to remove an item from a list on the backend
     removeFromList: function(path, item, household) { // unknown if household needs to be input for now
-      return $http.delete(path, {data: {item: item, household: household}});
+      return $http.delete('/api' + path, {data: {item: item, household: household}});
     },
     // helper function to buy a list of items
     buyList: function(itemsArray, household) {
-      return $http.post('/buy', {items: itemsArray, household: household});
+      return $http.post('/api/buy', {items: itemsArray, household: household});
     },
     // helper function to add a tag to a shopping list item
     addItemTag: function(item, household, tag) {
-      return $http.post('/item/tag', {item: item, household: household, tag: tag});
+      return $http.post('/api/item/tag', {item: item, household: household, tag: tag});
     },
     // helper function to post item data changes
     editItemData: function(item, household, category, expiration, purchase) {
@@ -157,8 +157,8 @@ groceries.factory('Lists', function($http) {
       var elapsed = (time2 - time1) / 86400000;
       elapsed = elapsed > 0 ? elapsed : 1;
       var obj = {item: item, household: household, category: category, expiration: elapsed, purchase: purchase};
-      console.log('POST /item/data:', obj);
-      return $http.post('/item/data', obj);
+      console.log('POST /api/item/data:', obj);
+      return $http.post('/api/item/data', obj);
     },
     
 
