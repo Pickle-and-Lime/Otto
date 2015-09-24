@@ -71,6 +71,7 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
         // console.log('GET /pantry', res.data);
         $scope.pantryList = res.data;
         $scope.pantryByCategory = $scope.pantryConverter(res.data);
+        $scope.pantryArray = $scope.itemConverter(res.data);
         // console.log('pantryByCategory:', $scope.pantryByCategory);
         console.log('pantryList:', $scope.pantryList);
       }, function(err) {
@@ -158,6 +159,7 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
 
   $scope.toggleActive = function(item) {
     $scope.activeItem = item;
+    console.log("ITEM", item);
     console.log($scope.pantryList[item]);
     $scope.editedCategory = $scope.pantryList[item].category || $scope.editedCategory;
     $scope.editedDate = (new Date($scope.pantryList[item].date)).toDateString() || $scope.editedDate;
@@ -239,8 +241,20 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
     }
     return returnArray;
   };
+
+  $scope.itemConverter = function(pantryObj){
+    var returnArray = [];
+    for (var item in pantryObj){
+      // var obj = {};
+      // obj.name = item;
+      // obj.info = pantryObj[item];
+      returnArray.push(item);
+    }
+    return returnArray;
+  };
   // check if a particular item is fullyStocked
   $scope.isStocked = function(item) {
+    console.log("ITEMEMEM", item);
     return $scope.pantryList[item].fullyStocked;
   };
 
@@ -261,5 +275,5 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
     var elapsed = $scope.pantryList[item].expiration * 24 * 60 * 60 * 1000;
     var newTime = oldDate + elapsed;
     return (new Date(newTime)).toDateString();
-  };
+  }; 
 });
