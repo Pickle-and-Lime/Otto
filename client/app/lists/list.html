@@ -8,7 +8,7 @@
         <label for="groceryItem">What do you need?</label>
       </div>
       <ul class="collection" ng-hide="!userItem.length">
-        <li class="collection-item pantry-list-item" ng-repeat="item in masterList | filter:{name: userItem}" ng-bind="item.name" ng-click="addItem(item.name)" onclick="Materialize.toast('Added',500)"></li>
+        <li class="cursor collection-item pantry-list-item" ng-repeat="item in masterList | filter:{name: userItem}" ng-bind="item.name" ng-click="addItem(item.name)" onclick="Materialize.toast('Added',500)"></li>
       </ul>
       <button class="btn waves-effect waves-light green right" onclick="Materialize.toast('Added',500)" ng-click="addItem(userItem)">Add</button>
     </div>
@@ -22,8 +22,8 @@
         <li class="collection-header"><strong>{{ itemObj.type }}</strong></li>
         <li class="collection-item" ng-repeat="item in itemObj.items track by $index | orderBy: ''">
           <div>
-            <span class="item-name" ng-click="toggleActiveTag(item)">{{ item }}</span>
-            <span class="right" ng-click="removeItem(item)" onclick="Materialize.toast('Item Deleted',500)"><i class="material-icons">not_interested</i></span>
+            <span class="cursor item-name" ng-click="toggleActiveTag(item)">{{ item }}</span>
+            <span class="cursor right not-interested" ng-click="removeItem(item)" onclick="Materialize.toast('Item Deleted',500)"><i class="material-icons">not_interested</i></span>
             <input class="right" id="{{ item }}" type="checkbox"/>
             <label for="{{ item }}" class="right" ng-click="toggleCheck(item)"></label>
             <div class="tags"><span class="item-tag" ng-repeat="tag in shoppingList[item].userTags">{{ tag }}</span></div>

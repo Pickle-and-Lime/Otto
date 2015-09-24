@@ -196,3 +196,11 @@
   padding-top: 40px
 }
 
+.not-interested {
+  color: red;
+}
+
+.cursor{
+  cursor: pointer;
+  cursor: hand;
+}

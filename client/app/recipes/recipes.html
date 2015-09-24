@@ -27,9 +27,9 @@
           <span class="card-title grey-text text-darken-4">{{ recipe.name }}<i class="material-icons right">close</i></span>
           <div>
             <span class="">Click any ingredient to add it to your shopping list</span>
-            <span class="pantry-button right" onclick="Materialize.toast('Added!',500)" ng-click="addAllIngredients(recipe.ingredients)" >Add all</span>
+            <span class="cursor pantry-button right" onclick="Materialize.toast('Added!',500)" ng-click="addAllIngredients(recipe.ingredients)" >Add all</span>
           </div>
-          <div class="tags"><span class="item-tag" ng-repeat="ingredient in recipe.ingredients" onclick="Materialize.toast('Added!',500)" ng-click="addIngredient(ingredient)">{{ ingredient }}</span></div>
+          <div class="tags"><span class="cursor item-tag" ng-repeat="ingredient in recipe.ingredients" onclick="Materialize.toast('Added!',500)" ng-click="addIngredient(ingredient)">{{ ingredient }}</span></div>
         </div>
       </div>
     </div>
