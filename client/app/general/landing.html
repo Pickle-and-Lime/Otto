@@ -8,9 +8,9 @@
           <ul class="collection">
             <li class="collection-item" ng-repeat="obj in seasonalList | orderBy: 'name'">
               {{ obj.name }}
-              <span class="right pantry-button" onclick="Materialize.toast('Added!',500)" ng-click="addSeasonalItem(obj.name)" ng-show="!obj.inList && !obj.inPantry">Add</span>
-              <span class="right pantry-button-disabled" ng-show="obj.inList">In List</span>
-              <span class="right pantry-button-disabled" ng-show="obj.inPantry">In Pantry</span>
+              <span  class="cursor right pantry-button" onclick="Materialize.toast('Added!',500)" ng-click="addSeasonalItem(obj.name)" ng-show="!obj.inList && !obj.inPantry">Add</span>
+              <span class="cursor right pantry-button-disabled" ng-show="obj.inList">In List</span>
+              <span class="cursor right pantry-button-disabled" ng-show="obj.inPantry">In Pantry</span>
             </li>
           </ul>
         </div>
