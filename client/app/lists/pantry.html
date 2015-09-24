@@ -2,12 +2,15 @@
 
   <form class="col s12 m6 l4">
     <div class="row">
-      <div class="input-field col s12">
-        <i class="material-icons prefix">shopping_basket</i>
-        <input id="pantryItem" type="text" ng-model="userPantryItem">
-        <label for="pantryItem">What do you have in your pantry?</label>
+      <div class="input-field col s11 l12 m12">
+        <div class ="row">
+          <i class="material-icons prefix">shopping_basket</i>
+          <input class="col" id="pantryItem" type="text" ng-model="userPantryItem">
+          <i class="col material-icons prefix" ng-click="userPantryItem = null">not_interested</i>
+          <label for="pantryItem">What do you have in your pantry?</label>
+        </div>
       </div>
-      <ul class="collection" ng-hide="!userPantryItem.length">
+      <ul class="col s12 collection" ng-hide="!userPantryItem.length">
         <li class="cursor collection-item pantry-list-item" ng-repeat="item in masterList | filter:{name: userPantryItem}" ng-bind="item.name" ng-click="addItem(item.name)" onclick="Materialize.toast('Added',500)"></li>
       </ul>
       <button class="btn waves-effect waves-light green right" ng-click="addItem(userPantryItem)" onclick="Materialize.toast('Added',500)">Add</button>
@@ -33,17 +36,20 @@
     <h4 class="center-align">My Pantry List</h4>
     <form class="col s12 m12 l12">
       <div class="row">
-        <div class="input-field col s12">
-          <i class="material-icons prefix">search</i>
-          <input id="pantryItem" type="text" ng-model="currentPantryItem">
-          <label for="pantryItem">What are you looking for?</label>
+        <div class="input-field col s11 m11 l5">
+          <div class="row">
+            <i class="material-icons prefix">search</i>
+            
+            <input class="col" id="currItem" type="text" ng-model="currentPantryItem">
+            <i class="col material-icons prefix" ng-click="currentPantryItem = null">not_interested</i>
+            <label for="currItem">What are you looking for?</label>
+          </div>
         </div>
-<!--         <span>{{ pantryArray }}</span>
- -->        <ul class="collection" ng-hide="!currentPantryItem.length">
+        <ul class="collection col s12" ng-hide="!currentPantryItem.length">
           <li class="cursor collection-item pantry-list-item" ng-repeat="item in pantryArray | filter:currentPantryItem">
             <div>
               <span class="cursor item-name" ng-click="toggleActive(item)">{{ item }}</span>
-              <span class="cursor right not-interested"><i class="material-icons" ng-click="toggleDelete(item)">not_interested</i></span>
+              <span class="cursor right delete"><i class="material-icons" ng-click="toggleDelete(item)">delete</i></span>
               <span class="cursor right pantry-button" onclick="Materialize.toast('Out of Item',500)" ng-click="ranOut(item)" ng-show="isStocked(item)">Ran Out</span>
               <div class="confirm-delete" ng-show="isDelete(item)">
                 Are you sure you want to delete this? This will erase the information Otto uses to predict when you'll need this item.<br>
@@ -63,7 +69,7 @@
         <li class="collection-item" ng-repeat="item in itemObj.items | orderBy: ''">
           <div>
             <span class="cursor item-name" ng-click="toggleActive(item)">{{ item }}</span>
-            <span class="cursor right not-interested"><i class="material-icons" ng-click="toggleDelete(item)">not_interested</i></span>
+            <span class="cursor right delete"><i class="material-icons" ng-click="toggleDelete(item)">delete</i></span>
             <span class="cursor right pantry-button" onclick="Materialize.toast('Out of Item',500)" ng-click="ranOut(item)" ng-show="isStocked(item)">Ran Out</span>
             <div class="confirm-delete" ng-show="isDelete(item)">
               Are you sure you want to delete this? This will erase the information Otto uses to predict when you'll need this item.<br>

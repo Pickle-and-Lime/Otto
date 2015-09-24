@@ -23,7 +23,7 @@
         <li class="collection-item" ng-repeat="item in itemObj.items track by $index | orderBy: ''">
           <div>
             <span class="cursor item-name" ng-click="toggleActiveTag(item)">{{ item }}</span>
-            <span class="cursor right not-interested" ng-click="removeItem(item)" onclick="Materialize.toast('Item Deleted',500)"><i class="material-icons">not_interested</i></span>
+            <span class="cursor right delete" ng-click="removeItem(item)" onclick="Materialize.toast('Item Deleted',500)"><i class="material-icons">delete</i></span>
             <input class="right" id="{{ item }}" type="checkbox"/>
             <label for="{{ item }}" class="right" ng-click="toggleCheck(item)"></label>
             <div class="tags"><span class="item-tag" ng-repeat="tag in shoppingList[item].userTags">{{ tag }}</span></div>
