@@ -6,7 +6,7 @@
         <div class ="row">
           <i class="material-icons prefix">shopping_basket</i>
           <input class="col" id="pantryItem" type="text" ng-model="userPantryItem">
-          <i class="col material-icons prefix" ng-click="userPantryItem = null">not_interested</i>
+          <i class="col material-icons prefix not-interested" ng-click="userPantryItem = null">not_interested</i>
           <label for="pantryItem">What do you have in your pantry?</label>
         </div>
       </div>
@@ -41,7 +41,7 @@
             <i class="material-icons prefix">search</i>
             
             <input class="col" id="currItem" type="text" ng-model="currentPantryItem">
-            <i class="col material-icons prefix" ng-click="currentPantryItem = null">not_interested</i>
+            <i class="col material-icons prefix not-interested" ng-click="currentPantryItem = null">not_interested</i>
             <label for="currItem">What are you looking for?</label>
           </div>
         </div>

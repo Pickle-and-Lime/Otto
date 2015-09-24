@@ -2,10 +2,13 @@
 
   <form class="col s12 m6 l4">
     <div class="row">
-      <div class="input-field col s12">
-        <i class="material-icons prefix">shopping_basket</i>
-        <input id="groceryItem" type="text" ng-model="userItem">
-        <label for="groceryItem">What do you need?</label>
+      <div class="input-field col s11 m12 l12">
+        <div class="row">
+          <i class="material-icons prefix">shopping_basket</i>
+          <input class="col" id="groceryItem" type="text" ng-model="userItem">
+          <i class="col material-icons prefix not-interested" ng-click="userItem = null">not_interested</i>
+          <label for="groceryItem">What do you need?</label>
+        </div>
       </div>
       <ul class="collection" ng-hide="!userItem.length">
         <li class="cursor collection-item pantry-list-item" ng-repeat="item in masterList | filter:{name: userItem}" ng-bind="item.name" ng-click="addItem(item.name)" onclick="Materialize.toast('Added',500)"></li>
