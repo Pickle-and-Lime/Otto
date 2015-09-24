@@ -159,8 +159,6 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
 
   $scope.toggleActive = function(item) {
     $scope.activeItem = item;
-    console.log("ITEM", item);
-    console.log($scope.pantryList[item]);
     $scope.editedCategory = $scope.pantryList[item].category || $scope.editedCategory;
     $scope.editedDate = (new Date($scope.pantryList[item].date)).toDateString() || $scope.editedDate;
     var expMils = $scope.pantryList[item].expiration*24*60*60*1000;
@@ -254,7 +252,6 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
   };
   // check if a particular item is fullyStocked
   $scope.isStocked = function(item) {
-    console.log("ITEMEMEM", item);
     return $scope.pantryList[item].fullyStocked;
   };
 
