@@ -1,92 +1,90 @@
-<div class="row">
+<p class="center-align">
+  <a class="btn waves-effect waves-light green" ui-sref="pantryBuilder">Go To Pantry Builder</a>
+</p>
 
-  <form class="col s12 m6 l4">
-    <div class="row">
-      <div class="input-field col s11 l12 m12">
-        <div class ="row">
-          <i class="material-icons prefix">shopping_basket</i>
-          <input class="col" id="pantryItem" type="text" ng-model="userPantryItem">
-          <i class="col material-icons prefix not-interested" ng-click="userPantryItem = null">not_interested</i>
-          <label for="pantryItem">What do you have in your pantry?</label>
-        </div>
-      </div>
-      <ul class="col s12 collection" ng-hide="!userPantryItem.length">
-        <li class="cursor collection-item pantry-list-item" ng-repeat="item in masterList | filter:{name: userPantryItem}" ng-bind="item.name" ng-click="addItem(item.name)" onclick="Materialize.toast('Added',500)"></li>
-      </ul>
-      <button class="btn waves-effect waves-light green right" ng-click="addItem(userPantryItem)" onclick="Materialize.toast('Added',500)">Add</button>
-    </div>
-    <p class="center-align">
-      <a class="btn waves-effect waves-light green" ui-sref="pantryBuilder">Go To Pantry Builder</a>
-    </p>
-    <div class="input-field confirm-delete hide-on-small-only" ng-show="editVisible">
-      <div>Editing Item: <strong>{{ activeItem }}</strong></div>
-      <div >Edit Purchase Date:</div>
-      <input type="date" class="cursor datepicker" ng-model="editedDate" ng-change="updateExp(activeItem)">
-      <div >Edit Expiration Date:</div>
-      <input type="date" class="cursor datepicker" ng-model="editedExpiration">
-      <div >Edit Category: <strong class="cursor" ng-click="toggleEditCategory()">{{ editedCategory }}</strong><br></div>
-      <div class="cursor"ng-show="editingCategory" ng-click="setCategory(item)" ng-repeat="item in categories">{{item}}</div>
-      <div>
-        <br><button class="btn waves-effect waves-light green" ng-click="submitItemEdits()" onclick="Materialize.toast('Item Data Edited',500)">Submit</button>
-        <button class="btn waves-effect waves-light red lighten-1" ng-click="cancelEdits()" onclick="Materialize.toast('Canceled',500)">Cancel</button></div>
-    </div>
-  </form>
+<div class="col s12" id="editItem">
+  <h4 class="center-align">My Pantry List</h4>
+</div>
 
-  <div class="col s12 m6 l8">
-    <h4 class="center-align">My Pantry List</h4>
-    <form class="col s12 m12 l12">
+<!-- Search for item or category -->
+<form class="col s12 m12 l12">
+  <div class="row">
+    <div class="input-field col s11 m11 l6 offset-l3">
       <div class="row">
-        <div class="input-field col s11 m11 l5">
-          <div class="row">
-            <i class="material-icons prefix">search</i>
-            
-            <input class="col" id="currItem" type="text" ng-model="currentPantryItem">
-            <i class="col material-icons prefix not-interested" ng-click="currentPantryItem = null">not_interested</i>
-            <label for="currItem">What are you looking for?</label>
-          </div>
-        </div>
-        <ul class="collection col s12" ng-hide="!currentPantryItem.length">
-          <li class="cursor collection-item pantry-list-item" ng-repeat="item in pantryArray | filter:currentPantryItem">
-            <div>
-              <span class="cursor item-name" ng-click="toggleActive(item)">{{ item }}</span>
-              <span class="cursor right delete"><i class="material-icons" ng-click="toggleDelete(item)">delete</i></span>
-              <span class="cursor right pantry-button" onclick="Materialize.toast('Out of Item',500)" ng-click="ranOut(item)" ng-show="isStocked(item)">Ran Out</span>
-              <div class="confirm-delete" ng-show="isDelete(item)">
-                Are you sure you want to delete this? This will erase the information Otto uses to predict when you'll need this item.<br>
-                <button class="btn waves-effect waves-light green" ng-click="removeItem(item)" onclick="Materialize.toast('Pantry Item Deleted',500)">Delete Pantry Item</button>
-            </div>
-            <div class="tags">
-              <span class="item-tag">Last Purchased: {{ makeDate(item) }}</span>
-              <span class="item-tag">Best Before: {{ makeExpiration(item) }}</span>
-            </div>
-          </li>
-        </ul>
+        <i class="material-icons prefix">search</i>
+        <input class="col" id="currItem" type="text" ng-model="currentPantryItem">
+        <i class="col material-icons prefix not-interested" ng-click="currentPantryItem = ''">not_interested</i>
+        <label for="currItem">Search item or category in your pantry</label>
       </div>
-    </form>
+    </div>
+  </div>
+</form>
+
+<!-- Edit Item Card -->
+<div class="row">
+  <div class="col s12 m12 l6 offset-l3" ng-show="editVisible">
+    <div class="card hoverable">
+      <div class="card-content">
+        <span class="card-title grey-text text-darken-4">Editing Item: <strong>{{ activeItem }}</strong></span>
+        <p>Edit Purchase Date:</p>
+        <input type="date" class="cursor datepicker" ng-model="editedDate" ng-change="updateExp(activeItem)">
+        <p>Edit Expiration Date:</p>
+        <input type="date" class="cursor datepicker" ng-model="editedExpiration">
+        <p >Edit Category: <span class="cursor item-tag" ng-click="toggleEditCategory()">{{ editedCategory }}</span><br></p>
+        <span class="cursor item-tag" ng-show="editingCategory" ng-click="setCategory(item)" ng-repeat="item in categories">{{item}}</span>
+        <div>
+          <br><button class="btn waves-effect waves-light green" ng-click="submitItemEdits()" onclick="Materialize.toast('Item Data Edited',500)">Submit</button>
+          <button class="btn waves-effect waves-light red lighten-1" ng-click="cancelEdits()" onclick="Materialize.toast('Canceled',500)">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Search Results -->
+<div class="row">
+  <ul class="collection col s12 l6 offset-l3" ng-hide="!currentPantryItem.length">
+    <li class="cursor collection-item pantry-list-item" ng-repeat="item in pantryArray | filter:currentPantryItem">
+      <div>
+        <span class="cursor item-name" ng-click="toggleActive(item); goToEditItem()">{{ item }}</span>
+        <span class="cursor right delete"><i class="material-icons" ng-click="toggleDelete(item)">delete</i></span>
+        <span class="cursor right pantry-button" onclick="Materialize.toast('Out of Item',500)" ng-click="ranOut(item)" ng-show="isStocked(item)">Ran Out</span>
+        <div class="confirm-delete center-align" ng-show="isDelete(item)">
+          <p class="center-align">Are you sure you want to delete this? This will erase the information Otto uses to predict when you'll need this item.</p>
+          <button class="btn waves-effect waves-light green" ng-click="removeItem(item)" onclick="Materialize.toast('Pantry Item Deleted',500)">Delete Pantry Item</button>
+        </div>
+      </div>
+      <div class="tags">
+        <span class="item-tag">Last Purchased: {{ makeDate(item) }}</span>
+        <span class="item-tag">Best Before: {{ makeExpiration(item) }}</span>
+      </div>
+    </li>
+  </ul>
+</div>
+
+
+<!-- Pantry Items -->
+<div class="row">
+  <div class="col s12">
     <div class="row">
-      <ul class="collection with-header col s12 m12 l6" ng-repeat="itemObj in pantryByCategory | orderBy: 'type'">
+      <ul class="collection with-header col s12 m6 l4" ng-repeat="itemObj in pantryByCategory | filter:currentPantryItem | orderBy: 'type'">
         <li class="collection-header"><strong>{{ itemObj.type }}</strong></li>
-        <li class="collection-item" ng-repeat="item in itemObj.items | orderBy: ''">
-          <div>
-            <span class="cursor item-name" ng-click="toggleActive(item)">{{ item }}</span>
-            <span class="cursor right delete"><i class="material-icons" ng-click="toggleDelete(item)">delete</i></span>
-            <span class="cursor right pantry-button" onclick="Materialize.toast('Out of Item',500)" ng-click="ranOut(item)" ng-show="isStocked(item)">Ran Out</span>
-            <div class="confirm-delete" ng-show="isDelete(item)">
-              Are you sure you want to delete this? This will erase the information Otto uses to predict when you'll need this item.<br>
-              <button class="btn waves-effect waves-light green" ng-click="removeItem(item)" onclick="Materialize.toast('Pantry Item Deleted',500)">Delete Pantry Item</button>
-            </div>
-            <div class="tags">
-              <span class="item-tag">Last Purchased: {{ makeDate(item) }}</span>
-              <span class="item-tag">Best Before: {{ makeExpiration(item) }}</span>
-            </div>
+        <li class="collection-item pantry-list-item" ng-repeat="item in itemObj.items | orderBy: ''">
+          <span class="cursor item-name" ng-click="goToEditItem(); toggleActive(item)" >{{ item }}</span>
+          <span class="cursor right delete"><i class="material-icons" ng-click="toggleDelete(item)">delete</i></span>
+          <span class="cursor right pantry-button" onclick="Materialize.toast('Out of Item',500)" ng-click="ranOut(item)" ng-show="isStocked(item)">Ran Out</span>
+          <div class="confirm-delete center-align" ng-show="isDelete(item)">
+            <p class="center-align">Are you sure you want to delete this? This will erase the information Otto uses to predict when you'll need this item.</p>
+            <button class="btn waves-effect waves-light green" ng-click="removeItem(item)" onclick="Materialize.toast('Pantry Item Deleted',500)">Delete Pantry Item</button>
+          </div>
+          <div class="tags">
+            <span class="item-tag">Last Purchased: {{ makeDate(item) }}</span>
+            <span class="item-tag">Best Before: {{ makeExpiration(item) }}</span>
           </div>
         </li>
       </ul>
     </div>
-
   </div>
-
-
 </div>
 
 <script>

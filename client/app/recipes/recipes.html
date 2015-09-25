@@ -4,7 +4,7 @@
       <div class="row">
         <i class="material-icons prefix">search</i>
         <input class="col" id="recipeTerms" type="text" ng-model="searchTerms">
-        <i class="col material-icons prefix not-interested" ng-click="searchTerms = null">not_interested</i>
+        <i class="col material-icons prefix not-interested" ng-click="searchTerms = ''">not_interested</i>
         <label for="recipeTerms">What do you want to cook?</label>
       </div>
       <button class="btn waves-effect waves-light green right" ng-click="search(searchTerms)">Search</button>

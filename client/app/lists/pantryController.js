@@ -1,7 +1,7 @@
-groceries.controller('pantryController', function ($scope, Lists, auth, store, States) {
+groceries.controller('pantryController', function ($scope, Lists, auth, store, States, $anchorScroll, $location) {
   // set state to 'pantry' when loading this view
   States.setState('pantry');
-  // get householdId from angular storage
+  // get householdId from angula storag
   $scope.household = store.get('householdId');
   console.log('householdId:', $scope.household);
   // get list of categories from backend
@@ -164,9 +164,9 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
     var expMils = $scope.pantryList[item].expiration*24*60*60*1000;
     var expDateMils = new Date($scope.pantryList[item].date).getTime()+expMils;
     $scope.editedExpiration = (new Date(expDateMils)).toDateString() || $scope.editedExpiration;
-    if (!$scope.editVisible){
+    // if (!$scope.editVisible){
       $scope.editVisible = !$scope.editVisible;
-    }
+    // }
   };
 
   $scope.updateExp = function(item){
@@ -273,4 +273,8 @@ groceries.controller('pantryController', function ($scope, Lists, auth, store, S
     var newTime = oldDate + elapsed;
     return (new Date(newTime)).toDateString();
   }; 
+
+  $scope.goToEditItem = function(){
+    $anchorScroll('editItem');
+  };
 });
