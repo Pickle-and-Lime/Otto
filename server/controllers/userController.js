@@ -199,7 +199,7 @@ module.exports = userCtrl = {
           return String(id) !== invitee.userId;
         });
 
-        if (accept) {
+        if (accept && household.users.indexOf(invitee.userId) === -1) {
           invitee.householdId = householdId;
           household.users.push(invitee.userId);
         }
