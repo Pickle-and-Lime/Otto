@@ -196,10 +196,13 @@
   padding-top: 40px
 }
 
-.not-interested {
+.delete {
   color: red;
 }
 
+.not-interested{
+  color: gray;
+}
 .cursor{
   cursor: pointer;
   cursor: hand;

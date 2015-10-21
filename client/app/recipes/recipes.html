@@ -1,9 +1,12 @@
 <div class="row">
-  <form class="col s12 m6 l4">
+  <form class="col s11 m6 l4">
     <div class="input-field">
-      <i class="material-icons prefix">search</i>
-      <input id="recipeTerms" type="text" ng-model="searchTerms">
-      <label for="recipeTerms">What do you want to cook?</label>
+      <div class="row">
+        <i class="material-icons prefix">search</i>
+        <input class="col" id="recipeTerms" type="text" ng-model="searchTerms">
+        <i class="col material-icons prefix not-interested" ng-click="searchTerms = ''">not_interested</i>
+        <label for="recipeTerms">What do you want to cook?</label>
+      </div>
       <button class="btn waves-effect waves-light green right" ng-click="search(searchTerms)">Search</button>
       <span class="right">Recipe search powered by <a href='http://www.yummly.com/recipes'><img alt='Yummly' src='http://static.yummly.com/api-logo.png'/></a></span>
     </div>
