@@ -196,3 +196,14 @@
   padding-top: 40px
 }
 
+.delete {
+  color: red;
+}
+
+.not-interested{
+  color: gray;
+}
+.cursor{
+  cursor: pointer;
+  cursor: hand;
+}

@@ -36,8 +36,7 @@ groceries.controller('householdController', ['$scope', '$http', '$location', 'au
       //used to toggle the create button/loading icon when form submitted, also toggles forms enabled/disabled
       $scope.s.submitted = false;
       $scope.s.joinSubmitted = false;
-    };
-    init();
+    }();
 
     /**
      * function to request user info from server (private)
