@@ -1,62 +1,70 @@
+
+<!-- Search item to add -->
+<form class="row">
+  <div class="input-field col s11 m11 l6 offset-l3">
+    <div class="row">
+      <i class="material-icons prefix">shopping_basket</i>
+      <input class="col" id="groceryItem" type="text" ng-model="userItem">
+      <i class="col material-icons prefix not-interested" ng-click="userItem = ''">not_interested</i>
+      <label for="groceryItem">Quick add item to list</label>
+    </div>
+    <button class="btn waves-effect waves-light green right" onclick="Materialize.toast('Added',500)" ng-click="addItem(userItem)">Add</button>
+  </div>
+</form>
+
+<!-- Search Results -->
 <div class="row">
+  <ul class="collection col s12 l6 offset-l3" ng-hide="!userItem.length">
+    <li class="cursor collection-item pantry-list-item" ng-repeat="item in masterList | filter:{name: userItem}" ng-bind="item.name" ng-click="addItem(item.name)" onclick="Materialize.toast('Added',500)"></li>
+  </ul>
+</div>
 
-  <form class="col s12 m6 l4">
-    <div class="row">
-      <div class="input-field col s11 m12 l12">
-        <div class="row">
-          <i class="material-icons prefix">shopping_basket</i>
-          <input class="col" id="groceryItem" type="text" ng-model="userItem">
-          <i class="col material-icons prefix not-interested" ng-click="userItem = ''">not_interested</i>
-          <label for="groceryItem">Search item to add to list</label>
-        </div>
-      </div>
-      <ul class="col s12 collection" ng-hide="!userItem.length">
-        <li class="cursor collection-item pantry-list-item" ng-repeat="item in masterList | filter:{name: userItem}" ng-bind="item.name" ng-click="addItem(item.name)" onclick="Materialize.toast('Added',500)"></li>
-      </ul>
-      <button class="btn waves-effect waves-light green right" onclick="Materialize.toast('Added',500)" ng-click="addItem(userItem)">Add</button>
-    </div>
-  </form>
+<div class="row">
+  <h4 class="center-align">My Shopping List</h4>
+</div>
 
-  <form class="col s12 m6 l8">
-    <h4 class="center-align">My Shopping List</h4>
+<!-- Search for item in list -->
+<form class="row list">
+  <div class="stuff input-field col s11 m11 l6 offset-l3">
     <div class="row">
-      <div class="input-field col s11 m11 l5">
-        <div class="row">
-          <i class="material-icons prefix">search</i>
-          
-          <input class="col" id="currItem" type="text" ng-model="currentListItem">
-          <i class="col material-icons prefix not-interested" ng-click="currentListItem = ''">not_interested</i>
-          <label for="currItem">Search item or category in list</label>
-        </div>
-      </div>
+      <i class="material-icons prefix">search</i>
       
+      <input class="col" id="currItem" type="text" ng-model="currentListItem">
+      <i class="col material-icons prefix not-interested" ng-click="currentListItem = ''">not_interested</i>
+      <label for="currItem">Search item or category in list</label>
     </div>
-    <div class="row">
-      <ul class="collection with-header col s12 m12 l6" ng-repeat="itemObj in shoppingByCategory | filter:currentListItem | orderBy: 'type'">
-        <li class="collection-header"><strong>{{ itemObj.type }}</strong></li>
-        <li class="collection-item" ng-repeat="item in itemObj.items track by $index | orderBy: ''">
-          <div>
-            <span class="cursor item-name" ng-click="toggleActiveTag(item)">{{ item }}</span>
-            <span class="cursor right delete" ng-click="removeItem(item)" onclick="Materialize.toast('Item Deleted',500)"><i class="material-icons">delete</i></span>
-            <input class="right" id="{{ item }}" type="checkbox"/>
-            <label for="{{ item }}" class="right" ng-click="toggleCheck(item)"></label>
-            <div class="tags"><span class="item-tag" ng-repeat="tag in shoppingList[item].userTags">{{ tag }}</span></div>
-            <div class="input-field" ng-show='isActiveTag(item)'>
-              <input id="{{ item }}{{ $index }}" type="text" ng-model="shoppingList[item].newTag">
-              <label for="{{ item }}{{ $index }}">Add description...</label>
-              <ul class="collection" ng-hide="!shoppingList[item].newTag.length">
-                <li class="collection-item pantry-list-item" ng-repeat="myTag in shoppingList[item].tags | filter: shoppingList[item].newTag" ng-click="addTags(item, myTag)">{{ myTag }}</li>
-              </ul>
-              <button class="btn waves-effect waves-light green" onclick="Materialize.toast('Added Description',500)" ng-click="addTags(item, shoppingList[item].newTag)">Add Description</button>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
+  </div>
+</form>
+      
+<!-- List -->
+<div class="row">
+  <ul class="collection with-header col s12 m6 l4" ng-repeat="itemObj in shoppingByCategory | filter:currentListItem | orderBy: 'type'">
+    <li class="collection-header"><strong>{{ itemObj.type }}</strong></li>
+    <li class="collection-item" ng-repeat="item in itemObj.items track by $index | orderBy: ''">
+      <div>
+        <span class="cursor item-name" ng-click="toggleActiveTag(item)">{{ item }}</span>
+        <span class="cursor right delete" ng-click="removeItem(item)" onclick="Materialize.toast('Item Deleted',500)"><i class="material-icons">delete</i></span>
+        <input class="right" id="{{ item }}" type="checkbox"/>
+        <label for="{{ item }}" class="right" ng-click="toggleCheck(item)"></label>
+        <div class="tags"><span class="item-tag" ng-repeat="tag in shoppingList[item].userTags">{{ tag }}</span></div>
+        <div class="input-field" ng-show='isActiveTag(item)'>
+          <input id="{{ item }}{{ $index }}" type="text" ng-model="shoppingList[item].newTag">
+          <label for="{{ item }}{{ $index }}">Add description...</label>
+          <ul class="collection" ng-hide="!shoppingList[item].newTag.length">
+            <li class="collection-item pantry-list-item" ng-repeat="myTag in shoppingList[item].tags | filter: shoppingList[item].newTag" ng-click="addTags(item, myTag)">{{ myTag }}</li>
+          </ul>
+          <button class="btn waves-effect waves-light green" onclick="Materialize.toast('Added Description',500)" ng-click="addTags(item, shoppingList[item].newTag)">Add Description</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 
-    <button class="green right btn waves-effect waves-light" ng-click="checkoutList()" onclick="Materialize.toast('Items Bought',500)">Checkout
+<div class="row">
+  <div class="col s12 center-align">
+    <button class="green btn waves-effect waves-light" ng-click="checkoutList()" onclick="Materialize.toast('Items Bought',500)">Checkout
     <i class="material-icons">send</i>
     </button>
-  </form>
-
+  </div>
 </div>
+
